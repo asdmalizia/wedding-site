@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagamento do Presente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Pagamento do Presente</h2>
+            <p>Preço do Presente: R$<span id="priceTag"></span></p>
+        </div>
+        <div class="col-md-12">
+            <div id="checkout-btn"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const mp = new MercadoPago('YOUR_PUBLIC_KEY');  // Substitua 'YOUR_PUBLIC_KEY' pela sua chave pública
+
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const price = urlParams.get('price');
+    document.getElementById('priceTag').textContent = price;
+
+    // Criar preferência quando o botão é clicado
+    document.getElementById('checkout-btn').addEventListener('click', function() {
+        createCheckoutButton(price);
+    });
+});
+
+function createCheckoutButton(price) {
+    const checkout = mp.checkout({
+        preference: {
+            items: [{
+                title: 'Presente de Casamento',
+                unit_price: parseFloat(price),
+                quantity: 1,
+            }]
+        },
+        autoOpen: true,  // Abre o checkout diretamente
+    });
+}
+</script>
+
+</body>
+</html>
