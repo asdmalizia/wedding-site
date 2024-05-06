@@ -258,7 +258,7 @@ Hero
   -o-background-size: cover;
   background-size: cover;
   position: relative;
-  opacity: 60%;
+  
 
   /*.rsvp-btn {
     position: absolute;
@@ -269,8 +269,11 @@ Hero
     color: $txt-light;
   }
   h1 {
-    color: $txt-light;
-    margin-bottom: 40px;
+    font-size: 120px;
+    color: #406611;
+    margin-bottom: 50px;
+    -webkit-text-stroke: 1px #406611;
+    text-shadow: 2px 2px 4px rgba(219, 193, 28, 0.87);
   }
   p.intro {
     color: $txt-light;
@@ -279,13 +282,24 @@ Hero
     margin-bottom: 80px;
   }
   .hero-content {
-    padding-top: 40%;
+    padding-top: 25%;
   }
   .hero-content img {
     width: 55%;
     margin-bottom: 12%;
   }
 }
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(216, 216, 216, 0.498); /* Cor de fundo com opacidade */
+}
+
 .navigation {
   transition: all 300ms ease-in-out;
   position: fixed;
@@ -294,12 +308,12 @@ Hero
 }
 .fixed {
   position: fixed;
-  background-color: rgba(55, 36, 40, .88);
+  background-color: #40541ce2;
   z-index: 999;
   width: 100%;
 }
 header {
-  padding: 50px 0;
+  padding: 15px 0;
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
   position: relative;
   width: 1170px;
@@ -657,6 +671,21 @@ Instagram
 /* ==========================================================================
 Engagement Pics
 ========================================================================== */
+#imageRow {
+  display: flex; /* Torna os elementos filhos flexíveis */
+  overflow-x: auto; /* Adiciona uma barra de rolagem horizontal quando necessário */
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* Estilo de barra de rolagem para o Internet Explorer */
+  scrollbar-width: thin; /* Espessura da barra de rolagem */
+  scrollbar-color: #ccc transparent; /* Cor da barra de rolagem */
+  white-space: nowrap; /* Impede que as imagens quebrem para uma nova linha */
+}
+
+.col-md-2 {
+  flex: 0 0 auto; /* Permite que as colunas tenham largura fixa */
+  padding: 0 5px; /* Espaçamento entre as colunas */
+  min-width: 200px; /* Largura mínima das colunas */
+}
+
 #eng-pics {
   img {
     width: 100%;
@@ -722,6 +751,7 @@ Engagement Pics
     z-index: -1;
   }
 }
+
 
 /* ==========================================================================
 Embed video
