@@ -84,7 +84,7 @@ $(document).ready(function () {
     });
 
     /***************** Header BG Scroll ******************/
-
+/*
     $(function () {
         $(window).scroll(function () {
             var scroll = $(window).scrollTop();
@@ -115,7 +115,7 @@ $(document).ready(function () {
                 });
             }
         });
-    });
+    });*/
     /***************** Smooth Scrolling ******************/
 
     $(function () {
@@ -160,6 +160,55 @@ $(document).ready(function () {
         share_bar[i].innerHTML = html;
         share_bar[i].style.display = 'inline-block';
     }
+
+    /**fotos do casal** */
+    // Dados das imagens
+        var images = [
+            "fm1.jpeg", "IMG_3483-lg.png", "_RFX2992-lg.png", "_RFX3064-lg.png", "NGP_4119-lg.png", "fm2.jpeg",
+            "fm3.jpeg", "fm4.jpeg", "fm5.jpeg", "fm6.jpeg", "fm7.jpeg", "fm8.jpeg", "fm9.jpeg", "fm10.jpeg",
+            "fm11.jpeg", "fm12.jpeg", "fm13.jpeg", "fm14.jpeg", "fm15.jpeg", "fm16.jpeg", "fm17.jpeg", "fm18.jpeg",
+            "fm19.jpeg", "fm20.jpeg", "fm21.jpeg", "fm22.jpeg", "fm23.jpeg", "fm24.jpeg", "fm25.jpeg", "fm26.jpeg",
+            "fmultima.jpeg"
+        ];
+
+        // Seleciona o elemento pai onde as imagens serão adicionadas
+        var imageRow = document.getElementById("imageRow");
+
+        // Adiciona cada imagem ao elemento pai
+        images.forEach(function(image) {
+            var col = document.createElement("div");
+            col.classList.add("col-md-2");
+            col.style.display = "flex"; // Adiciona flexbox para alinhar as imagens horizontalmente
+            col.style.alignItems = "center"; // Centraliza as imagens verticalmente
+        
+            var link = document.createElement("a");
+            link.classList.add("fancybox");
+            link.setAttribute("rel", "group");
+            link.setAttribute("href", "img/eng_pics/" + image);
+        
+            var imgWrap = document.createElement("div");
+            imgWrap.classList.add("img-wrap");
+        
+            var overlay = document.createElement("div");
+            overlay.classList.add("overlay");
+        
+            var icon = document.createElement("i");
+            icon.classList.add("fa", "fa-search");
+        
+            var img = document.createElement("img");
+            img.setAttribute("src", "img/eng_pics/" + image);
+            img.setAttribute("alt", image);
+            img.style.maxWidth = "100%"; // Define uma largura máxima para as imagens
+            img.style.height = "auto"; // Mantém a proporção da imagem
+        
+            overlay.appendChild(icon);
+            imgWrap.appendChild(overlay);
+            imgWrap.appendChild(img);
+            link.appendChild(imgWrap);
+            col.appendChild(link);
+            imageRow.appendChild(col);
+        });
+
 
     /********************** Embed youtube video *********************/
     $('.player').YTPlayer();
@@ -241,7 +290,7 @@ $(document).ready(function () {
 
 // Google map
 function initMap() {
-    var location = {lat: -25.413337964431744, lng: -49.31651648798866};
+    var location = {lat: -25.317811384597785, lng: -49.16990619206163};
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 15,
         center: location,
@@ -255,7 +304,7 @@ function initMap() {
 }
 
 function initBBSRMap() {
-    var la_fiesta = {lat: -25.413337964431744, lng: -49.31651648798866};
+    var la_fiesta = {lat: -25.317811384597785, lng: -49.16990619206163};;
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 15,
         center: la_fiesta,
