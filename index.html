@@ -447,8 +447,8 @@
                 <div class="gift-item" id="item-AirFryer">
                     <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive">
                     <h5>Air Fryer</h5>
-                    <p>Preço: R$100,00</p>
-                    <button class="btn btn-primary" onclick="openPaymentModal(10, 'Air Fryer', 'AirFryer')">Escolher Item</button>
+                    <p>Preço: R$5,00</p>
+                    <button class="btn btn-primary" onclick="openPaymentModal('5', 'Air Fryer', 'item-AirFryer')">Escolher Item</button>
                 </div>
             </div>
             <!-- Adicione outros itens conforme necessário -->
@@ -483,75 +483,51 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script>
-    const mp = new MercadoPago('TEST-3cf33dad-1cc9-436c-b117-58e911303eaf');
-    document.addEventListener('DOMContentLoaded', function() {
-        const items = document.querySelectorAll('.gift-item');
-        items.forEach(item => {
-            const itemId = item.id.replace('item-', '');
-            fetch(`/check-item/${itemId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.purchased) {
-                    const button = item.querySelector('button');
-                    button.classList.add('disabled', 'btn-secondary');
-                    button.classList.remove('btn-primary');
-                    button.disabled = true;
-                    const soldOutLabel = document.createElement('p');
-                    soldOutLabel.textContent = 'Já comprado';
-                    soldOutLabel.style.color = 'red';
-                    soldOutLabel.style.fontWeight = 'bold';
-                    soldOutLabel.style.marginTop = '10px';
-                    item.appendChild(soldOutLabel);
-                }
-            })
-            .catch(error => console.error('Failed to check item status:', error));
+document.addEventListener('DOMContentLoaded', function() {
+    const mp = new MercadoPago('APP_USR-6709aaee-8b3a-40e0-b94c-f33163c1c2b4'); // Substitua por sua chave pública do MercadoPago
+
+    // Atualizado para remover o uso de inline onclick e usar addEventListener
+    document.querySelectorAll('.gift-item button').forEach(button => {
+        button.addEventListener('click', function() {
+            const item = this.closest('.gift-item');
+            const price = item.querySelector('p').innerText.replace('Preço: R$', '').trim();
+            const title = item.querySelector('h5').innerText;
+            const itemId = item.id;
+
+            openPaymentModal(price, title, itemId);
         });
     });
+
     document.getElementById('paymentForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const email = document.getElementById('email').value;
-        const price = document.getElementById('price').value;
-        const title = document.getElementById('title').value;
-        const itemId = document.getElementById('itemId').value;
-        handlePayment(price, title, email, itemId);
-        $('#paymentModal').modal('hide');
+        processPayment();
     });
 
     function openPaymentModal(price, title, itemId) {
-    fetch(`/check-item/${itemId}`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.purchased) {
-            alert('Este item já foi comprado.');
-        } else {
-            document.getElementById('price').value = price;
-            document.getElementById('title').value = title;
-            document.getElementById('itemId').value = itemId;
-            $('#paymentModal').modal('show');
-        }
-    })
-    .catch(error => {
-        console.error('Error checking item status:', error);
-    });
+        $('#paymentModal').find('#price').val(price);
+        $('#paymentModal').find('#title').val(title);
+        $('#paymentModal').find('#itemId').val(itemId);
+        $('#paymentModal').modal('show');
     }
 
-    function handlePayment(price, title, email, itemId) {
+    function processPayment() {
+        const price = document.getElementById('price').value;
+        const title = document.getElementById('title').value;
+        const itemId = document.getElementById('itemId').value;
         const description = 'Compra de ' + title;
-        const url = `/payments/checkout/${itemId}/${email}/${encodeURIComponent(description)}/${price}`;
+        const numericPrice = parseFloat(price);
 
+        const url = `/payments/checkout/${itemId}/${encodeURIComponent(description)}/${numericPrice}`;
         fetch(url, {
             method: 'POST'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to process payment');
-            }
-            return response.json();
-        })
+        }).then(response => response.json())
         .then(data => {
-            if (data.preference_id) {
+            if (data.success && data.preference_id) {
                 mp.checkout({
                     preference: {
                         id: data.preference_id
@@ -561,12 +537,14 @@
             } else {
                 console.error('No preference ID returned');
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+        }).catch(error => {
+            console.error('Error processing payment:', error);
+            alert('Erro ao processar pagamento.');
         });
     }
+});
 </script>
+
 
 
 <footer>

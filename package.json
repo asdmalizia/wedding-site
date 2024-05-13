@@ -25,13 +25,14 @@
   },
   "dependencies": {
     "animate.css": "^3.7.2",
+    "axios": "^1.6.8",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "font-awesome": "^4.7.0",
     "helmet": "^7.1.0",
     "http-proxy-middleware": "^3.0.0",
-    "mercadopago": "^1.5.17",
-    "sqlite3": "^5.1.7",
+    "mercadopago": "^1.5.8",
+        "sqlite3": "^5.1.7",
     "waypoints": "^4.0.1"
   }
 }
