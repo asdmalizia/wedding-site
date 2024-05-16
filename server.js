@@ -8,9 +8,13 @@ const config = require('./config.json');
 const helmet = require('helmet');
 const { v4: uuidv4 } = require('uuid'); 
 const uniqueId = uuidv4(); // Isto gera um novo UUID
+const axios = require('axios');
+const fs = require('fs');
+
+// Ler configuração do arquivo config.json
+const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 
 console.log("Using access token:", config.mercadoPagoAccessToken);
-
 
 // Configuração inicial do MercadoPago
 MercadoPago.configure({
@@ -18,9 +22,10 @@ MercadoPago.configure({
 });
 
 const app = express();
+
 app.use(helmet.contentSecurityPolicy({
     directives: {
-        defaultSrc: ["'self'"], // Padrão para a maioria das fontes
+        defaultSrc: ["'self'"],
         scriptSrc: [
             "'self'",
             "https://http2.mlstatic.com",
@@ -28,38 +33,39 @@ app.use(helmet.contentSecurityPolicy({
             "https://sdk.mercadopago.com/js/v2",
             "https://apis.google.com",
             "https://www.youtube.com",
-            "'unsafe-inline'", // Se necessário para inline scripts
-            "'unsafe-eval'", // Se necessário para eval
-            "'nonce-oNZMR6yDOmJFaX5IMT8KCg=='" // Para scripts com um nonce específico
+            "'unsafe-inline'",
+            "'unsafe-eval'",
+            "'nonce-oNZMR6yDOmJFaX5IMT8KCg=='"
         ],
         imgSrc: [
             "'self'",
             "data:",
-            "*", // Permite todas as origens para imagens
+            "*"
         ],
-        connectSrc: [ // Permite conexões a APIs
+        connectSrc: [
             "'self'",
             "https://maps.googleapis.com",
-            "https://*.youtube.com", // Inclui YouTube API
+            "https://*.youtube.com"
         ],
-        styleSrc: [ // Estilos, incluindo inline e externos
+        styleSrc: [
             "'self'",
             "'unsafe-inline'"
         ],
-        frameSrc: [ // Permite iframes de fontes específicas
+        frameSrc: [
             "https://www.youtube.com",
             "https://maps.google.com"
         ],
-        objectSrc: ["'none'"], // Bloqueia todos os objetos, como Flash
-        upgradeInsecureRequests: [], // Opcional, força https
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: []
     },
-    reportOnly: true // Altere para true para testar sem bloquear recursos
+    reportOnly: true
 }));
 
 app.use(cors());
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+
 // Definir diretório de visualizações e engine de visualização
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -98,7 +104,7 @@ app.get('/pending', (req, res) => {
 // Express.js route
 app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
-    console.log("Checking item status for ID:", id);  // Log para verificar o ID recebido
+    console.log("Checking item status for ID:", id);
 
     db.get("SELECT * FROM purchased_items WHERE id = ?", [id], (err, row) => {
         if (err) {
@@ -107,11 +113,10 @@ app.get('/check-item/:id', (req, res) => {
             return;
         }
         if (row) {
-            console.log("Item found and purchased:", row);  // Log para verificar os dados retornados
+            console.log("Item found and purchased:", row);
             res.json({ purchased: !!row.purchased, price: row.amount, title: row.description });
         } else {
-            console.log("Item not found, assuming not purchased for ID:", id);  // Log para confirmar que o item não foi encontrado
-            // Retorna como não comprado se não for encontrado no banco
+            console.log("Item not found, assuming not purchased for ID:", id);
             res.json({ purchased: false, price: null, title: null });
         }
     });
@@ -141,9 +146,9 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
             unit_price: floatAmount
         }],
         back_urls: {
-            success: "http://localhost:3000/success",
-            failure: "http://localhost:3000/failure",
-            pending: "http://localhost:3000/pending"
+            success: `${config.url_after_payment}/success`,
+            failure: `${config.url_after_payment}/failure`,
+            pending: `${config.url_after_payment}/pending`
         },
         auto_return: "all",
         external_reference: externalReference,
@@ -158,10 +163,6 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     }
 });
 
-
-
-const axios = require('axios'); // Você precisará do axios para fazer chamadas HTTP
-
 app.post('/notify', async (req, res) => {
     const { topic, resource } = req.body;
 
@@ -170,9 +171,7 @@ app.post('/notify', async (req, res) => {
             const orderDetails = await fetchOrderDetails(resource);
             console.log('Merchant Order Details:', orderDetails);
 
-            // Verificar se há pagamentos completos
             if (orderDetails.payments && orderDetails.payments.some(payment => payment.status === 'approved')) {
-                // Atualiza o status do pedido no seu sistema para "Pago"
                 updateOrderStatus(orderDetails.external_reference, 'Paid');
                 console.log('Payment has been approved and order updated.');
             } else {
@@ -195,12 +194,8 @@ async function fetchOrderDetails(resourceUrl) {
 }
 
 function updateOrderStatus(orderId, status) {
-    // Aqui você atualiza o status do pedido na sua base de dados
     console.log(`Order ${orderId} updated to ${status}`);
 }
-
-
-
 
 const PORT = 3000;
 app.listen(PORT, () => {

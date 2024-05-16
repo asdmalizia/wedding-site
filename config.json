@@ -1,3 +1,4 @@
 {
-    "mercadoPagoAccessToken": "XXXXXXXXXXXXX"
+    "mercadoPagoAccessToken": "XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "url_after_payment": "XXXXXXXXXXXXXXXXXX"
 }
