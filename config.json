@@ -1,4 +1,5 @@
 {
     "mercadoPagoAccessToken": "XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "url_after_payment": "XXXXXXXXXXXXXXXXXX"
+    "url_after_payment": "XXXXXXXXXXXXXXXXXX",
+    "googleSheetUrl": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 }

@@ -11,9 +11,6 @@ const uniqueId = uuidv4(); // Isto gera um novo UUID
 const axios = require('axios');
 const fs = require('fs');
 
-// Ler configuração do arquivo config.json
-const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
-
 console.log("Using access token:", config.mercadoPagoAccessToken);
 
 // Configuração inicial do MercadoPago
@@ -71,13 +68,43 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Endpoint para pagamento bem-sucedido
+// Endpoint para pagamento bem-sucedido
 app.get('/success', (req, res) => {
     const payment_id = req.query.payment_id;
     const status = req.query.status;
     const external_reference = req.query.external_reference;
 
     console.log('Pagamento bem-sucedido:', payment_id, status, external_reference);
-    res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+
+    db.run("UPDATE purchased_items SET purchased = 1, payment_status = ? WHERE id = ?", ['approved', external_reference], function(err) {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send('Error updating database');
+        }
+
+        // Fetch the purchase details to send to Google Sheets
+        db.get("SELECT * FROM purchased_items WHERE id = ?", [external_reference], function(err, row) {
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ error: 'Database error', details: err.message });
+            }
+            if (row) {
+                // Send data to Google Sheets
+                axios.post(config.googleSheetUrl, {
+                    type: 'compra',
+                    email: row.email,
+                    description: row.description,
+                    amount: row.amount
+                }).then(response => {
+                    console.log('Data sent to Google Sheets:', response.data);
+                }).catch(error => {
+                    console.error('Error sending data to Google Sheets:', error);
+                });
+            }
+        });
+
+        res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+    });
 });
 
 // Endpoint para pagamento falho
@@ -104,7 +131,7 @@ app.get('/pending', (req, res) => {
 // Express.js route
 app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
-    console.log("Checking item status for ID:", id);
+    console.log("Checking item status for ID:", id);  // Log para verificar o ID recebido
 
     db.get("SELECT * FROM purchased_items WHERE id = ?", [id], (err, row) => {
         if (err) {
@@ -113,10 +140,11 @@ app.get('/check-item/:id', (req, res) => {
             return;
         }
         if (row) {
-            console.log("Item found and purchased:", row);
+            console.log("Item found and purchased:", row);  // Log para verificar os dados retornados
             res.json({ purchased: !!row.purchased, price: row.amount, title: row.description });
         } else {
-            console.log("Item not found, assuming not purchased for ID:", id);
+            console.log("Item not found, assuming not purchased for ID:", id);  // Log para confirmar que o item não foi encontrado
+            // Retorna como não comprado se não for encontrado no banco
             res.json({ purchased: false, price: null, title: null });
         }
     });
@@ -136,31 +164,46 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     }
 
     const externalReference = uuidv4();
+    const email = req.body.email; // Pegando o email do corpo da requisição
 
-    const purchaseOrder = {
-        items: [{
-            id: externalReference,
-            title: description,
-            quantity: 1,
-            currency_id: 'BRL',
-            unit_price: floatAmount
-        }],
-        back_urls: {
-            success: `${config.url_after_payment}/success`,
-            failure: `${config.url_after_payment}/failure`,
-            pending: `${config.url_after_payment}/pending`
-        },
-        auto_return: "all",
-        external_reference: externalReference,
-    };
+    // Insere o item no banco de dados com status pendente
+    db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 0, 'pending')", [id, email, description, floatAmount], function(err) {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send('Error inserting into database');
+        }
 
-    try {
-        const response = await MercadoPago.preferences.create(purchaseOrder);
-        res.json({ success: true, preference_id: response.body.id });
-    } catch (err) {
-        console.error('MercadoPago API error:', err);
-        res.status(500).json({ error: 'MercadoPago API error', details: err.message });
-    }
+        const baseUrl = config.url_after_payment;
+
+        const purchaseOrder = {
+            items: [{
+                id: externalReference,
+                title: description,
+                quantity: 1,
+                currency_id: 'BRL',
+                unit_price: floatAmount
+            }],
+            back_urls: {
+                success: `${baseUrl}/success`,
+                failure: `${baseUrl}/failure`,
+                pending: `${baseUrl}/pending`
+            },
+            auto_return: "all",
+            external_reference: externalReference,
+        };
+
+        try {
+            MercadoPago.preferences.create(purchaseOrder).then(response => {
+                res.json({ success: true, preference_id: response.body.id });
+            }).catch(err => {
+                console.error('MercadoPago API error:', err);
+                res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+            });
+        } catch (err) {
+            console.error('MercadoPago API error:', err);
+            res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+        }
+    });
 });
 
 app.post('/notify', async (req, res) => {
@@ -171,8 +214,10 @@ app.post('/notify', async (req, res) => {
             const orderDetails = await fetchOrderDetails(resource);
             console.log('Merchant Order Details:', orderDetails);
 
+            // Verificar se há pagamentos completos
             if (orderDetails.payments && orderDetails.payments.some(payment => payment.status === 'approved')) {
-                updateOrderStatus(orderDetails.external_reference, 'Paid');
+                // Atualiza o status do pedido no seu sistema para "Pago"
+                updateOrderStatus(orderDetails.external_reference, 'approved');
                 console.log('Payment has been approved and order updated.');
             } else {
                 console.log('Payment not approved yet.');
@@ -194,7 +239,14 @@ async function fetchOrderDetails(resourceUrl) {
 }
 
 function updateOrderStatus(orderId, status) {
-    console.log(`Order ${orderId} updated to ${status}`);
+    // Aqui você atualiza o status do pedido na sua base de dados
+    db.run("UPDATE purchased_items SET purchased = 1, payment_status = ? WHERE id = ?", [status, orderId], function(err) {
+        if (err) {
+            console.error('Database error:', err.message);
+        } else {
+            console.log(`Order ${orderId} updated to ${status}`);
+        }
+    });
 }
 
 const PORT = 3000;

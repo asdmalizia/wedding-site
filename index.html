@@ -447,8 +447,9 @@
                 <div class="gift-item" id="item-AirFryer">
                     <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive">
                     <h5>Air Fryer</h5>
-                    <p>Preço: R$5,00</p>
-                    <button class="btn btn-primary" onclick="openPaymentModal('5', 'Air Fryer', 'item-AirFryer')">Escolher Item</button>
+                    <p>Preço: R$1,00</p>
+                    <p id="availability-item-AirFryer"></p>
+                    <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
                 </div>
             </div>
             <!-- Adicione outros itens conforme necessário -->
@@ -489,9 +490,8 @@
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const mp = new MercadoPago('APP_USR-6709aaee-8b3a-40e0-b94c-f33163c1c2b4'); // Substitua por sua chave pública do MercadoPago
+    const mp = new MercadoPago('XXXXXXXXXXXXXXXXX'); // Substitua por sua chave pública do MercadoPago
 
-    // Atualizado para remover o uso de inline onclick e usar addEventListener
     document.querySelectorAll('.gift-item button').forEach(button => {
         button.addEventListener('click', function() {
             const item = this.closest('.gift-item');
@@ -516,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function processPayment() {
+        const email = document.getElementById('email').value;
         const price = document.getElementById('price').value;
         const title = document.getElementById('title').value;
         const itemId = document.getElementById('itemId').value;
@@ -524,7 +525,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const url = `/payments/checkout/${itemId}/${encodeURIComponent(description)}/${numericPrice}`;
         fetch(url, {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
         }).then(response => response.json())
         .then(data => {
             if (data.success && data.preference_id) {
@@ -542,9 +547,31 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Erro ao processar pagamento.');
         });
     }
+
+    // Verificar disponibilidade dos itens ao carregar a página
+    document.querySelectorAll('.gift-item').forEach(item => {
+        const itemId = item.id;
+        const availabilityText = document.getElementById(`availability-${itemId}`);
+        const button = document.getElementById(`button-${itemId}`);
+
+        fetch(`/check-item/${itemId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.purchased) {
+                    availabilityText.innerText = 'Já comprado';
+                    availabilityText.style.color = 'red';
+                    button.disabled = true;
+                } else {
+                    availabilityText.innerText = '';
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking item availability:', error);
+            });
+    });
 });
 </script>
-
 
 
 <footer>

@@ -267,7 +267,7 @@ $(document).ready(function () {
         if ($('#invite_code').val() !== '12345') {
             $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
         } else {
-            $.post('https://script.google.com/macros/s/AKfycbwMYzraSkLwSbAUk0mt6_goks3XvQOEW8QTBqKs3vl2kl1L3zJmkMpxOY52QEDxKAge/exec', formData)
+            $.post('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', formData)
                 .done(function (data) {
                     console.log("Response: ", data);
                     if (data.result === "error") {
@@ -540,3 +540,5 @@ var MD5 = function (string) {
 
     return temp.toLowerCase();
 };
+
+
