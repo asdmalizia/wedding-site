@@ -68,7 +68,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Endpoint para pagamento bem-sucedido
-// Endpoint para pagamento bem-sucedido
 app.get('/success', (req, res) => {
     const payment_id = req.query.payment_id;
     const status = req.query.status;
@@ -76,39 +75,71 @@ app.get('/success', (req, res) => {
 
     console.log('Pagamento bem-sucedido:', payment_id, status, external_reference);
 
-    // Fetch the purchase details to send to Google Sheets
     axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {
         headers: { 'Authorization': `Bearer ${config.mercadoPagoAccessToken}` }
     }).then(response => {
         const paymentInfo = response.data;
         const { email, description, transaction_amount: amount } = paymentInfo;
 
-        // Insere o item no banco de dados após o pagamento ser aprovado
-        db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [external_reference, email, description, amount], function(err) {
+        function generateNewId(baseId, callback) {
+            let newId = baseId;
+            db.get("SELECT id FROM purchased_items WHERE id = ?", [newId], function (err, row) {
+                if (err) {
+                    callback(err, null);
+                } else if (row) {
+                    let i = 1;
+                    let incrementId = () => {
+                        newId = `${baseId}${i}`;
+                        db.get("SELECT id FROM purchased_items WHERE id = ?", [newId], function (err, row) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (row) {
+                                i++;
+                                incrementId();
+                            } else {
+                                callback(null, newId);
+                            }
+                        });
+                    };
+                    incrementId();
+                } else {
+                    callback(null, newId);
+                }
+            });
+        }
+
+        generateNewId(external_reference, (err, newId) => {
             if (err) {
-                console.error('Database error:', err.message);
-                return res.status(500).send('Error updating database');
+                console.error('Error generating new ID:', err.message);
+                return res.status(500).send('Error generating new ID');
             }
 
-            // Envia os dados para o Google Sheets
-            axios.post(config.googleSheetUrl, {
-                type: 'compra',
-                email: email,
-                description: description,
-                amount: amount
-            }).then(response => {
-                console.log('Data sent to Google Sheets:', response.data);
-            }).catch(error => {
-                console.error('Error sending data to Google Sheets:', error);
-            });
+            db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [newId, email, description, amount], function(err) {
+                if (err) {
+                    console.error('Database error:', err.message);
+                    return res.status(500).send('Error updating database');
+                }
 
-            res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+                axios.post(config.googleSheetUrl, {
+                    type: 'compra',
+                    email: email,
+                    description: description,
+                    amount: amount
+                }).then(response => {
+                    console.log('Data sent to Google Sheets:', response.data);
+                }).catch(error => {
+                    console.error('Error sending data to Google Sheets:', error);
+                });
+
+                res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${newId}`);
+            });
         });
     }).catch(error => {
         console.error('Error fetching payment info:', error);
         res.status(500).send('Error fetching payment info');
     });
 });
+
 
 // Endpoint para pagamento falho
 app.get('/failure', (req, res) => {
@@ -136,7 +167,18 @@ app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
     console.log("Checking item status for ID:", id);  // Log para verificar o ID recebido
 
-    db.get("SELECT * FROM purchased_items WHERE id = ?", [id], (err, row) => {
+    // Função para verificar status de compra aprovado
+    function checkApprovedPurchase(baseId, callback) {
+        db.get("SELECT * FROM purchased_items WHERE id LIKE ? AND payment_status = 'approved'", [`${baseId}%`], (err, row) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, row);
+            }
+        });
+    }
+
+    checkApprovedPurchase(id, (err, row) => {
         if (err) {
             console.error("Database error:", err);
             res.status(500).json({ error: 'Database error', details: err.message });
@@ -152,6 +194,7 @@ app.get('/check-item/:id', (req, res) => {
         }
     });
 });
+
 
 app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     const { id, description, amount } = req.params;
