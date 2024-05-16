@@ -76,34 +76,37 @@ app.get('/success', (req, res) => {
 
     console.log('Pagamento bem-sucedido:', payment_id, status, external_reference);
 
-    db.run("UPDATE purchased_items SET purchased = 1, payment_status = ? WHERE id = ?", ['approved', external_reference], function(err) {
-        if (err) {
-            console.error('Database error:', err.message);
-            return res.status(500).send('Error updating database');
-        }
+    // Fetch the purchase details to send to Google Sheets
+    axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {
+        headers: { 'Authorization': `Bearer ${config.mercadoPagoAccessToken}` }
+    }).then(response => {
+        const paymentInfo = response.data;
+        const { email, description, transaction_amount: amount } = paymentInfo;
 
-        // Fetch the purchase details to send to Google Sheets
-        db.get("SELECT * FROM purchased_items WHERE id = ?", [external_reference], function(err, row) {
+        // Insere o item no banco de dados após o pagamento ser aprovado
+        db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [external_reference, email, description, amount], function(err) {
             if (err) {
-                console.error("Database error:", err);
-                return res.status(500).json({ error: 'Database error', details: err.message });
+                console.error('Database error:', err.message);
+                return res.status(500).send('Error updating database');
             }
-            if (row) {
-                // Send data to Google Sheets
-                axios.post(config.googleSheetUrl, {
-                    type: 'compra',
-                    email: row.email,
-                    description: row.description,
-                    amount: row.amount
-                }).then(response => {
-                    console.log('Data sent to Google Sheets:', response.data);
-                }).catch(error => {
-                    console.error('Error sending data to Google Sheets:', error);
-                });
-            }
-        });
 
-        res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+            // Envia os dados para o Google Sheets
+            axios.post(config.googleSheetUrl, {
+                type: 'compra',
+                email: email,
+                description: description,
+                amount: amount
+            }).then(response => {
+                console.log('Data sent to Google Sheets:', response.data);
+            }).catch(error => {
+                console.error('Error sending data to Google Sheets:', error);
+            });
+
+            res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+        });
+    }).catch(error => {
+        console.error('Error fetching payment info:', error);
+        res.status(500).send('Error fetching payment info');
     });
 });
 
@@ -166,44 +169,36 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     const externalReference = uuidv4();
     const email = req.body.email; // Pegando o email do corpo da requisição
 
-    // Insere o item no banco de dados com status pendente
-    db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 0, 'pending')", [id, email, description, floatAmount], function(err) {
-        if (err) {
-            console.error('Database error:', err.message);
-            return res.status(500).send('Error inserting into database');
-        }
+    const baseUrl = config.url_after_payment;
 
-        const baseUrl = config.url_after_payment;
+    const purchaseOrder = {
+        items: [{
+            id: id,
+            title: description,
+            quantity: 1,
+            currency_id: 'BRL',
+            unit_price: floatAmount
+        }],
+        back_urls: {
+            success: `${baseUrl}/success`,
+            failure: `${baseUrl}/failure`,
+            pending: `${baseUrl}/pending`
+        },
+        auto_return: "all",
+        external_reference: externalReference,
+    };
 
-        const purchaseOrder = {
-            items: [{
-                id: externalReference,
-                title: description,
-                quantity: 1,
-                currency_id: 'BRL',
-                unit_price: floatAmount
-            }],
-            back_urls: {
-                success: `${baseUrl}/success`,
-                failure: `${baseUrl}/failure`,
-                pending: `${baseUrl}/pending`
-            },
-            auto_return: "all",
-            external_reference: externalReference,
-        };
-
-        try {
-            MercadoPago.preferences.create(purchaseOrder).then(response => {
-                res.json({ success: true, preference_id: response.body.id });
-            }).catch(err => {
-                console.error('MercadoPago API error:', err);
-                res.status(500).json({ error: 'MercadoPago API error', details: err.message });
-            });
-        } catch (err) {
+    try {
+        MercadoPago.preferences.create(purchaseOrder).then(response => {
+            res.json({ success: true, preference_id: response.body.id });
+        }).catch(err => {
             console.error('MercadoPago API error:', err);
             res.status(500).json({ error: 'MercadoPago API error', details: err.message });
-        }
-    });
+        });
+    } catch (err) {
+        console.error('MercadoPago API error:', err);
+        res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+    }
 });
 
 app.post('/notify', async (req, res) => {
