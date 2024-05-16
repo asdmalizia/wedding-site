@@ -34,24 +34,10 @@ app.use(helmet.contentSecurityPolicy({
             "'unsafe-eval'",
             "'nonce-oNZMR6yDOmJFaX5IMT8KCg=='"
         ],
-        imgSrc: [
-            "'self'",
-            "data:",
-            "*"
-        ],
-        connectSrc: [
-            "'self'",
-            "https://maps.googleapis.com",
-            "https://*.youtube.com"
-        ],
-        styleSrc: [
-            "'self'",
-            "'unsafe-inline'"
-        ],
-        frameSrc: [
-            "https://www.youtube.com",
-            "https://maps.google.com"
-        ],
+        imgSrc: ["'self'", "data:", "*"],
+        connectSrc: ["'self'", "https://maps.googleapis.com", "https://*.youtube.com"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        frameSrc: ["https://www.youtube.com", "https://maps.google.com"],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: []
     },
@@ -63,21 +49,18 @@ app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Definir diretório de visualizações e engine de visualização
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Endpoint para pagamento bem-sucedido
-app.get('/success', (req, res) => {
-    const payment_id = req.query.payment_id;
-    const status = req.query.status;
-    const external_reference = req.query.external_reference;
+// Função para processar pagamentos bem-sucedidos
+async function processSuccessfulPayment(payment_id, status, external_reference) {
+    console.log('Processing successful payment internally:', payment_id, status, external_reference);
 
-    console.log('Pagamento bem-sucedido:', payment_id, status, external_reference);
+    try {
+        const response = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {
+            headers: { 'Authorization': `Bearer ${config.mercadoPagoAccessToken}` }
+        });
 
-    axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {
-        headers: { 'Authorization': `Bearer ${config.mercadoPagoAccessToken}` }
-    }).then(response => {
         const paymentInfo = response.data;
         const { email, description, transaction_amount: amount } = paymentInfo;
 
@@ -111,13 +94,13 @@ app.get('/success', (req, res) => {
         generateNewId(external_reference, (err, newId) => {
             if (err) {
                 console.error('Error generating new ID:', err.message);
-                return res.status(500).send('Error generating new ID');
+                return;
             }
 
             db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [newId, email, description, amount], function(err) {
                 if (err) {
                     console.error('Database error:', err.message);
-                    return res.status(500).send('Error updating database');
+                    return;
                 }
 
                 axios.post(config.googleSheetUrl, {
@@ -131,15 +114,26 @@ app.get('/success', (req, res) => {
                     console.error('Error sending data to Google Sheets:', error);
                 });
 
-                res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${newId}`);
+                console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${newId}`);
             });
         });
-    }).catch(error => {
+    } catch (error) {
         console.error('Error fetching payment info:', error);
-        res.status(500).send('Error fetching payment info');
-    });
-});
+    }
+}
 
+// Endpoint para pagamento bem-sucedido
+app.get('/success', async (req, res) => {
+    const payment_id = req.query.payment_id;
+    const status = req.query.status;
+    const external_reference = req.query.external_reference;
+
+    console.log('Pagamento bem-sucedido:', payment_id, status, external_reference);
+
+    await processSuccessfulPayment(payment_id, status, external_reference);
+
+    res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+});
 
 // Endpoint para pagamento falho
 app.get('/failure', (req, res) => {
@@ -162,12 +156,11 @@ app.get('/pending', (req, res) => {
     res.send(`Pagamento pendente. ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
 });
 
-// Express.js route
+// Verificar status do item
 app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
     console.log("Checking item status for ID:", id);  // Log para verificar o ID recebido
 
-    // Função para verificar status de compra aprovado
     function checkApprovedPurchase(baseId, callback) {
         db.get("SELECT * FROM purchased_items WHERE id LIKE ? AND payment_status = 'approved'", [`${baseId}%`], (err, row) => {
             if (err) {
@@ -189,13 +182,12 @@ app.get('/check-item/:id', (req, res) => {
             res.json({ purchased: !!row.purchased, price: row.amount, title: row.description });
         } else {
             console.log("Item not found, assuming not purchased for ID:", id);  // Log para confirmar que o item não foi encontrado
-            // Retorna como não comprado se não for encontrado no banco
             res.json({ purchased: false, price: null, title: null });
         }
     });
 });
 
-
+// Criar preferência de pagamento
 app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     const { id, description, amount } = req.params;
 
@@ -229,6 +221,9 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
         },
         auto_return: "all",
         external_reference: externalReference,
+        payer: {
+            email: email
+        }
     };
 
     try {
@@ -244,6 +239,7 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     }
 });
 
+// Notificações IPN do Mercado Pago
 app.post('/notify', async (req, res) => {
     const { topic, resource } = req.body;
 
@@ -252,10 +248,9 @@ app.post('/notify', async (req, res) => {
             const orderDetails = await fetchOrderDetails(resource);
             console.log('Merchant Order Details:', orderDetails);
 
-            // Verificar se há pagamentos completos
             if (orderDetails.payments && orderDetails.payments.some(payment => payment.status === 'approved')) {
-                // Atualiza o status do pedido no seu sistema para "Pago"
-                updateOrderStatus(orderDetails.external_reference, 'approved');
+                const approvedPayment = orderDetails.payments.find(payment => payment.status === 'approved');
+                await processSuccessfulPayment(approvedPayment.id, approvedPayment.status, orderDetails.external_reference);
                 console.log('Payment has been approved and order updated.');
             } else {
                 console.log('Payment not approved yet.');
@@ -276,18 +271,7 @@ async function fetchOrderDetails(resourceUrl) {
     return response.data;
 }
 
-function updateOrderStatus(orderId, status) {
-    // Aqui você atualiza o status do pedido na sua base de dados
-    db.run("UPDATE purchased_items SET purchased = 1, payment_status = ? WHERE id = ?", [status, orderId], function(err) {
-        if (err) {
-            console.error('Database error:', err.message);
-        } else {
-            console.log(`Order ${orderId} updated to ${status}`);
-        }
-    });
-}
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
