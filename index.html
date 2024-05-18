@@ -277,23 +277,14 @@
             </div>
         </div>
         <div class="row" id="imageRow" >
-            <!-- Coloque todas as imagens aqui via JavaScript -->
+                <!-- Coloque todas as imagens aqui via JavaScript -->
         </div>
-        
     </div>
     <div class="container">
         <div class="row hidden-lg hidden-md hidden-xs">
             <div class="col-xs-12 section-border section-padding"></div>
         </div>
     </div>
-    <!--<div class="row">
-        <div class="col-md-12">
-            <div class="diamond floating-logo">
-                <img src="img/sketch-logo.png" alt="Sketch Logo">
-                <div class="ring"></div>
-            </div>
-        </div>
-    </div>-->
 </section>
 
 <section id="video-bg" class="hidden-sm hidden-xs">
@@ -442,47 +433,110 @@
                 <p>Escolha um presente da nossa lista e marque sua presença em nossa união!</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="gift-item" id="item-AirFryer">
-                    <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive">
-                    <h5>Air Fryer</h5>
-                    <p>Preço: R$1,00</p>
-                    <p id="availability-item-AirFryer"></p>
-                    <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
+        <div id="giftCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4 d-flex align-items-stretch">
+                            <div class="gift-item text-center" id="item-AirFryer">
+                                <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive gift-img">
+                                <h5>Air Fryer</h5>
+                                <p>Preço: R$1,00</p>
+                                <p id="availability-item-AirFryer"></p>
+                                <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-stretch">
+                            <div class="gift-item text-center" id="item-smartphone">
+                                <img src="img/presentes/presente2.png" alt="Smartphone" class="img-responsive gift-img">
+                                <h5>Smartphone</h5>
+                                <p>Preço: R$5,00</p>
+                                <p id="availability-item-smartphone"></p>
+                                <button class="btn btn-primary" id="button-item-smartphone">Escolher Item</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-stretch">
+                            <div class="gift-item text-center" id="item-aspirador">
+                                <img src="img/presentes/presente3.png" alt="Aspirador" class="img-responsive gift-img">
+                                <h5>Robô Aspirador</h5>
+                                <p>Preço: R$0,90</p>
+                                <p id="availability-item-aspirador"></p>
+                                <button class="btn btn-primary" id="button-item-aspirador">Escolher Item</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="gift-item" id="item-smartphone">
-                    <img src="img/presentes/presente2.png" alt="Smartphone" class="img-responsive">
-                    <h5>Smartphone</h5>
-                    <p>Preço: R$5,00</p>
-                    <p id="availability-item-smartphone"></p>
-                    <button class="btn btn-primary" id="button-item-smartphone">Escolher Item</button>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4 d-flex align-items-stretch">
+                            <div class="gift-item text-center" id="item-cama">
+                                <img src="img/presentes/presente4.png" alt="Cama" class="img-responsive gift-img">
+                                <h5>Cama Casal</h5>
+                                <p>Preço: R$2</p>
+                                <p id="availability-item-cama"></p>
+                                <button class="btn btn-primary" id="button-item-cama">Escolher Item</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-stretch">
+                            <div class="gift-item text-center" id="item-item5">
+                                <img src="img/presentes/presente5.png" alt="Item 5" class="img-responsive gift-img">
+                                <h5>Livro</h5>
+                                <p>Preço: R$3</p>
+                                <p id="availability-item-item5"></p>
+                                <button class="btn btn-primary" id="button-item-item5">Escolher Item</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-stretch">
+                            <div class="gift-item text-center" id="item-item6">
+                                <img src="img/presentes/presente6.png" alt="Item 6" class="img-responsive gift-img">
+                                <h5>Televisão</h5>
+                                <p>Preço: R$4</p>
+                                <p id="availability-item-item6"></p>
+                                <button class="btn btn-primary" id="button-item-item6">Escolher Item</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- Adicione mais .carousel-item aqui conforme necessário -->
             </div>
-            <div class="col-md-4">
-                <div class="gift-item" id="item-aspirador">
-                    <img src="img/presentes/presente3.png" alt="Aspirador" class="img-responsive">
-                    <h5>Robô Aspirador</h5>
-                    <p>Preço: R$0,90</p>
-                    <p id="availability-item-aspirador"></p>
-                    <button class="btn btn-primary" id="button-item-aspirador">Escolher Item</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="gift-item" id="item-cama">
-                    <img src="img/presentes/presente4.png" alt="Cama" class="img-responsive">
-                    <h5>Cama Casal</h5>
-                    <p>Preço: R$2</p>
-                    <p id="availability-item-cama"></p>
-                    <button class="btn btn-primary" id="button-item-cama">Escolher Item</button>
-                </div>
-            </div>
-            <!-- Adicione outros itens conforme necessário -->
+            <a class="carousel-control-prev" href="#giftCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#giftCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
 </section>
+
+<style>
+    .gift-img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        object-fit: cover;
+    }
+
+    .gift-item {
+        margin-bottom: 30px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .gift-item h5 {
+        margin-top: 10px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: black;
+        border-radius: 50%;
+    }
+</style>
+
 
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
