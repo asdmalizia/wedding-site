@@ -141,10 +141,89 @@
                 <h3>Vamos casar!</h3>
                 <p style="color: black;">12 Dezembro 2024</p>
                 <p style="color: black;">Comemore conosco esse momento!</p>
+                <h5 style="color: black;">COUNTDOWN</h5>
+                <div id="countdown" class="countdown">
+                    <div class="countdown-item">
+                        <span id="days" class="countdown-value"></span>
+                        <span class="countdown-label">Dias</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="hours" class="countdown-value"></span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="minutes" class="countdown-value"></span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="seconds" class="countdown-value"></span>
+                        <span class="countdown-label">Segundos</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    .countdown {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+        color: #ffffff;
+        background-color: #377125;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .countdown-item {
+        margin: 0 15px;
+        text-align: center;
+    }
+
+    .countdown-value {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .countdown-label {
+        font-size: 16px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateCountdown() {
+            const weddingDate = new Date('2024-12-12T16:30:00');
+            const now = new Date();
+            const timeDifference = weddingDate - now;
+
+            if (timeDifference < 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    });
+</script>
+
 
 <section id="intro">
     <div class="container">
@@ -431,229 +510,8 @@
             <div class="col-md-12">
                 <h3 class="header">Lista de Presentes</h3>
                 <p>Escolha um presente da nossa lista e marque sua presença em nossa união!</p>
-            </div>
-        </div>
-        <div id="giftCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-md-4 d-flex align-items-stretch">
-                            <div class="gift-item text-center" id="item-AirFryer">
-                                <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive gift-img">
-                                <h5>Air Fryer</h5>
-                                <p>Preço: R$1,00</p>
-                                <p id="availability-item-AirFryer"></p>
-                                <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-stretch">
-                            <div class="gift-item text-center" id="item-smartphone">
-                                <img src="img/presentes/presente2.png" alt="Smartphone" class="img-responsive gift-img">
-                                <h5>Smartphone</h5>
-                                <p>Preço: R$5,00</p>
-                                <p id="availability-item-smartphone"></p>
-                                <button class="btn btn-primary" id="button-item-smartphone">Escolher Item</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-stretch">
-                            <div class="gift-item text-center" id="item-aspirador">
-                                <img src="img/presentes/presente3.png" alt="Aspirador" class="img-responsive gift-img">
-                                <h5>Robô Aspirador</h5>
-                                <p>Preço: R$0,01</p>
-                                <p id="availability-item-aspirador"></p>
-                                <button class="btn btn-primary" id="button-item-aspirador">Escolher Item</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-md-4 d-flex align-items-stretch">
-                            <div class="gift-item text-center" id="item-cama">
-                                <img src="img/presentes/presente4.png" alt="Cama" class="img-responsive gift-img">
-                                <h5>Cama Casal</h5>
-                                <p>Preço: R$2</p>
-                                <p id="availability-item-cama"></p>
-                                <button class="btn btn-primary" id="button-item-cama">Escolher Item</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-stretch">
-                            <div class="gift-item text-center" id="item-item5">
-                                <img src="img/presentes/presente5.png" alt="Item 5" class="img-responsive gift-img">
-                                <h5>Livro</h5>
-                                <p>Preço: R$3</p>
-                                <p id="availability-item-item5"></p>
-                                <button class="btn btn-primary" id="button-item-item5">Escolher Item</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-stretch">
-                            <div class="gift-item text-center" id="item-item6">
-                                <img src="img/presentes/presente6.png" alt="Item 6" class="img-responsive gift-img">
-                                <h5>Televisão</h5>
-                                <p>Preço: R$4</p>
-                                <p id="availability-item-item6"></p>
-                                <button class="btn btn-primary" id="button-item-item6">Escolher Item</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Adicione mais .carousel-item aqui conforme necessário -->
-            </div>
-            <a class="carousel-control-prev" href="#giftCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#giftCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
+                <a href="/presentes" class="btn btn-primary btn-gifts">Ver Lista de Presentes</a>
 </section>
-
-<style>
-    .gift-img {
-        width: 100%;
-        height: auto;
-        max-height: 200px;
-        object-fit: cover;
-    }
-
-    .gift-item {
-        margin-bottom: 30px;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-    }
-
-    .gift-item h5 {
-        margin-top: 10px;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        background-color: black;
-        border-radius: 50%;
-    }
-</style>
-
-
-<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel">Informações de Pagamento</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="paymentForm">
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-                    <input type="hidden" id="price">
-                    <input type="hidden" id="title">
-                    <input type="hidden" id="itemId">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Pagar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const mp = new MercadoPago('XXXXXXXXXXXXXXXXX'); // Substitua por sua chave pública do MercadoPago
-
-    document.querySelectorAll('.gift-item button').forEach(button => {
-        button.addEventListener('click', function() {
-            const item = this.closest('.gift-item');
-            const price = item.querySelector('p').innerText.replace('Preço: R$', '').trim();
-            const title = item.querySelector('h5').innerText;
-            const itemId = item.id;
-
-            openPaymentModal(price, title, itemId);
-        });
-    });
-
-    document.getElementById('paymentForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        processPayment();
-    });
-
-    function openPaymentModal(price, title, itemId) {
-        $('#paymentModal').find('#price').val(price);
-        $('#paymentModal').find('#title').val(title);
-        $('#paymentModal').find('#itemId').val(itemId);
-        $('#paymentModal').modal('show');
-    }
-
-    function processPayment() {
-        const email = document.getElementById('email').value;
-        const price = document.getElementById('price').value;
-        const title = document.getElementById('title').value;
-        const itemId = document.getElementById('itemId').value;
-        const description = 'Compra de ' + title;
-        const numericPrice = parseFloat(price);
-
-        const url = `/payments/checkout/${itemId}/${encodeURIComponent(description)}/${numericPrice}`;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email })
-        }).then(response => response.json())
-        .then(data => {
-            if (data.success && data.preference_id) {
-                mp.checkout({
-                    preference: {
-                        id: data.preference_id
-                    },
-                    autoOpen: true
-                });
-            } else {
-                console.error('No preference ID returned');
-            }
-        }).catch(error => {
-            console.error('Error processing payment:', error);
-            alert('Erro ao processar pagamento.');
-        });
-    }
-
-    // Verificar disponibilidade dos itens ao carregar a página
-    document.querySelectorAll('.gift-item').forEach(item => {
-        const itemId = item.id;
-        const availabilityText = document.getElementById(`availability-${itemId}`);
-        const button = document.getElementById(`button-${itemId}`);
-
-        fetch(`/check-item/${itemId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.purchased) {
-                    availabilityText.innerText = 'Já comprado';
-                    availabilityText.style.color = 'red';
-                    button.disabled = true;
-                } else {
-                    availabilityText.innerText = '';
-                    button.disabled = false;
-                }
-            })
-            .catch(error => {
-                console.error('Error checking item availability:', error);
-            });
-    });
-});
-</script>
-
 
 <footer>
     <div class="container">

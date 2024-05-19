@@ -105,6 +105,10 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
     }
 }
 
+app.get('/presentes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'presentes.html'));
+});
+
 // Endpoint para pagamento bem-sucedido
 app.get('/success', async (req, res) => {
     const payment_id = req.query.payment_id;

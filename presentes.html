@@ -1,0 +1,426 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Maxine & Felipe!</title>
+    <meta name="description" content="We would like to invite you to our big day.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="Maxine & Felipe">
+    <meta property="og:description" content="We would like to invite you to our big day.">
+    <meta property="og:image" content="https://wedding.ramswaroop.me/img/hero.png">
+    <meta property="og:type" content="website">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+    <link rel="stylesheet" href="css/flexslider.css">
+    <link rel="stylesheet" href="css/styles.min.css">
+    <link rel="stylesheet" href="css/queries.css">
+    <link rel="stylesheet" href="node_modules/animate.css/animate.min.css" onerror="loadCssFromCDN('animate.css')">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" onerror="loadCssFromCDN('font-awesome.css')">
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <style>
+        .gift-img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .gift-item {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .gift-item h5 {
+            margin-top: 10px;
+        }
+
+        .filter-buttons {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-buttons button, .filter-buttons input, .filter-buttons label {
+            margin: 5px;
+        }
+
+        .filter-buttons .btn-clear {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .filter-active {
+            background-color: #5bc0de !important;
+            color: white !important;
+        }
+
+        .filter-buttons input[type="number"] {
+            width: 150px;
+        }
+
+        .filter-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .gift-item-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .gift-item-col {
+            flex: 1 1 30%;
+            max-width: 30%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .gift-item-col {
+                flex: 1 1 45%;
+                max-width: 45%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gift-item-col {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+    <script>
+        // Load CSS files from CDN if local node_modules fail
+        function loadCssFromCDN(css) {
+            const link = document.createElement('link');
+            if (css === 'animate.css') {
+                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css';
+            } else if (css === 'font-awesome.css') {
+                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
+            }
+            link.rel = 'stylesheet';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+
+        // Load JS files from CDN if local node_modules fail
+        function loadJsFromCDN(js) {
+            if (js === 'waypoints.js') {
+                document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"><\/script>');
+            } else if (js === 'jquery.js') {
+                document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>');
+            }
+        }
+    </script>
+</head>
+<body id="top">
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<section class="hero2">
+    <section class="navigation fixed">
+        <header>
+            <div class="header-content">
+                <div class="logo"><a href="/"><img src="img/logo.png" alt="Logo" style="width:80px; height: auto"></a></div>
+                <div class="header-nav">
+                    <nav>
+                        <ul class="primary-nav">
+                            <li><a href="/" onclick="navigateToSection(event, '#intro')">Voltar para a tela principal</a></li>
+                    </nav>
+                </div>
+                <div class="navicon">
+                    <a class="nav-toggle" href="#"><span></span></a>
+                </div>
+            </div>
+        </header>
+    </section>
+</section>
+
+<section class="gift-list text-center" id="gifts">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 style="padding-top: 115px;">Lista de Presentes</h3>
+                <p>Escolha um presente da nossa lista e marque sua presença em nossa união!</p>
+            </div>
+        </div>
+        <div class="filter-buttons">
+            <div>
+                <input type="checkbox" id="filter-available" checked>
+                <label for="filter-available">Disponíveis</label>
+                <input type="checkbox" id="filter-purchased" checked>
+                <label for="filter-purchased">Comprados</label>
+            </div>
+            <button class="btn btn-secondary" id="sort-toggle">
+                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+            </button>
+            <input type="number" class="form-control" id="filter-price-min" placeholder="Preço Mínimo">
+            <input type="number" class="form-control" id="filter-price-max" placeholder="Preço Máximo">
+            <button class="btn btn-secondary" id="filter-price-range">Aplicar Filtro</button>
+            <button class="btn btn-clear" id="clear-filters">Limpar Filtros</button>
+        </div>
+        <div class="filter-info" id="filter-info"></div>
+        <div id="giftItems" class="gift-item-row">
+            <div class="gift-item-col">
+                <div class="gift-item text-center" id="item-AirFryer">
+                    <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive gift-img">
+                    <h5>Air Fryer</h5>
+                    <p>Preço: R$1,00</p>
+                    <p id="availability-item-AirFryer"></p>
+                    <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
+                </div>
+            </div>
+            <div class="gift-item-col">
+                <div class="gift-item text-center" id="item-smartphone">
+                    <img src="img/presentes/presente2.png" alt="Smartphone" class="img-responsive gift-img">
+                    <h5>Smartphone</h5>
+                    <p>Preço: R$1,10</p>
+                    <p id="availability-item-smartphone"></p>
+                    <button class="btn btn-primary" id="button-item-smartphone">Escolher Item</button>
+                </div>
+            </div>
+            <div class="gift-item-col">
+                <div class="gift-item text-center" id="item-aspirador">
+                    <img src="img/presentes/presente3.png" alt="Aspirador" class="img-responsive gift-img">
+                    <h5>Robô Aspirador</h5>
+                    <p>Preço: R$0,80</p>
+                    <p id="availability-item-aspirador"></p>
+                    <button class="btn btn-primary" id="button-item-aspirador">Escolher Item</button>
+                </div>
+            </div>
+            <div class="gift-item-col">
+                <div class="gift-item text-center" id="item-cama">
+                    <img src="img/presentes/presente4.png" alt="Cama" class="img-responsive gift-img">
+                    <h5>Cama Casal</h5>
+                    <p>Preço: R$2,00</p>
+                    <p id="availability-item-cama"></p>
+                    <button class="btn btn-primary" id="button-item-cama">Escolher Item</button>
+                </div>
+            </div>
+            <div class="gift-item-col">
+                <div class="gift-item text-center" id="item-item5">
+                    <img src="img/presentes/presente5.png" alt="Item 5" class="img-responsive gift-img">
+                    <h5>Livro</h5>
+                    <p>Preço: R$0,90</p>
+                    <p id="availability-item-item5"></p>
+                    <button class="btn btn-primary" id="button-item-item5">Escolher Item</button>
+                </div>
+            </div>
+            <div class="gift-item-col">
+                <div class="gift-item text-center" id="item-item6">
+                    <img src="img/presentes/presente6.png" alt="Item 6" class="img-responsive gift-img">
+                    <h5>Televisão</h5>
+                    <p>Preço: R$2,00</p>
+                    <p id="availability-item-item6"></p>
+                    <button class="btn btn-primary" id="button-item-item6">Escolher Item</button>
+                </div>
+            </div>
+            <!-- Adicione mais presentes conforme necessário -->
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Informações de Pagamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <input type="hidden" id="price">
+                    <input type="hidden" id="title">
+                    <input type="hidden" id="itemId">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Pagar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mp = new MercadoPago('XXXXXXXXXXXXXXXXX'); // Substitua por sua chave pública do MercadoPago
+    let sortAscending = true;
+
+    document.querySelectorAll('.gift-item button').forEach(button => {
+        button.addEventListener('click', function() {
+            const item = this.closest('.gift-item');
+            const price = item.querySelector('p').innerText.replace('Preço: R$', '').trim();
+            const title = item.querySelector('h5').innerText;
+            const itemId = item.id;
+
+            openPaymentModal(price, title, itemId);
+        });
+    });
+
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        processPayment();
+    });
+
+    function openPaymentModal(price, title, itemId) {
+        $('#paymentModal').find('#price').val(price);
+        $('#paymentModal').find('#title').val(title);
+        $('#paymentModal').find('#itemId').val(itemId);
+        $('#paymentModal').modal('show');
+    }
+
+    function processPayment() {
+        const email = document.getElementById('email').value;
+        const price = document.getElementById('price').value;
+        const title = document.getElementById('title').value;
+        const itemId = document.getElementById('itemId').value;
+        const description = 'Compra de ' + title;
+        const numericPrice = parseFloat(price);
+
+        const url = `/payments/checkout/${itemId}/${encodeURIComponent(description)}/${numericPrice}`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success && data.preference_id) {
+                mp.checkout({
+                    preference: {
+                        id: data.preference_id
+                    },
+                    autoOpen: true
+                });
+            } else {
+                console.error('No preference ID returned');
+            }
+        }).catch(error => {
+            console.error('Error processing payment:', error);
+            alert('Erro ao processar pagamento.');
+        });
+    }
+
+    // Verificar disponibilidade dos itens ao carregar a página
+    document.querySelectorAll('.gift-item').forEach(item => {
+        const itemId = item.id;
+        const availabilityText = document.getElementById(`availability-${itemId}`);
+        const button = document.getElementById(`button-${itemId}`);
+
+        fetch(`/check-item/${itemId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.purchased) {
+                    availabilityText.innerText = 'Já comprado';
+                    availabilityText.style.color = 'red';
+                    button.disabled = true;
+                } else {
+                    availabilityText.innerText = '';
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking item availability:', error);
+            });
+    });
+
+    // Filtros e Ordenação
+    document.getElementById('sort-toggle').addEventListener('click', function() {
+        sortItemsByPrice(sortAscending ? 'asc' : 'desc');
+        sortAscending = !sortAscending;
+        this.querySelector('i').className = sortAscending ? 'fa fa-sort-amount-asc' : 'fa fa-sort-amount-desc';
+    });
+
+    document.getElementById('filter-available').addEventListener('change', function() {
+        filterItemsByAvailability();
+    });
+
+    document.getElementById('filter-purchased').addEventListener('change', function() {
+        filterItemsByAvailability();
+    });
+
+    document.getElementById('filter-price-range').addEventListener('click', function() {
+        const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
+        const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
+        filterItemsByPriceRange(minPrice, maxPrice);
+        updateFilterInfo(minPrice, maxPrice);
+    });
+
+    document.getElementById('clear-filters').addEventListener('click', function() {
+        clearFilters();
+    });
+
+    function sortItemsByPrice(order) {
+        const items = Array.from(document.querySelectorAll('.gift-item-col'));
+        items.sort((a, b) => {
+            const priceA = parseFloat(a.querySelector('p').innerText.replace('Preço: R$', '').trim());
+            const priceB = parseFloat(b.querySelector('p').innerText.replace('Preço: R$', '').trim());
+            return order === 'asc' ? priceA - priceB : priceB - priceA;
+        });
+        items.forEach(item => document.getElementById('giftItems').appendChild(item));
+    }
+
+    function filterItemsByAvailability() {
+        const showAvailable = document.getElementById('filter-available').checked;
+        const showPurchased = document.getElementById('filter-purchased').checked;
+        document.querySelectorAll('.gift-item-col').forEach(item => {
+            const availabilityText = item.querySelector('p[id^="availability-"]').innerText;
+            item.style.display = (showPurchased && availabilityText === 'Já comprado') || (showAvailable && availabilityText !== 'Já comprado') ? 'block' : 'none';
+        });
+    }
+
+    function filterItemsByPriceRange(minPrice, maxPrice) {
+        document.querySelectorAll('.gift-item-col').forEach(item => {
+            const price = parseFloat(item.querySelector('p').innerText.replace('Preço: R$', '').trim());
+            item.style.display = (price >= minPrice && price <= maxPrice) ? 'block' : 'none';
+        });
+    }
+
+    function updateFilterInfo(minPrice, maxPrice) {
+        document.getElementById('filter-info').innerText = `Apresentando apenas produtos entre R$${minPrice} e R$${maxPrice}`;
+    }
+
+    function clearFilters() {
+        document.querySelectorAll('.gift-item-col').forEach(item => {
+            item.style.display = 'block';
+        });
+        document.querySelectorAll('.filter-buttons button').forEach(button => {
+            button.classList.remove('filter-active');
+        });
+        document.getElementById('filter-price-min').value = '';
+        document.getElementById('filter-price-max').value = '';
+        document.getElementById('filter-info').innerText = '';
+        document.getElementById('filter-available').checked = true;
+        document.getElementById('filter-purchased').checked = true;
+    }
+});
+</script>
+</body>
+</html>
