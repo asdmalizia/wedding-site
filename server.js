@@ -62,7 +62,19 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
         });
 
         const paymentInfo = response.data;
-        const { email, description, transaction_amount: amount } = paymentInfo;
+        let { email, description, transaction_amount: amount } = paymentInfo;
+
+        if (!email) {
+            // Fetch email from the database if not present in paymentInfo
+            const row = await new Promise((resolve, reject) => {
+                db.get("SELECT email FROM pending_payments WHERE external_reference = ?", [external_reference], (err, row) => {
+                    if (err) reject(err);
+                    else resolve(row);
+                });
+            });
+
+            email = row ? row.email : "nao informado";
+        }
 
         function generateNewId(baseId, callback) {
             let newId = baseId;
@@ -190,8 +202,9 @@ app.get('/check-item/:id', (req, res) => {
 // Criar preferência de pagamento
 app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     const { id, description, amount } = req.params;
+    const email = req.body.email;
 
-    if (!id || !description || !amount) {
+    if (!id || !description || !amount || !email) {
         console.error('Missing parameters:', req.params);
         return res.status(400).send('Missing parameters');
     }
@@ -202,8 +215,6 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     }
 
     const externalReference = uuidv4();
-    const email = req.body.email; // Pegando o email do corpo da requisição
-
     const baseUrl = config.url_after_payment;
 
     const purchaseOrder = {
@@ -227,6 +238,8 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     };
 
     try {
+        await db.run("INSERT INTO pending_payments (external_reference, email) VALUES (?, ?)", [externalReference, email]);
+
         MercadoPago.preferences.create(purchaseOrder).then(response => {
             res.json({ success: true, preference_id: response.body.id });
         }).catch(err => {
@@ -234,10 +247,11 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
             res.status(500).json({ error: 'MercadoPago API error', details: err.message });
         });
     } catch (err) {
-        console.error('MercadoPago API error:', err);
-        res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+        console.error('Database error:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
     }
 });
+
 
 // Notificações IPN do Mercado Pago
 app.post('/notify', async (req, res) => {
