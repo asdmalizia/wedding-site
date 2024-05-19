@@ -76,58 +76,27 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
             email = row ? row.email : "nao informado";
         }
 
-        function generateNewId(baseId, callback) {
-            let newId = baseId;
-            db.get("SELECT id FROM purchased_items WHERE id = ?", [newId], function (err, row) {
-                if (err) {
-                    callback(err, null);
-                } else if (row) {
-                    let i = 1;
-                    let incrementId = () => {
-                        newId = `${baseId}${i}`;
-                        db.get("SELECT id FROM purchased_items WHERE id = ?", [newId], function (err, row) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (row) {
-                                i++;
-                                incrementId();
-                            } else {
-                                callback(null, newId);
-                            }
-                        });
-                    };
-                    incrementId();
-                } else {
-                    callback(null, newId);
-                }
-            });
-        }
+        const product_id = external_reference.replace(/\d*$/, ''); // Extrai o ID do produto da referência
 
-        generateNewId(external_reference, (err, newId) => {
+        db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [product_id, email, description, amount], function(err) {
             if (err) {
-                console.error('Error generating new ID:', err.message);
+                console.error('Database error:', err.message);
                 return;
             }
 
-            db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [newId, email, description, amount], function(err) {
-                if (err) {
-                    console.error('Database error:', err.message);
-                    return;
-                }
-
-                axios.post(config.googleSheetUrl, {
-                    type: 'compra',
-                    email: email,
-                    description: description,
-                    amount: amount
-                }).then(response => {
-                    console.log('Data sent to Google Sheets:', response.data);
-                }).catch(error => {
-                    console.error('Error sending data to Google Sheets:', error);
-                });
-
-                console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${newId}`);
+            axios.post(config.googleSheetUrl, {
+                type: 'compra',
+                email: email,
+                description: description,
+                amount: amount
+            }).then(response => {
+                console.log('Data sent to Google Sheets:', response.data);
+            }).catch(error => {
+                console.error('Error sending data to Google Sheets:', error);
+                console.error('Response data:', error.response.data);
             });
+
+            console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
         });
     } catch (error) {
         console.error('Error fetching payment info:', error);
@@ -214,43 +183,77 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
         return res.status(400).send('Invalid amount format');
     }
 
-    const externalReference = uuidv4();
-    const baseUrl = config.url_after_payment;
-
-    const purchaseOrder = {
-        items: [{
-            id: id,
-            title: description,
-            quantity: 1,
-            currency_id: 'BRL',
-            unit_price: floatAmount
-        }],
-        back_urls: {
-            success: `${baseUrl}/success`,
-            failure: `${baseUrl}/failure`,
-            pending: `${baseUrl}/pending`
-        },
-        auto_return: "all",
-        external_reference: externalReference,
-        payer: {
-            email: email
-        }
-    };
-
-    try {
-        await db.run("INSERT INTO pending_payments (external_reference, email) VALUES (?, ?)", [externalReference, email]);
-
-        MercadoPago.preferences.create(purchaseOrder).then(response => {
-            res.json({ success: true, preference_id: response.body.id });
-        }).catch(err => {
-            console.error('MercadoPago API error:', err);
-            res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+    function generateUniqueId(baseId, callback) {
+        let newId = baseId;
+        db.get("SELECT external_reference FROM pending_payments WHERE external_reference = ?", [newId], function (err, row) {
+            if (err) {
+                callback(err, null);
+            } else if (row) {
+                let i = 1;
+                let incrementId = () => {
+                    newId = `${baseId}${i}`;
+                    db.get("SELECT external_reference FROM pending_payments WHERE external_reference = ?", [newId], function (err, row) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (row) {
+                            i++;
+                            incrementId();
+                        } else {
+                            callback(null, newId);
+                        }
+                    });
+                };
+                incrementId();
+            } else {
+                callback(null, newId);
+            }
         });
-    } catch (err) {
-        console.error('Database error:', err);
-        res.status(500).json({ error: 'Database error', details: err.message });
     }
+
+    generateUniqueId(id, async (err, externalReference) => {
+        if (err) {
+            console.error('Error generating unique ID:', err.message);
+            return res.status(500).json({ error: 'Database error', details: err.message });
+        }
+
+        const baseUrl = config.url_after_payment;
+
+        const purchaseOrder = {
+            items: [{
+                id: id,
+                title: description,
+                quantity: 1,
+                currency_id: 'BRL',
+                unit_price: floatAmount
+            }],
+            back_urls: {
+                success: `${baseUrl}/success`,
+                failure: `${baseUrl}/failure`,
+                pending: `${baseUrl}/pending`
+            },
+            auto_return: "all",
+            external_reference: externalReference,
+            payer: {
+                email: email
+            }
+        };
+
+        try {
+            await db.run("INSERT INTO pending_payments (external_reference, email) VALUES (?, ?)", [externalReference, email]);
+
+            MercadoPago.preferences.create(purchaseOrder).then(response => {
+                res.json({ success: true, preference_id: response.body.id });
+            }).catch(err => {
+                console.error('MercadoPago API error:', err);
+                res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+            });
+        } catch (err) {
+            console.error('Database error:', err);
+            res.status(500).json({ error: 'Database error', details: err.message });
+        }
+    });
 });
+
 
 
 // Notificações IPN do Mercado Pago
