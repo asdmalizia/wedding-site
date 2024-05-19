@@ -91,6 +91,8 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
                 amount: amount
             }).then(response => {
                 console.log('Data sent to Google Sheets:', response.data);
+                // Redirecionar para a página de sucesso
+                res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
             }).catch(error => {
                 console.error('Error sending data to Google Sheets:', error);
                 console.error('Response data:', error.response.data);
@@ -113,8 +115,63 @@ app.get('/success', async (req, res) => {
 
     await processSuccessfulPayment(payment_id, status, external_reference);
 
-    res.send(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Pagamento Bem-sucedido</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f9;
+                    color: #333;
+                    text-align: center;
+                    padding: 50px;
+                }
+                .success-container {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    display: inline-block;
+                    padding: 30px;
+                    margin-top: 50px;
+                }
+                .success-icon {
+                    font-size: 50px;
+                    color: #4CAF50;
+                }
+                .success-message {
+                    font-size: 24px;
+                    margin: 20px 0;
+                }
+                .redirect-button {
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 15px 25px;
+                    border: none;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                }
+                .redirect-button:hover {
+                    background-color: #45a049;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="success-container">
+                <div class="success-icon">✔️</div>
+                <div class="success-message">Obrigado pelo seu pagamento!<br>Em nome de Maxine e Felipe, agradecemos a sua contribuição.</div>
+                <a href="/" class="redirect-button">Voltar para o site</a>
+            </div>
+        </body>
+        </html>
+    `);
 });
+
 
 // Endpoint para pagamento falho
 app.get('/failure', (req, res) => {
