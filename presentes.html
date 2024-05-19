@@ -165,7 +165,7 @@
                 <input type="checkbox" id="filter-available" checked>
                 <label for="filter-available">Disponíveis</label>
                 <input type="checkbox" id="filter-purchased" checked>
-                <label for="filter-purchased">Comprados</label>
+                <label for="filter-purchased">Indisponíveis</label>
             </div>
             <button class="btn btn-secondary" id="sort-toggle">
                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
@@ -263,6 +263,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -289,9 +290,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function openPaymentModal(price, title, itemId) {
-        $('#paymentModal').find('#price').val(price);
-        $('#paymentModal').find('#title').val(title);
-        $('#paymentModal').find('#itemId').val(itemId);
+        $('#price').val(price);
+        $('#title').val(title);
+        $('#itemId').val(itemId);
         $('#paymentModal').modal('show');
     }
 
@@ -390,35 +391,49 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterItemsByAvailability() {
         const showAvailable = document.getElementById('filter-available').checked;
         const showPurchased = document.getElementById('filter-purchased').checked;
-        document.querySelectorAll('.gift-item-col').forEach(item => {
+
+        document.querySelectorAll('.gift-item').forEach(item => {
             const availabilityText = item.querySelector('p[id^="availability-"]').innerText;
-            item.style.display = (showPurchased && availabilityText === 'Já comprado') || (showAvailable && availabilityText !== 'Já comprado') ? 'block' : 'none';
+            const isPurchased = availabilityText === 'Já comprado';
+
+            if ((isPurchased && showPurchased) || (!isPurchased && showAvailable)) {
+                item.closest('.gift-item-col').style.display = 'block';
+            } else {
+                item.closest('.gift-item-col').style.display = 'none';
+            }
         });
     }
 
     function filterItemsByPriceRange(minPrice, maxPrice) {
-        document.querySelectorAll('.gift-item-col').forEach(item => {
+        document.querySelectorAll('.gift-item').forEach(item => {
             const price = parseFloat(item.querySelector('p').innerText.replace('Preço: R$', '').trim());
-            item.style.display = (price >= minPrice && price <= maxPrice) ? 'block' : 'none';
+            if (price >= minPrice && price <= maxPrice) {
+                item.closest('.gift-item-col').style.display = 'block';
+            } else {
+                item.closest('.gift-item-col').style.display = 'none';
+            }
         });
     }
 
     function updateFilterInfo(minPrice, maxPrice) {
-        document.getElementById('filter-info').innerText = `Apresentando apenas produtos entre R$${minPrice} e R$${maxPrice}`;
+        const filterInfo = document.getElementById('filter-info');
+        if (minPrice > 0 || maxPrice < Infinity) {
+            filterInfo.innerText = `Apresentando apenas produtos entre R$${minPrice} e R$${maxPrice}`;
+        } else {
+            filterInfo.innerText = '';
+        }
     }
 
     function clearFilters() {
         document.querySelectorAll('.gift-item-col').forEach(item => {
             item.style.display = 'block';
         });
-        document.querySelectorAll('.filter-buttons button').forEach(button => {
-            button.classList.remove('filter-active');
+        document.querySelectorAll('.filter-buttons input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = true;
         });
         document.getElementById('filter-price-min').value = '';
         document.getElementById('filter-price-max').value = '';
         document.getElementById('filter-info').innerText = '';
-        document.getElementById('filter-available').checked = true;
-        document.getElementById('filter-purchased').checked = true;
     }
 });
 </script>
