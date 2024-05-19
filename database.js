@@ -25,6 +25,17 @@ db.serialize(() => {
             console.log('Table created successfully or already exists.');
         }
     });
+
+    db.run(`CREATE TABLE IF NOT EXISTS pending_payments (
+        external_reference TEXT PRIMARY KEY,
+        email TEXT NOT NULL
+    )`, (err) => {
+        if (err) {
+            console.error('Error creating table:', err.message);
+        } else {
+            console.log('Pending payments table created successfully or already exists.');
+        }
+    });
 });
 
 module.exports = db;
