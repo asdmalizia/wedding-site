@@ -164,7 +164,7 @@
                 <div class="gift-item text-center" id="item-AirFryer">
                     <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive gift-img">
                     <h5>Air Fryer</h5>
-                    <p>Preço: R$1,00</p>
+                    <p>Preço: R$7,00</p>
                     <p id="availability-item-AirFryer"></p>
                     <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
                 </div>
@@ -182,7 +182,7 @@
                 <div class="gift-item text-center" id="item-aspirador">
                     <img src="img/presentes/presente3.png" alt="Aspirador" class="img-responsive gift-img">
                     <h5>Robô Aspirador</h5>
-                    <p>Preço: R$0,80</p>
+                    <p>Preço: R$0,50</p>
                     <p id="availability-item-aspirador"></p>
                     <button class="btn btn-primary" id="button-item-aspirador">Escolher Item</button>
                 </div>
@@ -197,21 +197,21 @@
                 </div>
             </div>
             <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-item5">
-                    <img src="img/presentes/presente5.png" alt="Item 5" class="img-responsive gift-img">
+                <div class="gift-item text-center" id="item-livro">
+                    <img src="img/presentes/presente5.png" alt="Livro" class="img-responsive gift-img">
                     <h5>Livro</h5>
                     <p>Preço: R$0,90</p>
-                    <p id="availability-item-item5"></p>
-                    <button class="btn btn-primary" id="button-item-item5">Escolher Item</button>
+                    <p id="availability-item-livro"></p>
+                    <button class="btn btn-primary" id="button-item-livro">Escolher Item</button>
                 </div>
             </div>
             <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-item6">
-                    <img src="img/presentes/presente6.png" alt="Item 6" class="img-responsive gift-img">
+                <div class="gift-item text-center" id="item-tv">
+                    <img src="img/presentes/presente6.png" alt="TV" class="img-responsive gift-img">
                     <h5>Televisão</h5>
-                    <p>Preço: R$2,00</p>
-                    <p id="availability-item-item6"></p>
-                    <button class="btn btn-primary" id="button-item-item6">Escolher Item</button>
+                    <p>Preço: R$4,00</p>
+                    <p id="availability-item-tv"></p>
+                    <button class="btn btn-primary" id="button-item-tv">Escolher Item</button>
                 </div>
             </div>
             <!-- Adicione mais presentes conforme necessário -->
@@ -220,7 +220,7 @@
 </section>
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="display: block;">
             <div class="modal-header">
                 <h5 class="modal-title" id="paymentModalLabel">Informações de Pagamento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -296,6 +296,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Adicionando log para verificar se o modal foi realmente mostrado
         $('#paymentModal').on('shown.bs.modal', function () {
             console.log('Modal de pagamento mostrado');
+            // Verificação adicional de estilos
+            console.log('Estilos do modal:', $('#paymentModal').attr('style'));
         });
     }
 
@@ -452,5 +454,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+<script src="js/vendor/jquery-1.11.2.min.js" onerror="loadJsFromCDN('jquery.js')"></script>
+<script src="node_modules/waypoints/lib/jquery.waypoints.min.js" onerror="loadJsFromCDN('waypoints.js')"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/jquery.flexslider-min.js"></script>
+<script src="js/jquery.mb.YTPlayer.min.js"></script>
+<script src="js/vendor/ouical.js"></script>
+<script src="js/scripts.min.js"></script>
 </body>
 </html>
