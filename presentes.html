@@ -22,9 +22,14 @@
     <link rel="stylesheet" href="css/flexslider.css">
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/queries.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="node_modules/animate.css/animate.min.css" onerror="loadCssFromCDN('animate.css')">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" onerror="loadCssFromCDN('font-awesome.css')">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sdk.mercadopago.com https://http2.mlstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self' https://api.mercadopago.com; frame-src 'self' https://www.mercadolibre.com;">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,400italic,300italic,700,700italic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,300,700" rel="stylesheet">
     <style>
         .gift-img {
             width: 100%;
@@ -105,28 +110,6 @@
             }
         }
     </style>
-    <script>
-        // Load CSS files from CDN if local node_modules fail
-        function loadCssFromCDN(css) {
-            const link = document.createElement('link');
-            if (css === 'animate.css') {
-                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css';
-            } else if (css === 'font-awesome.css') {
-                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
-            }
-            link.rel = 'stylesheet';
-            document.getElementsByTagName('head')[0].appendChild(link);
-        }
-
-        // Load JS files from CDN if local node_modules fail
-        function loadJsFromCDN(js) {
-            if (js === 'waypoints.js') {
-                document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"><\/script>');
-            } else if (js === 'jquery.js') {
-                document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>');
-            }
-        }
-    </script>
 </head>
 <body id="top">
 <!--[if lt IE 8]>
@@ -235,7 +218,6 @@
         </div>
     </div>
 </section>
-
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -264,21 +246,34 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Carregar scripts localmente -->
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+  // Verificar se o jQuery está carregado corretamente
+  if (typeof jQuery === 'undefined') {
+    console.error('jQuery não foi carregado corretamente.');
+  } else {
+    console.log('jQuery carregado com sucesso.');
+  }
+</script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM totalmente carregado e analisado');
+    
     const mp = new MercadoPago('XXXXXXXXXXXXXXXXX'); // Substitua por sua chave pública do MercadoPago
     let sortAscending = true;
 
     document.querySelectorAll('.gift-item button').forEach(button => {
         button.addEventListener('click', function() {
+            console.log('Botão "Escolher Item" clicado');
             const item = this.closest('.gift-item');
             const price = item.querySelector('p').innerText.replace('Preço: R$', '').trim();
             const title = item.querySelector('h5').innerText;
             const itemId = item.id;
+            console.log('Item:', item, 'Preço:', price, 'Título:', title, 'ID:', itemId);
 
             openPaymentModal(price, title, itemId);
         });
@@ -286,14 +281,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('paymentForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        console.log('Formulário de pagamento enviado');
         processPayment();
     });
 
     function openPaymentModal(price, title, itemId) {
-        $('#price').val(price);
-        $('#title').val(title);
-        $('#itemId').val(itemId);
+        console.log('Abrindo modal de pagamento');
+        $('#paymentModal').find('#price').val(price);
+        $('#paymentModal').find('#title').val(title);
+        $('#paymentModal').find('#itemId').val(itemId);
         $('#paymentModal').modal('show');
+        console.log('Modal de pagamento exibido com', 'Preço:', price, 'Título:', title, 'ID:', itemId);
+
+        // Adicionando log para verificar se o modal foi realmente mostrado
+        $('#paymentModal').on('shown.bs.modal', function () {
+            console.log('Modal de pagamento mostrado');
+        });
     }
 
     function processPayment() {
@@ -303,6 +306,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const itemId = document.getElementById('itemId').value;
         const description = 'Compra de ' + title;
         const numericPrice = parseFloat(price);
+
+        console.log('Processando pagamento para', 'E-mail:', email, 'Preço:', price, 'Título:', title, 'ID:', itemId);
 
         const url = `/payments/checkout/${itemId}/${encodeURIComponent(description)}/${numericPrice}`;
         fetch(url, {
@@ -314,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }).then(response => response.json())
         .then(data => {
             if (data.success && data.preference_id) {
+                console.log('Pagamento processado com sucesso, Preference ID:', data.preference_id);
                 mp.checkout({
                     preference: {
                         id: data.preference_id
@@ -321,10 +327,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     autoOpen: true
                 });
             } else {
-                console.error('No preference ID returned');
+                console.error('Nenhum ID de preferência retornado');
+                alert('Erro ao processar pagamento.');
             }
         }).catch(error => {
-            console.error('Error processing payment:', error);
+            console.error('Erro ao processar pagamento:', error);
             alert('Erro ao processar pagamento.');
         });
     }
@@ -348,37 +355,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Error checking item availability:', error);
+                console.error('Erro ao verificar disponibilidade do item:', error);
             });
     });
 
     // Filtros e Ordenação
     document.getElementById('sort-toggle').addEventListener('click', function() {
+        console.log('Botão de ordenação clicado');
         sortItemsByPrice(sortAscending ? 'asc' : 'desc');
         sortAscending = !sortAscending;
         this.querySelector('i').className = sortAscending ? 'fa fa-sort-amount-asc' : 'fa fa-sort-amount-desc';
     });
 
     document.getElementById('filter-available').addEventListener('change', function() {
+        console.log('Filtro de disponíveis alterado');
         filterItemsByAvailability();
     });
 
     document.getElementById('filter-purchased').addEventListener('change', function() {
+        console.log('Filtro de indisponíveis alterado');
         filterItemsByAvailability();
     });
 
     document.getElementById('filter-price-range').addEventListener('click', function() {
         const minPrice = parseFloat(document.getElementById('filter-price-min').value) || 0;
         const maxPrice = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
+        console.log('Filtro de preço aplicado', 'Mínimo:', minPrice, 'Máximo:', maxPrice);
         filterItemsByPriceRange(minPrice, maxPrice);
         updateFilterInfo(minPrice, maxPrice);
     });
 
     document.getElementById('clear-filters').addEventListener('click', function() {
+        console.log('Filtros limpos');
         clearFilters();
     });
 
     function sortItemsByPrice(order) {
+        console.log('Ordenando itens por preço', 'Ordem:', order);
         const items = Array.from(document.querySelectorAll('.gift-item-col'));
         items.sort((a, b) => {
             const priceA = parseFloat(a.querySelector('p').innerText.replace('Preço: R$', '').trim());
@@ -391,6 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterItemsByAvailability() {
         const showAvailable = document.getElementById('filter-available').checked;
         const showPurchased = document.getElementById('filter-purchased').checked;
+        console.log('Filtrando itens por disponibilidade', 'Disponíveis:', showAvailable, 'Indisponíveis:', showPurchased);
 
         document.querySelectorAll('.gift-item').forEach(item => {
             const availabilityText = item.querySelector('p[id^="availability-"]').innerText;
@@ -405,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function filterItemsByPriceRange(minPrice, maxPrice) {
+        console.log('Filtrando itens por faixa de preço', 'Mínimo:', minPrice, 'Máximo:', maxPrice);
         document.querySelectorAll('.gift-item').forEach(item => {
             const price = parseFloat(item.querySelector('p').innerText.replace('Preço: R$', '').trim());
             if (price >= minPrice && price <= maxPrice) {
