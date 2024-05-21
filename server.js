@@ -115,11 +115,8 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
             };
             res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
             console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
-        });
-    } catch (error) {
-        console.error('Error fetching payment info:', error);
-    }
-}
+};
+
 
 app.get('/presentes', (req, res) => {
     res.sendFile(path.join(__dirname, 'presentes.html'));
