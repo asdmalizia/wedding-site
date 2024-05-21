@@ -267,7 +267,8 @@ $(document).ready(function () {
         if ($('#invite_code').val() !== '12345') {
             $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
         } else {
-            $.post('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', formData)
+            // Ajuste a URL para o proxy server
+            $.post('http://localhost:3000/proxy', formData)
                 .done(function (data) {
                     console.log("Response: ", data);
                     if (data.result === "error") {
@@ -283,8 +284,7 @@ $(document).ready(function () {
                 });
         }
     });
-
-});
+}); 
 
 /********************** Extras **********************/
 

@@ -52,6 +52,16 @@ app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.post('/proxy', async (req, res) => {
+    try {
+        const response = await axios.post(config.googleSheetUrl, req.body);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error forwarding request:', error);
+        res.status(500).send('Error forwarding request');
+    }
+});
+
 // Função para processar pagamentos bem-sucedidos
 async function processSuccessfulPayment(payment_id, status, external_reference) {
     console.log('Processing successful payment internally:', payment_id, status, external_reference);
@@ -84,20 +94,26 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
                 return;
             }
 
-            axios.post(config.googleSheetUrl, {
+            axios.post('http://localhost:3000/proxy', {
                 type: 'compra',
                 email: email,
                 description: description,
                 amount: amount
             }).then(response => {
-                console.log('Data sent to Google Sheets:', response.data);
+                console.log('Data sent to Google Sheets via proxy:', response.data);
                 // Redirecionar para a página de sucesso
-                res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
             }).catch(error => {
+                console.error('Error sending data to Google Sheets via proxy:', error);
+            });
+
+            res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
+            console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+        });
+    } catch (error) {
                 console.error('Error sending data to Google Sheets:', error);
                 console.error('Response data:', error.response.data);
             });
-
+            res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
             console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
         });
     } catch (error) {
@@ -168,7 +184,7 @@ app.get('/success', async (req, res) => {
         <body>
             <div class="success-container">
                 <div class="success-icon">✔️</div>
-                <div class="success-message">Obrigado pelo seu pagamento!<br>Em nome de Maxine e Felipe, agradecemos a sua contribuição.</div>
+                <div class="success-message">Recebemos a confirmação do seu pagamento!<br>Maxine e Felipe agradecem pelo presente.</div>
                 <a href="/" class="redirect-button">Voltar para o site</a>
             </div>
         </body>
