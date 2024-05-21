@@ -112,7 +112,7 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
     } catch (error) {
                 console.error('Error sending data to Google Sheets:', error);
                 console.error('Response data:', error.response.data);
-            });
+            };
             res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
             console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
         });
