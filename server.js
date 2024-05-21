@@ -7,9 +7,7 @@ const db = require('./database'); // Importando a configuração do banco de dad
 const config = require('./config.json');
 const helmet = require('helmet');
 const { v4: uuidv4 } = require('uuid'); 
-const uniqueId = uuidv4(); // Isto gera um novo UUID
 const axios = require('axios');
-const fs = require('fs');
 
 console.log("Using access token:", config.mercadoPagoAccessToken);
 
@@ -105,35 +103,29 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
 
         const product_id = external_reference.replace(/\d*$/, ''); // Extrai o ID do produto da referência
 
-        db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [product_id, email, description, amount], function(err) {
-            if (err) {
-                console.error('Database error:', err.message);
-                return;
-            }
-
-            axios.post('https://casamentomaxinefelipe/proxy', {
-                type: 'compra',
-                email: email,
-                description: description,
-                amount: amount
-            }).then(response => {
-                console.log('Data sent to Google Sheets via proxy:', response.data);
-                // Redirecionar para a página de sucesso
-            }).catch(error => {
-                console.error('Error sending data to Google Sheets via proxy:', error);
+        await new Promise((resolve, reject) => {
+            db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [product_id, email, description, amount], function(err) {
+                if (err) {
+                    console.error('Database error:', err.message);
+                    return reject('Database error');
+                }
+                resolve();
             });
-
-            res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
-            console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
         });
-    } catch (error) {
-                console.error('Error sending data to Google Sheets:', error);
-                console.error('Response data:', error.response.data);
-            };
-            res.redirect(`/success?payment_id=${payment_id}&status=${status}&external_reference=${external_reference}`);
-            console.log(`Pagamento realizado com sucesso! ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
-};
 
+        await axios.post('https://casamentomaxinefelipe/proxy', {
+            type: 'compra',
+            email: email,
+            description: description,
+            amount: amount
+        });
+
+        console.log('Data sent to Google Sheets via proxy');
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        throw new Error('Error processing payment');
+    }
+}
 
 app.get('/presentes', (req, res) => {
     res.sendFile(path.join(__dirname, 'presentes.html'));
@@ -147,65 +139,67 @@ app.get('/success', async (req, res) => {
 
     console.log('Pagamento bem-sucedido:', payment_id, status, external_reference);
 
-    await processSuccessfulPayment(payment_id, status, external_reference);
-
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Pagamento Bem-sucedido</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f4f4f9;
-                    color: #333;
-                    text-align: center;
-                    padding: 50px;
-                }
-                .success-container {
-                    background-color: #fff;
-                    border-radius: 10px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                    display: inline-block;
-                    padding: 30px;
-                    margin-top: 50px;
-                }
-                .success-icon {
-                    font-size: 50px;
-                    color: #4CAF50;
-                }
-                .success-message {
-                    font-size: 24px;
-                    margin: 20px 0;
-                }
-                .redirect-button {
-                    background-color: #4CAF50;
-                    color: white;
-                    padding: 15px 25px;
-                    border: none;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    font-size: 18px;
-                    cursor: pointer;
-                }
-                .redirect-button:hover {
-                    background-color: #45a049;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="success-container">
-                <div class="success-icon">✔️</div>
-                <div class="success-message">Recebemos a confirmação do seu pagamento!<br>Maxine e Felipe agradecem pelo presente.</div>
-                <a href="/" class="redirect-button">Voltar para o site</a>
-            </div>
-        </body>
-        </html>
-    `);
+    try {
+        await processSuccessfulPayment(payment_id, status, external_reference);
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Pagamento Bem-sucedido</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f9;
+                        color: #333;
+                        text-align: center;
+                        padding: 50px;
+                    }
+                    .success-container {
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        display: inline-block;
+                        padding: 30px;
+                        margin-top: 50px;
+                    }
+                    .success-icon {
+                        font-size: 50px;
+                        color: #4CAF50;
+                    }
+                    .success-message {
+                        font-size: 24px;
+                        margin: 20px 0;
+                    }
+                    .redirect-button {
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 15px 25px;
+                        border: none;
+                        border-radius: 5px;
+                        text-decoration: none;
+                        font-size: 18px;
+                        cursor: pointer;
+                    }
+                    .redirect-button:hover {
+                        background-color: #45a049;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="success-container">
+                    <div class="success-icon">✔️</div>
+                    <div class="success-message">Recebemos a confirmação do seu pagamento!<br>Maxine e Felipe agradecem pelo presente.</div>
+                    <a href="/" class="redirect-button">Voltar para o site</a>
+                </div>
+            </body>
+            </html>
+        `);
+    } catch (error) {
+        res.status(500).send('Error processing payment');
+    }
 });
-
 
 // Endpoint para pagamento falho
 app.get('/failure', (req, res) => {
@@ -344,8 +338,6 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
         }
     });
 });
-
-
 
 // Notificações IPN do Mercado Pago
 app.post('/notify', async (req, res) => {
