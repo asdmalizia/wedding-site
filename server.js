@@ -55,10 +55,18 @@ app.set('view engine', 'ejs');
 app.post('/proxy', async (req, res) => {
     console.log('Received request at /proxy:', req.body);
     try {
-        const response = await axios.post(config.googleSheetUrl, req.body);
+        // Ensure that the data is sent as JSON
+        const response = await axios.post(config.googleSheetUrl, req.body, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Log the response from Google Sheets
         console.log('Response from Google Sheets:', response.data);
         res.json(response.data);
     } catch (error) {
+        // Log error details
         console.error('Error forwarding request:', error.message);
         if (error.response) {
             console.error('Response data:', error.response.data);
@@ -103,7 +111,7 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
                 return;
             }
 
-            axios.post('http://localhost:3000/proxy', {
+            axios.post('https://casamentomaxinefelipe/proxy', {
                 type: 'compra',
                 email: email,
                 description: description,
