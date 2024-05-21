@@ -11,7 +11,6 @@ const axios = require('axios');
 
 console.log("Using access token:", config.mercadoPagoAccessToken);
 
-// Configuração inicial do MercadoPago
 MercadoPago.configure({
     access_token: config.mercadoPagoAccessToken
 });
@@ -53,7 +52,7 @@ app.set('view engine', 'ejs');
 app.post('/proxy', async (req, res) => {
     console.log('Received request at /proxy:', req.body);
     try {
-        const response = await axios.post(config.googleSheetUrl, req.body, {
+        const response = await axios.post(config.googleSheetUrlc, req.body, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -74,7 +73,6 @@ app.post('/proxy', async (req, res) => {
     }
 });
 
-// Função para processar pagamentos bem-sucedidos
 async function processSuccessfulPayment(payment_id, status, external_reference) {
     console.log('Processing successful payment internally:', payment_id, status, external_reference);
 
@@ -97,7 +95,7 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
             email = row ? row.email : "nao informado";
         }
 
-        const product_id = external_reference.replace(/\d*$/, ''); // Extrai o ID do produto da referência
+        const product_id = external_reference.replace(/\d*$/, ''); 
 
         await new Promise((resolve, reject) => {
             db.run("INSERT INTO purchased_items (id, email, description, amount, purchased, payment_status) VALUES (?, ?, ?, ?, 1, 'approved')", [product_id, email, description, amount], function(err) {
@@ -127,7 +125,6 @@ app.get('/presentes', (req, res) => {
     res.sendFile(path.join(__dirname, 'presentes.html'));
 });
 
-// Endpoint para pagamento bem-sucedido
 app.get('/success', async (req, res) => {
     const payment_id = req.query.payment_id;
     const status = req.query.status;
@@ -193,11 +190,11 @@ app.get('/success', async (req, res) => {
             </html>
         `);
     } catch (error) {
+        console.error('Error processing successful payment:', error.message);
         res.status(500).send('Error processing payment');
     }
 });
 
-// Endpoint para pagamento falho
 app.get('/failure', (req, res) => {
     const payment_id = req.query.payment_id;
     const status = req.query.status;
@@ -208,7 +205,6 @@ app.get('/failure', (req, res) => {
     res.send(`Falha ao processar o pagamento. ID do Pagamento: ${payment_id}, Status: ${status}, Detalhe: ${status_detail}, Ref: ${external_reference}`);
 });
 
-// Endpoint para pagamento pendente
 app.get('/pending', (req, res) => {
     const payment_id = req.query.payment_id;
     const status = req.query.status;
@@ -218,7 +214,6 @@ app.get('/pending', (req, res) => {
     res.send(`Pagamento pendente. ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
 });
 
-// Verificar status do item
 app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
     console.log("Checking item status for ID:", id);
@@ -249,7 +244,6 @@ app.get('/check-item/:id', (req, res) => {
     });
 });
 
-// Criar preferência de pagamento
 app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
     const { id, description, amount } = req.params;
     const email = req.body.email;
@@ -320,22 +314,26 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
         };
 
         try {
-            await db.run("INSERT INTO pending_payments (external_reference, email) VALUES (?, ?)", [externalReference, email]);
-
-            MercadoPago.preferences.create(purchaseOrder).then(response => {
-                res.json({ success: true, preference_id: response.body.id });
-            }).catch(err => {
-                console.error('MercadoPago API error:', err);
-                res.status(500).json({ error: 'MercadoPago API error', details: err.message });
+            await new Promise((resolve, reject) => {
+                db.run("INSERT INTO pending_payments (external_reference, email) VALUES (?, ?)", [externalReference, email], function (err) {
+                    if (err) {
+                        console.error('Database error:', err);
+                        reject('Database error');
+                    } else {
+                        resolve();
+                    }
+                });
             });
+
+            const response = await MercadoPago.preferences.create(purchaseOrder);
+            res.json({ success: true, preference_id: response.body.id });
         } catch (err) {
-            console.error('Database error:', err);
-            res.status(500).json({ error: 'Database error', details: err.message });
+            console.error('Error creating MercadoPago preference:', err);
+            res.status(500).json({ error: 'MercadoPago API error', details: err.message });
         }
     });
 });
 
-// Notificações IPN do Mercado Pago
 app.post('/notify', async (req, res) => {
     const { topic, resource } = req.body;
 
@@ -352,9 +350,11 @@ app.post('/notify', async (req, res) => {
                 console.log('Payment not approved yet.');
             }
         } catch (error) {
-            console.error('Error processing notification:', error);
+            console.error('Error processing notification:', error.message);
             res.status(500).send('Error processing notification');
         }
+    } else {
+        console.log('Unhandled topic:', topic);
     }
 
     res.status(200).send('Notification processed successfully');
