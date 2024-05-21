@@ -6,7 +6,7 @@ const path = require('path');
 const db = require('./database'); // Importando a configuração do banco de dados
 const config = require('./config.json');
 const helmet = require('helmet');
-const { v4: uuidv4 } = require('uuid'); 
+const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 
 console.log("Using access token:", config.mercadoPagoAccessToken);
@@ -53,18 +53,15 @@ app.set('view engine', 'ejs');
 app.post('/proxy', async (req, res) => {
     console.log('Received request at /proxy:', req.body);
     try {
-        // Ensure that the data is sent as JSON
         const response = await axios.post(config.googleSheetUrl, req.body, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        // Log the response from Google Sheets
         console.log('Response from Google Sheets:', response.data);
         res.json(response.data);
     } catch (error) {
-        // Log error details
         console.error('Error forwarding request:', error.message);
         if (error.response) {
             console.error('Response data:', error.response.data);
@@ -90,7 +87,6 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
         let { email, description, transaction_amount: amount } = paymentInfo;
 
         if (!email) {
-            // Fetch email from the database if not present in paymentInfo
             const row = await new Promise((resolve, reject) => {
                 db.get("SELECT email FROM pending_payments WHERE external_reference = ?", [external_reference], (err, row) => {
                     if (err) reject(err);
@@ -113,7 +109,7 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
             });
         });
 
-        await axios.post('https://casamentomaxinefelipe/proxy', {
+        await axios.post('https://casamentomaxinefelipe.com.br/proxy', {
             type: 'compra',
             email: email,
             description: description,
@@ -225,7 +221,7 @@ app.get('/pending', (req, res) => {
 // Verificar status do item
 app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
-    console.log("Checking item status for ID:", id);  // Log para verificar o ID recebido
+    console.log("Checking item status for ID:", id);
 
     function checkApprovedPurchase(baseId, callback) {
         db.get("SELECT * FROM purchased_items WHERE id LIKE ? AND payment_status = 'approved'", [`${baseId}%`], (err, row) => {
@@ -244,10 +240,10 @@ app.get('/check-item/:id', (req, res) => {
             return;
         }
         if (row) {
-            console.log("Item found and purchased:", row);  // Log para verificar os dados retornados
+            console.log("Item found and purchased:", row);
             res.json({ purchased: !!row.purchased, price: row.amount, title: row.description });
         } else {
-            console.log("Item not found, assuming not purchased for ID:", id);  // Log para confirmar que o item não foi encontrado
+            console.log("Item not found, assuming not purchased for ID:", id);
             res.json({ purchased: false, price: null, title: null });
         }
     });
