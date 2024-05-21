@@ -55,7 +55,7 @@ app.set('view engine', 'ejs');
 app.post('/proxy', async (req, res) => {
     console.log('Received request at /proxy:', req.body);
     try {
-        const response = await axios.post('https://script.google.com/macros/s/AKfycbykvZV8SbRI3rOL_tsvYNUfamxsNl2_YbgmybdtDvGAgvzwMMyg_q01k2LngcUDbIEO/exec', req.body);
+        const response = await axios.post(config.googleSheetUrl, req.body);
         console.log('Response from Google Sheets:', response.data);
         res.json(response.data);
     } catch (error) {
