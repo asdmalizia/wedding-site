@@ -268,7 +268,7 @@ $(document).ready(function () {
             $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
         } else {
             // Ajuste a URL para o proxy server
-            $.post('http://localhost:3000/proxy', formData)
+            $.post('https://casamentomaxinefelipe.com.br/proxy', formData)
                 .done(function (data) {
                     console.log("Response: ", data);
                     if (data.result === "error") {

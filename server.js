@@ -50,26 +50,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.post('/proxy', async (req, res) => {
-    console.log('Received request at /proxy:', req.body);
     try {
-        const response = await axios.post(config.googleSheetUrlc, req.body, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        console.log('Response from Google Sheets:', response.data);
+        const response = await axios.post(config.googleSheetUrl, req.body);
         res.json(response.data);
     } catch (error) {
-        console.error('Error forwarding request:', error.message);
-        if (error.response) {
-            console.error('Response data:', error.response.data);
-            console.error('Response status:', error.response.status);
-            console.error('Response headers:', error.response.headers);
-            res.status(error.response.status).send(error.response.data);
-        } else {
-            res.status(500).send('Error forwarding request');
-        }
+        console.error('Error forwarding request:', error);
+        res.status(500).send('Error forwarding request');
     }
 });
 
