@@ -295,11 +295,11 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
                 unit_price: floatAmount
             }],
             back_urls: {
-                success: `${baseUrl}/success`,
+                success: `${baseUrl}/success?payment_id=:id&status=approved&external_reference=${externalReference}`,
                 failure: `${baseUrl}/failure`,
                 pending: `${baseUrl}/pending`
             },
-            auto_return: "all",
+            auto_return: "approved",
             external_reference: externalReference,
             payer: {
                 email: email
