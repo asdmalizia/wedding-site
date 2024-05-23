@@ -107,19 +107,26 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
             });
         });
 
-        await axios.post('https://casamentomaxinefelipe.com.br/proxy', {
-            type: 'compra',
-            email: email,
-            description: description,
-            amount: amount
-        });
+        try {
+            await axios.post('https://casamentomaxinefelipe.com.br/proxy', {
+                type: 'compra',
+                email: email,
+                description: description,
+                amount: amount
+            });
+            console.log('Data sent to Google Sheets via proxy');
+        } catch (error) {
+            console.error('Error forwarding request:', error.message);
+            console.error('Response data:', error.response ? error.response.data : 'No response data');
+            throw new Error('Error forwarding request');
+        }
 
-        console.log('Data sent to Google Sheets via proxy');
     } catch (error) {
-        console.error('Error processing payment:', error);
+        console.error('Error processing payment:', error.message);
         throw new Error('Error processing payment');
     }
 }
+
 
 app.get('/presentes', (req, res) => {
     res.sendFile(path.join(__dirname, 'presentes.html'));
@@ -349,16 +356,17 @@ app.post('/notify', async (req, res) => {
             } else {
                 console.log('Payment not approved yet.');
             }
+            res.status(200).send('Notification processed successfully'); // Move this line inside the try block
         } catch (error) {
             console.error('Error processing notification:', error.message);
-            res.status(500).send('Error processing notification');
+            return res.status(500).send('Error processing notification'); // Use return to ensure the function exits
         }
     } else {
         console.log('Unhandled topic:', topic);
+        return res.status(200).send('Notification processed successfully'); // Ensure the function exits
     }
-
-    res.status(200).send('Notification processed successfully');
 });
+
 
 async function fetchOrderDetails(resourceUrl) {
     const response = await axios.get(resourceUrl, {
