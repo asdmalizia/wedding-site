@@ -160,61 +160,7 @@
         </div>
         <div class="filter-info" id="filter-info"></div>
         <div id="giftItems" class="gift-item-row">
-            <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-AirFryer">
-                    <img src="img/presentes/presente1.png" alt="Air Fryer" class="img-responsive gift-img">
-                    <h5>Air Fryer</h5>
-                    <p>Preço: R$7,00</p>
-                    <p id="availability-item-AirFryer"></p>
-                    <button class="btn btn-primary" id="button-item-AirFryer">Escolher Item</button>
-                </div>
-            </div>
-            <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-smartphone">
-                    <img src="img/presentes/presente2.png" alt="Smartphone" class="img-responsive gift-img">
-                    <h5>Smartphone</h5>
-                    <p>Preço: R$1,10</p>
-                    <p id="availability-item-smartphone"></p>
-                    <button class="btn btn-primary" id="button-item-smartphone">Escolher Item</button>
-                </div>
-            </div>
-            <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-aspirador">
-                    <img src="img/presentes/presente3.png" alt="Aspirador" class="img-responsive gift-img">
-                    <h5>Robô Aspirador</h5>
-                    <p>Preço: R$0,50</p>
-                    <p id="availability-item-aspirador"></p>
-                    <button class="btn btn-primary" id="button-item-aspirador">Escolher Item</button>
-                </div>
-            </div>
-            <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-cama">
-                    <img src="img/presentes/presente4.png" alt="Cama" class="img-responsive gift-img">
-                    <h5>Cama Casal</h5>
-                    <p>Preço: R$2,00</p>
-                    <p id="availability-item-cama"></p>
-                    <button class="btn btn-primary" id="button-item-cama">Escolher Item</button>
-                </div>
-            </div>
-            <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-livro">
-                    <img src="img/presentes/presente5.png" alt="Livro" class="img-responsive gift-img">
-                    <h5>Livro</h5>
-                    <p>Preço: R$0,90</p>
-                    <p id="availability-item-livro"></p>
-                    <button class="btn btn-primary" id="button-item-livro">Escolher Item</button>
-                </div>
-            </div>
-            <div class="gift-item-col">
-                <div class="gift-item text-center" id="item-tv">
-                    <img src="img/presentes/presente6.png" alt="TV" class="img-responsive gift-img">
-                    <h5>Televisão</h5>
-                    <p>Preço: R$4,00</p>
-                    <p id="availability-item-tv"></p>
-                    <button class="btn btn-primary" id="button-item-tv">Escolher Item</button>
-                </div>
-            </div>
-            <!-- Adicione mais presentes conforme necessário -->
+            <!--script adiciona a lista de presentes-->
         </div>
     </div>
 </section>
@@ -260,6 +206,288 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script>
+    //lista de presentes
+
+    const gifts = [
+        {
+            id: 'AirFryer',
+            name: 'Air Fryer',
+            image:'img/presentes/presente1.png',
+            price: 0.50
+        },
+        {
+            id: 'smartphone',
+            name:'Smartphone',
+            image:'img/presentes/presente2.png',
+            price: 1.00
+        },
+        {
+            id: 'Cafeteira',
+            name: 'Cafeteira Oster',
+            image: 'img/presentes/1-Cafeteira.jpg',
+            price: 379.00
+        },
+        {
+            id: 'SuporteFiltrarCafe',
+            name: 'Suporte para Filtrar Café YuriPress',
+            image: 'img/presentes/2-FiltroCafe.jpg',
+            price: 234.00
+        },
+        {
+            id: 'MoedorCafe',
+            name: 'Moedor de Café Philco',
+            image: 'img/presentes/3-Moedor.jpg',
+            price: 123.00
+        },
+        {
+            id: 'PratoServirTrevo',
+            name: 'Prato de Servir Trevo',
+            image: 'img/presentes/4-PratoTrevo.jpg',
+            price: 99.00
+        },
+        {
+            id: 'KitSushi',
+            name: 'Kit de fazer sushi (16 peças)',
+            image: 'img/presentes/5-KitSushi.jpg',
+            price: 252.00
+        },
+        {
+            id: 'ConjuntoParaSushi',
+            name: 'Conjunto para Sushi 4 Pessoas',
+            image: 'img/presentes/6-ConjuntoParaSushi.jpg',
+            price: 57.00
+        },
+        {
+            id: 'ConjuntoSushiCeramica',
+            name: 'Conjunto Cerâmica para Sushi',
+            image: 'img/presentes/7-ConjuntoSushiCeramica.jpg',
+            price: 598.00
+        },
+        {
+            id: 'QueimadorIncenso',
+            name: 'Queimador de Incenso Oriente Médio',
+            image: 'img/presentes/8-Incensario.jpg',
+            price: 63.00
+        },
+        {
+            id: 'IncensarioCascata',
+            name: 'Incensario Cascata',
+            image: 'img/presentes/9-IncensarioCascata.jpg',
+            price: 114.00
+        },
+        {
+            id: 'EscorredorLoucainox',
+            name: 'Escorredor de Louça Inox - Branco',
+            image: 'img/presentes/10-Escorredor.jpg',
+            price: 176.00
+        },
+        {
+            id: 'DuplaEsteiraSofa',
+            name: 'Dupla Esteira De Sofá',
+            image: 'img/presentes/11-EsteiraSofa.jpg',
+            price: 50.00
+        },
+        {
+            id: 'PortaCoposCeramica',
+            name: 'Porta-copos de Cerâmica',
+            image: 'img/presentes/12-PortaCopoCeramica.jpg',
+            price: 139.00
+        },
+        {
+            id: 'KitChurrascoTramontina',
+            name: 'Kit Churrasco Tramontina',
+            image: 'img/presentes/13-KitChurrasco.jpg',
+            price: 162.00
+        },
+        {
+            id: 'KitCarneWoodbull',
+            name: 'Kit Carne Woodbull',
+            image: 'img/presentes/14-KitCarne.jpg',
+            price: 147.00
+        },
+        {
+            id: 'KitChurrascoEspecialWoodbull',
+            name: 'Kit Churrasco Edição Especial WOODBULL',
+            image: 'img/presentes/15-KitWoodbull.jpg',
+            price: 322.00
+        },
+        {
+            id: 'PortaBoloBambu',
+            name: 'Porta-Bolo de Bambu Com Tampa de Acrílico',
+            image: 'img/presentes/16-PortaBolo.jpg',
+            price: 95.00
+        },
+        {
+            id: 'MaquinaGeloPhilco',
+            name: 'Máquina de Gelo Philco',
+            image: 'img/presentes/17-MaquinaGelo.jpg',
+            price: 400.00
+        },
+        {
+            id: 'KitXicarasAlice',
+            name: 'Kit Xícaras Alice no País das Maravilhas',
+            image: 'img/presentes/18-KitAlice.jpg',
+            price: 3000.00
+        },
+        {
+            id: 'ConjuntoChaMagnetico',
+            name: 'Conjunto de chá magnético',
+            image: 'img/presentes/19-ConjuntoCha.jpg',
+            price: 319.00
+        },
+        {
+            id: 'BandejaCafeManha',
+            name: 'Bandeja Café Da Manhã',
+            image: 'img/presentes/20-Bandeja.jpg',
+            price: 95.00
+        },
+        {
+            id: 'BandejaEspelhada',
+            name: 'Bandeja Espelhada',
+            image: 'img/presentes/21-BandejaEspelhada.jpg',
+            price: 99.00
+        },
+        {
+            id: 'PratoFrutas',
+            name: 'Prato de frutas',
+            image: 'img/presentes/22-PratoFrutas.jpg',
+            price: 264.00
+        },
+        {
+            id: 'KitCarregadorPS5',
+            name: 'Kit Carregador PS5',
+            image: 'img/presentes/23-KitPS5.jpg',
+            price: 235.00
+        },
+        {
+            id: 'CadeiraEscritorio',
+            name: 'Cadeira de Escritório',
+            image: 'img/presentes/24-CadeiraEscritorio.jpg',
+            price: 368.00
+        },
+        {
+            id: 'SuporteVinhoBike',
+            name: 'Suporte para Vinho - Bike',
+            image: 'img/presentes/25-SuporteVinho.jpg',
+            price: 120.00
+        },
+        {
+            id: 'BolsaPortaVinho',
+            name: 'Bolsa Porta Vinho',
+            image: 'img/presentes/26-BolsaVinho.jpg',
+            price: 110.00
+        },
+        {
+            id: 'KitCoqueteleiraBar',
+            name: 'Kit Coqueteleira Bar',
+            image: 'img/presentes/27-KitCoqueteleira.jpg',
+            price: 158.00
+        },
+        {
+            id: 'CopoWhiskyGlencairn',
+            name: 'Copo de Whisky - Glencairn',
+            image: 'img/presentes/28-CopoWhiskey.jpg',
+            price: 120.00
+        },
+        {
+            id: 'CanecaPooh',
+            name: 'Caneca Cerâmica Winnie the Pooh - Silver Buffalo',
+            image: 'img/presentes/29-CanecaPooh.jpg',
+            price: 170.00
+        },
+        {
+            id: 'KitPizza',
+            name: 'Kit 6 Pratos Pizza',
+            image: 'img/presentes/30-KitPizza.jpg',
+            price: 42.00
+        },
+        {
+            id: 'XicaraBuleBelaFera',
+            name: 'Xícara e Bule - A Bela e a Fera',
+            image: 'img/presentes/31-BuleBelaFera.jpg',
+            price: 283.00
+        },
+        {
+            id: 'KitCameraInstax',
+            name: 'Kit Câmera Instax Mini',
+            image: 'img/presentes/32-Instax.jpg',
+            price: 550.00
+        },
+        {
+            id: 'MalaRigidaGladiador',
+            name: 'Mala Rígida Gladiador - Rose',
+            image: 'img/presentes/33-Mala.jpg',
+            price: 400.00
+        },
+        {
+            id: 'AdegaClimatizada',
+            name: 'Adega Climatizada',
+            image: 'img/presentes/34-Adega.jpg',
+            price: 745.00
+        },
+        {
+            id: 'LuminariaMesa',
+            name: 'Luminária Mesa',
+            image: 'img/presentes/35-Luminaria.jpg',
+            price: 87.00
+        },
+        {
+            id: 'EspelhoParede',
+            name: 'Espelho de Parede',
+            image: 'img/presentes/36-Espelho.jpg',
+            price: 180.00
+        },
+        {
+            id: 'TorradeiraElectrolux',
+            name: 'Torradeira Electrolux',
+            image: 'img/presentes/38-Torradeira.jpg',
+            price: 162.00
+        },
+        {
+            id: 'ConjuntoPassaporte',
+            name: 'Conjunto Porta Passaporte Sr e Sra',
+            image: 'img/presentes/39-Passaporte.jpg',
+            price: 209.00
+        },
+        {
+            id: 'KitFonduePedra',
+            name: 'Kit Fondue Pedra',
+            image: 'img/presentes/40-KitFondue.jpg',
+            price: 260.00
+        },
+        {
+            id: 'ConjuntoXicarasPorcelana',
+            name: 'Conjunto Xícaras de Porcelana Wolff',
+            image: 'img/presentes/41-XicaraPorcelana.jpg',
+            price: 300.00
+        },
+        {
+            id: 'BoxGinTanqueray',
+            name: 'Box Gin Tanqueray',
+            image: 'img/presentes/42-KitGin.jpg',
+            price: 165.00
+        },
+        {
+            id: 'GarrafaTermicaElectrolux',
+            name: 'Garrafa Térmica Electrolux Sense 1,8L Verde',
+            image: 'img/presentes/43-GarrafaTermica.jpg',
+            price: 270.00
+        },
+        {
+            id: 'AspiradorRoboElectrolux',
+            name: 'Aspirador de pó robô Electrolux',
+            image: 'img/presentes/44-RoboAspirador.jpg',
+            price: 539.00
+        },
+        {
+            id: 'MoedorEletricoSalPimenta',
+            name: 'Conjunto de moedor elétrico de sal e pimenta',
+            image: 'img/presentes/45-MoedoresSalPimenta.jpg',
+            price: 169.00
+        }
+    ];
+
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM totalmente carregado e analisado');
     
@@ -338,11 +566,55 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    //gera a lista de presentes
+    const giftItemsContainer = document.getElementById('giftItems');
+
+    gifts.forEach(gift => {
+        const giftItemCol = document.createElement('div');
+        giftItemCol.classList.add('gift-item-col');
+
+        const giftItem = document.createElement('div');
+        giftItem.classList.add('gift-item', 'text-center');
+        giftItem.id = `item-${gift.id}`;
+
+        const img = document.createElement('img');
+        img.src = gift.image;
+        img.alt = gift.name;
+        img.classList.add('img-responsive', 'gift-img');
+
+        const h5 = document.createElement('h5');
+        h5.textContent = gift.name;
+
+        const pPrice = document.createElement('p');
+        pPrice.textContent = `Preço: R$${gift.price.toFixed(2)}`;
+
+        const pAvailability = document.createElement('p');
+        pAvailability.id = `availability-item-${gift.id}`;
+
+        const button = document.createElement('button');
+        button.classList.add('btn', 'btn-primary');
+        button.id = `button-item-${gift.id}`;
+        button.textContent = 'Escolher Item';
+        button.addEventListener('click', function() {
+            openPaymentModal(gift.price, gift.name, gift.id);
+        });
+
+        giftItem.appendChild(img);
+        giftItem.appendChild(h5);
+        giftItem.appendChild(pPrice);
+        giftItem.appendChild(pAvailability);
+        giftItem.appendChild(button);
+
+        giftItemCol.appendChild(giftItem);
+        giftItemsContainer.appendChild(giftItemCol);
+    });
+
+    
     // Verificar disponibilidade dos itens ao carregar a página
-    document.querySelectorAll('.gift-item').forEach(item => {
-        const itemId = item.id;
-        const availabilityText = document.getElementById(`availability-${itemId}`);
-        const button = document.getElementById(`button-${itemId}`);
+    gifts.forEach(gift => {
+        const itemId = gift.id;
+        const availabilityText = document.getElementById(`availability-item-${itemId}`);
+        const button = document.getElementById(`button-item-${itemId}`);
 
         fetch(`/check-item/${itemId}`)
             .then(response => response.json())
@@ -453,6 +725,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('filter-info').innerText = '';
     }
 });
+
 </script>
 <script src="js/vendor/jquery-1.11.2.min.js" onerror="loadJsFromCDN('jquery.js')"></script>
 <script src="node_modules/waypoints/lib/jquery.waypoints.min.js" onerror="loadJsFromCDN('waypoints.js')"></script>
