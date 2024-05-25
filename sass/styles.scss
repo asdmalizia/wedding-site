@@ -9,6 +9,18 @@
 @import "partials/colors";
 @import "partials/layout";
 
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
 /* ==========================================================================
 Global Styles
 ========================================================================== */
@@ -717,85 +729,136 @@ Instagram
 Engagement Pics
 ========================================================================== */
 #imageRow {
-  display: flex; /* Torna os elementos filhos flexíveis */
-  overflow-x: auto; /* Adiciona uma barra de rolagem horizontal quando necessário */
-  -ms-overflow-style: -ms-autohiding-scrollbar; /* Estilo de barra de rolagem para o Internet Explorer */
-  scrollbar-width: thin; /* Espessura da barra de rolagem */
-  scrollbar-color: #ccc transparent; /* Cor da barra de rolagem */
-  white-space: nowrap; /* Impede que as imagens quebrem para uma nova linha */
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+  white-space: nowrap;
+  padding: 10px 0;
 }
 
 .col-md-2 {
-  flex: 0 0 auto; /* Permite que as colunas tenham largura fixa */
-  padding: 0 5px; /* Espaçamento entre as colunas */
-  min-width: 200px; /* Largura mínima das colunas */
+  flex: 0 0 auto;
+  padding: 0 5px;
+  min-width: 150px;
 }
 
-#eng-pics {
-  img {
-    width: 100%;
-    height: auto;
-    -moz-transition: all 300ms ease-in-out;
-    -o-transition: all 300ms ease-in-out;
-    -webkit-transition: all 300ms ease-in-out;
-    transition: all 300ms ease-in-out;
+.img-wrap img {
+  width: 100%;
+  height: auto;
+}
+
+/* Media query para dispositivos móveis */
+@media (max-width: 768px) {
+  #imageRow {
+    flex-wrap: nowrap; /* Mantém as imagens em uma linha */
+    overflow-x: auto; /* Adiciona rolagem horizontal */
   }
+
+  .col-md-2 {
+    flex: 0 0 auto; /* Assegura que as colunas não encolham */
+    min-width: 100px; /* Ajusta a largura mínima das colunas */
+  }
+
   .img-wrap {
-    position: relative;
-    overflow: hidden;
-    border-radius: 4px;
+    width: 100px; /* Define uma largura fixa para as imagens em telas menores */
+    margin: 5px;
   }
+
+  .img-wrap img {
+    width: 100%; /* Garante que a imagem ocupe 100% da largura disponível */
+    height: auto;
+  }
+
   .img-wrap .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    -moz-transition: all 300ms ease-in-out;
-    -o-transition: all 300ms ease-in-out;
-    -webkit-transition: all 300ms ease-in-out;
-    transition: all 300ms ease-in-out;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-    opacity: 0; }
-  .img-wrap i {
-    color: #fff;
-    font-size: 15px;
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    top: 6px;
-    right: 6px; }
-  .img-wrap:hover img, .img-wrap:focus img {
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1); }
-  .img-wrap:hover .overlay, .img-wrap:focus .overlay {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
-    filter: alpha(opacity=1);
-    opacity: 1;
-    z-index: 9; }
-  .diamond {
-    width: 230px;
-    height: 230px;
-    position: absolute;
-    bottom: -145px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 500;
+    background-color: rgba(255, 255, 255, 0.7);
   }
-  .ring {
-    width: 75px;
-    height: 75px;
-    border-radius: 75px;
-    border: 10px solid #d0d3d4;
-    position: absolute;
-    left: 34%;
-    top: 75%;
-    z-index: -1;
+
+  .img-wrap i {
+    font-size: 10px;
   }
 }
+
+#eng-pics img {
+  width: 100%;
+  height: auto;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.img-wrap .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.img-wrap i {
+  color: #fff;
+  font-size: 15px;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 6px;
+  right: 6px;
+}
+
+.img-wrap:hover img, .img-wrap:focus img {
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.img-wrap:hover .overlay, .img-wrap:focus .overlay {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+  filter: alpha(opacity=1);
+  opacity: 1;
+  z-index: 9;
+}
+
+.diamond {
+  width: 230px;
+  height: 230px;
+  position: absolute;
+  bottom: -145px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+}
+
+.ring {
+  width: 75px;
+  height: 75px;
+  border-radius: 75px;
+  border: 10px solid #d0d3d4;
+  position: absolute;
+  left: 34%;
+  top: 75%;
+  z-index: -1;
+}
+
+
+
+
 
 
 /* ==========================================================================

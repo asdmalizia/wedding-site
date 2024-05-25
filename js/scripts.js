@@ -180,7 +180,7 @@ $(document).ready(function () {
             col.classList.add("col-md-2");
             col.style.display = "flex"; // Adiciona flexbox para alinhar as imagens horizontalmente
             col.style.alignItems = "center"; // Centraliza as imagens verticalmente
-        
+            
             var link = document.createElement("a");
             link.classList.add("fancybox");
             link.setAttribute("rel", "group");
