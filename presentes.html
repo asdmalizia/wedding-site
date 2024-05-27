@@ -35,7 +35,8 @@
             width: 100%;
             height: auto;
             max-height: 200px;
-            object-fit: cover;
+            object-fit: contain; /* Ajuste a imagem sem cortar */
+            object-position: center; /* Centraliza a imagem no contêiner */
         }
 
         .gift-item {
@@ -101,6 +102,10 @@
                 flex: 1 1 45%;
                 max-width: 45%;
             }
+
+            .gift-img {
+                max-height: 150px; /* Ajuste a altura máxima para telas menores */
+            }
         }
 
         @media (max-width: 576px) {
@@ -108,7 +113,12 @@
                 flex: 1 1 100%;
                 max-width: 100%;
             }
+
+            .gift-img {
+                max-height: 120px; /* Ajuste a altura máxima para telas ainda menores */
+            }
         }
+
     </style>
 </head>
 <body id="top">
@@ -213,7 +223,7 @@
             id: 'AirFryer',
             name: 'Air Fryer',
             image:'img/presentes/presente1.png',
-            price: 0.50
+            price: 1.00
         },
         {
             id: 'smartphone',
@@ -252,10 +262,10 @@
             price: 252.00
         },
         {
-            id: 'ConjuntoParaSushi',
-            name: 'Conjunto para Sushi 4 Pessoas',
-            image: 'img/presentes/6-ConjuntoParaSushi.jpg',
-            price: 57.00
+            id: 'XicaraAlice',
+            name: 'Xícara Alice no País das Maravilhas',
+            image: 'img/presentes/6-XicaraAlice.jpg',
+            price: 130.00
         },
         {
             id: 'ConjuntoSushiCeramica',
@@ -271,7 +281,7 @@
         },
         {
             id: 'IncensarioCascata',
-            name: 'Incensario Cascata',
+            name: 'Incensário Cascata',
             image: 'img/presentes/9-IncensarioCascata.jpg',
             price: 114.00
         },
@@ -285,7 +295,7 @@
             id: 'DuplaEsteiraSofa',
             name: 'Dupla Esteira De Sofá',
             image: 'img/presentes/11-EsteiraSofa.jpg',
-            price: 50.00
+            price: 98.00
         },
         {
             id: 'PortaCoposCeramica',
@@ -322,6 +332,42 @@
             name: 'Máquina de Gelo Philco',
             image: 'img/presentes/17-MaquinaGelo.jpg',
             price: 400.00
+        },
+        {
+            id: 'LavaLouca1',
+            name: 'Máquina de Lavar Louças Brastemp - Cota 1',
+            image: 'img/presentes/18-LavaLouca.jpeg',
+            price: 400.00
+        },
+        {
+            id: 'LavaLouca2',
+            name: 'Máquina de Lavar Louças Brastemp - Cota 2',
+            image: 'img/presentes/18-LavaLouca.jpeg',
+            price: 400.00
+        },
+        {
+            id: 'LavaLouca3',
+            name: 'Máquina de Lavar Louças Brastemp - Cota 3',
+            image: 'img/presentes/18-LavaLouca.jpeg',
+            price: 400.00
+        },
+        {
+            id: 'LavaLouca4',
+            name: 'Máquina de Lavar Louças Brastemp - Cota 4',
+            image: 'img/presentes/18-LavaLouca.jpeg',
+            price: 400.00
+        },
+        {
+            id: 'LavaLouca5',
+            name: 'Máquina de Lavar Louças Brastemp - Cota 5',
+            image: 'img/presentes/18-LavaLouca.jpeg',
+            price: 300.00
+        },
+        {
+            id: 'LavaLouca6',
+            name: 'Máquina de Lavar Louças Brastemp - Cota 6',
+            image: 'img/presentes/18-LavaLouca.jpeg',
+            price: 200.00
         },
         {
             id: 'ConjuntoChaMagnetico',
@@ -388,12 +434,6 @@
             name: 'Caneca Cerâmica Winnie the Pooh - Silver Buffalo',
             image: 'img/presentes/29-CanecaPooh.jpg',
             price: 170.00
-        },
-        {
-            id: 'KitPizza',
-            name: 'Kit 6 Pratos Pizza',
-            image: 'img/presentes/30-KitPizza.jpg',
-            price: 42.00
         },
         {
             id: 'XicaraBuleBelaFera',
@@ -597,14 +637,8 @@
             id: 'Geladeira20',
             name: 'Geladeira Brastemp French Door Frost Free - Cota 20',
             image: 'img/presentes/46-Geladeira.jpg',
-            price: 100.00
+            price: 200.00
         },
-        {
-            id: 'Geladeira21',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 21',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 100.00
-        }
     ];
 
 
