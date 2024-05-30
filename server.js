@@ -184,9 +184,10 @@ app.get('/success', async (req, res) => {
         `);
     } catch (error) {
         console.error('Error processing successful payment:', error.message);
-        res.status(500).send('Error processing payment');
+        res.redirect('https://www.casamentomaxinefelipe.com.br');
     }
 });
+
 
 app.get('/failure', (req, res) => {
     const payment_id = req.query.payment_id;
@@ -195,17 +196,19 @@ app.get('/failure', (req, res) => {
     const external_reference = req.query.external_reference;
 
     console.log('Falha no pagamento:', payment_id, status, status_detail, external_reference);
-    res.send(`Falha ao processar o pagamento. ID do Pagamento: ${payment_id}, Status: ${status}, Detalhe: ${status_detail}, Ref: ${external_reference}`);
+    res.send(`Falha ao processar o pagamento. ID do Pagamento: ${payment_id}, Status: ${status}, Detalhe: ${status_detail}, Ref: ${external_reference}, por favor, cheque seu email e tente realizar o pagamento novamente.`);
 });
 
-app.get('/pending', (req, res) => {
+app.get('/pending', async (req, res) => {
     const payment_id = req.query.payment_id;
     const status = req.query.status;
     const external_reference = req.query.external_reference;
 
     console.log('Pagamento pendente:', payment_id, status, external_reference);
-    res.send(`Pagamento pendente. ID do Pagamento: ${payment_id}, Status: ${status}, Ref: ${external_reference}`);
+
+    res.redirect(config.url_after_payment);
 });
+
 
 app.get('/check-item/:id', (req, res) => {
     const { id } = req.params;
@@ -297,7 +300,7 @@ app.post('/payments/checkout/:id/:description/:amount', async (req, res) => {
             back_urls: {
                 success: `${baseUrl}/success?payment_id=:id&status=approved&external_reference=${externalReference}`,
                 failure: `${baseUrl}/failure`,
-                pending: `${baseUrl}/pending`
+                pending: `${baseUrl}/pending?payment_id=:id&status=pending&external_reference=${externalReference}`
             },
             auto_return: "approved",
             external_reference: externalReference,
@@ -361,7 +364,7 @@ async function fetchOrderDetails(resourceUrl) {
     return response.data;
 }
 
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;  // Use a porta 8080 se estiver definida
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

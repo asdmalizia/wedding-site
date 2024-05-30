@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="node_modules/animate.css/animate.min.css" onerror="loadCssFromCDN('animate.css')">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" onerror="loadCssFromCDN('font-awesome.css')">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sdk.mercadopago.com https://http2.mlstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self' https://api.mercadopago.com; frame-src 'self' https://www.mercadolibre.com https://mercadopago.com.br;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sdk.mercadopago.com https://http2.mlstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self' https://api.mercadopago.com; frame-src 'self' https://www.mercadolibre.com https://www.mercadopago.com.br https://mercadopago.com.br;">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,400italic,300italic,700,700italic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,300,700" rel="stylesheet">
@@ -186,7 +186,7 @@
             <div class="modal-body">
                 <form id="paymentForm">
                     <div class="form-group">
-                        <label for="email">E-mail</label>
+                        <label for="email">E-mail (Você receberá confirmação caso o pagamento tenha sido processado com sucesso).</label>
                         <input type="email" class="form-control" id="email" required>
                     </div>
                     <input type="hidden" id="price">
@@ -645,7 +645,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM totalmente carregado e analisado');
     
-    const mp = new MercadoPago('XXXXXXXXXXXXXXXXX'); // Substitua por sua chave pública do MercadoPago
+    const mp = new MercadoPago('APP_USR-89ebdd77-652f-4f9a-9b42-a4d6c60def11'); // Substitua por sua chave pública do MercadoPago
     let sortAscending = true;
 
     document.querySelectorAll('.gift-item button').forEach(button => {
