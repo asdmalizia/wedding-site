@@ -2,13 +2,11 @@
 
 ## Instruções para Configuração e Uso
 
-```markdown
 ### 1. Instalação dos Pacotes
 Utilize o comando abaixo para instalar os pacotes descritos no arquivo `package.json`:
-```bash
+'''bash
 npm install
-```
-
+'''
 ### 2. Executar o Projeto Localmente
 Para rodar o projeto localmente, utilize o comando:
 ```bash
