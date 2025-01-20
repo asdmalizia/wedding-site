@@ -68,4 +68,3 @@ No google cloud, foram habilitadas e utilizadas as seguintes API's para facilita
 - Cloud Run API
 
   Isso tornou possível o deploy do container ser feito através do google sdk shell.
-```
