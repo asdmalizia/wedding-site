@@ -56,5 +56,8 @@ No arquivo `config.json`, insira as seguintes informações:
 - `credentials.json`: Arquivo para configuração das credenciais de APIs.
 - `config.json`: Arquivo de configuração para integração de APIs e redirecionamento.
 
-Vale destacar que algumas outras chaves ainda estarão dentro dos códigos. O ideal é separá-las para facilitar manutenção, para para funcionar o site, você poderá editar diretamente nos arquivos, como id de pasta no google drive, api do maps, etc.
+Vale destacar que algumas outras chaves ainda estarão dentro dos códigos. O ideal é separá-las para facilitar manutenção, porém para funcionar o site, você poderá editar diretamente nos arquivos, como id de pasta no google drive, api do maps, etc.
+
+### Android/Apple:
+É importante se atentar para existências de adaptações css em alguns arquivos para que o site carregue corretamente em dispositivos mobile, sem perda de resolução. Nesse caso, algumas configs css estão duplicadas para oscilar entre desktop e mobile corretamente. 
 ```
