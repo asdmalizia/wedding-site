@@ -16,7 +16,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta property="og:title" content="Maxine & Felipe">
     <meta property="og:description" content="We would like to invite you to our big day.">
-    <meta property="og:image" content="https://wedding.ramswaroop.me/img/hero.png">
+    <meta property="og:image" content="https://wedding.ramswaroop.me/img/hero.jpeg">
     <meta property="og:type" content="website">
     <link rel="uch-icon" sizes="180x180" href="favicon-256x256.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -51,6 +51,18 @@
             border: none;
             padding: 10px 20px;
             cursor: pointer;
+
+        }
+        .audio-player {
+            margin: 20px auto;
+            text-align: center;
+        }
+        audio {
+            width: 100%;
+            max-width: 300px;
+        }
+        .section-padding {
+            padding: 60px 0;
         }
     </style>
     <script>
@@ -108,11 +120,12 @@
                             <li><a href="#eng-pics">Momentos do Casal</a></li>
                             <li class="hidden-sm hidden-xs"><a href="#video-bg">Um visão da Cidade</a></li>
                             <li><a href="#gifts">Lista de Presentes</a></li>
+                            <li><a href="#map" class="login">Local</a></li>
                         </ul>
-                        <ul class="member-actions">
+                        <!-- <ul class="member-actions">
                             <li><a href="#map" class="login">Local</a></li>
                             <li><a href="#rsvp" class="btn-white btn-small">Presença</a></li>
-                        </ul>
+                        </ul> -->
                     </nav>
                 </div>
                 <div class="navicon">
@@ -167,6 +180,26 @@
         </div>
     </div>
 </section>
+<section id="music" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Música do Casal</h3>
+                <p style="color: black;">Dê o play e entre no clima do nosso casamento!</p>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="musica_casal.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 <style>
     .countdown {
@@ -279,8 +312,8 @@
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 rightcol">
                 <div class="wp5">
-                    <h5>Festa <span class="time">18h - 02h30</span></h5>
-                    <p>A festa de casamento começará imediatamente após a cerimônia e se estenderá até a meia-noite. Prepare-se para uma noite de muita dança, música e celebração. A festa contará com uma banda ao vivo, DJ, e uma variedade de entretenimentos para garantir que todos tenham uma experiência inesquecível. Refeições e bebidas serão servidas ao longo da noite, garantindo que a energia dos convidados permaneça alta até o final do evento.</p>
+                    <h5>Jantar/Festa <span class="time">18h - 02h30</span></h5>
+                    <p>O jantar e a festa começarão logo após a cerimônia e se estenderão até ás 02:30. Prepare-se para uma noite de muita dança, música e celebração. A festa contará com uma banda ao vivo, DJ, e uma variedade de entretenimentos para garantir que todos tenham uma experiência inesquecível. Refeições e bebidas serão servidas ao longo da noite, garantindo que a energia dos convidados permaneça alta até o final do evento.</p>
                 </div>
             </div>
         </div>
@@ -369,11 +402,11 @@
 
 <section id="video-bg" class="hidden-sm hidden-xs">
     <div id="bgndVideo" class="player"
-         data-property="{videoURL:'https://www.youtube.com/watch?v=Pi3swE_pjPA',containment:'#video-bg',autoPlay:true, mute:true, showControls:false, startAt:80, stopAt:259, opacity:1}">
+         data-property="{videoURL:'https://www.youtube.com/watch?v=BKALRn4V_FU',containment:'#video-bg',autoPlay:true, mute:true, showControls:false, startAt:0, stopAt:86, opacity:1}">
     </div>
     <div id="video-content">
         <h5>Curitiba</h5>
-        <p>A Europa brasileira</p>
+        <p>Pelos olhos do casal</p>
     </div>
 </section>
 
@@ -402,12 +435,6 @@
                             <p><i class="fa fa-phone"></i> <a href="tel://+55413656-5299">+55 41 3656-5299</a></p>
                         </div>
                     </div>
-                   <!-- <div class="row text-center">
-                        <div class="col-md-6" style="padding: 5px;">
-                            <a class="btn btn-fill btn-small"
-                               href="https://m.uber.com/ul/?action=setPickup&client_id=seuClientID&pickup=my_location&dropoff[formatted_address]=Castello%20Trevizzo,%20Av.%20Manoel%20Ribas,%204289%20-%20Santa%20Felicidade,%20Curitiba%20-%20PR,%20Brasil&dropoff[latitude]=-25.404456&dropoff[longitude]=-49.328073"><i
-                                    class="fa fa-taxi"></i>&nbsp;&nbsp;Book Uber</a>
-                        </div>-->
                         <div class="col-md-6" style="padding: 5px;">
                             <a class="btn btn-accent btn-small" id="btn-show-map"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Ver Mapa</a>
                         </div>
@@ -433,9 +460,9 @@
                         <div id="add-to-cal"></div>
                     </div>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="row">
@@ -479,7 +506,7 @@
                 document.getElementById('extras').addEventListener('change', function() {
                     const numberOfGuests = this.value;
                     const extraGuestsContainer = document.getElementById('extra-guests');
-                    extraGuestsContainer.innerHTML = ''; // Limpa os campos antigos
+                    extraGuestsContainer.innerHTML = ''; 
                 
                     for (let i = 1; i <= numberOfGuests; i++) {
                         const guestDiv = document.createElement('div');
@@ -642,7 +669,7 @@
 <script src="js/vendor/ouical.js"></script>
 <script src="js/scripts.min.js"></script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlPw3GQYI3faa_9mRE6plWuM7xNEmrwH0&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXX&callback=initMap"></script>
 <!-- Google Analytics -->
 <script>
     (function (i, s, o, g, r, a, m) {

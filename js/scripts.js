@@ -164,6 +164,7 @@ $(document).ready(function () {
     /**fotos do casal** */
     // Dados das imagens
         var images = [
+            "pre_wedding1.jpeg", "pre_wedding2.jpeg", "pre_wedding3.jpeg", "pre_wedding4.jpeg","pre_wedding5.jpeg", "pre_wedding7.jpeg", 
             "fm1.jpeg", "IMG_3483-lg.png", "_RFX2992-lg.png", "_RFX3064-lg.png", "NGP_4119-lg.png", "fm2.jpeg",
             "fm3.jpeg", "fm4.jpeg", "fm5.jpeg", "fm6.jpeg", "fm7.jpeg", "fm8.jpeg", "fm9.jpeg", "fm10.jpeg",
             "fm11.jpeg", "fm12.jpeg", "fm13.jpeg", "fm14.jpeg", "fm15.jpeg", "fm16.jpeg", "fm17.jpeg", "fm18.jpeg",
@@ -236,20 +237,20 @@ $(document).ready(function () {
             title: "Casamento de Maxine e Felipe",
 
             // Event start date
-            start: new Date('Dec 12, 2024 10:00'),
+            start: new Date('Dec 12, 2024 16:00'),
 
             // Event duration (IN MINUTES)
-            duration: 120,
+            duration: 600,
 
             // You can also choose to set an end time
             // If an end time is set, this will take precedence over duration
             //end: new Date('Dez 12, 2024 11:00'),
 
             // Event Address
-            address: 'Castello Trevizzo Eventos, Curitiba-PR',
+            address: 'Castello Reale, Colombo-PR',
 
             // Event Description
-            description: "Estamos ansiosos para ter a sua presença no nosso grande dia. Para quaisquer dúvidas ou questionamentos, por favor, entre em contato com  Mr. Amit Roy no número +91 9876543210."
+            description: "Estamos ansiosos para ter a sua presença no nosso grande dia. Para quaisquer dúvidas ou questionamentos, por favor, entre em contato com os noivos."
         }
     });
 
@@ -264,8 +265,8 @@ $(document).ready(function () {
 
         $('#alert-wrapper').html(alert_markup('info', '<strong>Um momento!</strong> Estamos salvando seus detalhes.'));
 
-        if ($('#invite_code').val() !== '12345') {
-            $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
+        if ($('#invite_code').val() !== '121224') {
+            $('#alert-wrapper').html(alert_markup('danger', '<strong>Desculpe!</strong> O código inserido é inválido.'));
         } else {
             // Ajuste a URL para o proxy server
             $.post('https://casamentomaxinefelipe.com.br/proxy', formData)

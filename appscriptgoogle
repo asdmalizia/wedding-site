@@ -1,0 +1,80 @@
+function doPost(e) {
+    try {
+        Logger.log('Request received: ' + JSON.stringify(e));
+
+        if (!e || !e.postData) {
+            Logger.log('No postData found in the request');
+            return ContentService.createTextOutput(JSON.stringify({ result: "error", message: "No postData found in the request" }))
+                .setMimeType(ContentService.MimeType.JSON);
+        }
+
+        var sheetId = 'XXXXXXXXXXXXXXXXXXXXXXXX';
+        Logger.log('Sheet ID: ' + sheetId);
+
+        var file = DriveApp.getFileById(sheetId);
+        Logger.log('File retrieved successfully');
+
+        var spreadsheet = SpreadsheetApp.open(file);
+        Logger.log('Spreadsheet opened successfully');
+
+        function getOrCreateSheet(sheetName) {
+            var sheet = spreadsheet.getSheetByName(sheetName);
+            if (!sheet) {
+                sheet = spreadsheet.insertSheet(sheetName);
+                Logger.log('Sheet created: ' + sheetName);
+
+                if (sheetName === 'Compras') {
+                    sheet.appendRow(['id', 'email', 'description', 'amount', 'purchased', 'payment_status']);
+                } else if (sheetName === 'PendingPayments') {
+                    sheet.appendRow(['external_reference', 'email']);
+                }
+            }
+            return sheet;
+        }
+
+        var data = JSON.parse(e.postData.contents);
+        Logger.log('Received data: ' + JSON.stringify(data));
+
+        if (data.action === 'insert') {
+            var sheetName = data.sheetName;
+            var rowData = data.data;
+
+            var targetSheet = getOrCreateSheet(sheetName);
+            targetSheet.appendRow(rowData);
+            Logger.log('Inserted data into ' + sheetName + ': ' + JSON.stringify(rowData));
+
+        } else if (data.action === 'select') {
+            var sheetName = data.sheetName;
+            var condition = data.condition;
+
+            var targetSheet = getOrCreateSheet(sheetName);
+            var rows = targetSheet.getDataRange().getValues();
+            var headers = rows[0];
+            var result = [];
+
+            for (var i = 1; i < rows.length; i++) {
+                var row = rows[i];
+                var rowObject = headers.reduce((acc, header, index) => {
+                    acc[header] = row[index];
+                    return acc;
+                }, {});
+
+                if (eval(condition)) {
+                    result.push(rowObject);
+                }
+            }
+
+            Logger.log('Select result: ' + JSON.stringify(result));
+            return ContentService.createTextOutput(JSON.stringify(result))
+                .setMimeType(ContentService.MimeType.JSON);
+        }
+
+        return ContentService.createTextOutput(JSON.stringify({ result: "success", message: "Dados salvos com sucesso!" }))
+            .setMimeType(ContentService.MimeType.JSON);
+
+    } catch (error) {
+        Logger.log('Error: ' + error.message);
+        return ContentService.createTextOutput(JSON.stringify({ result: "error", message: error.message }))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
+}
