@@ -60,4 +60,12 @@ Vale destacar que algumas outras chaves ainda estarão dentro dos códigos. O id
 
 ### Android/Apple:
 É importante se atentar para existências de adaptações css em alguns arquivos para que o site carregue corretamente em dispositivos mobile, sem perda de resolução. Nesse caso, algumas configs css estão duplicadas para oscilar entre desktop e mobile corretamente. 
+
+### Google Cloud:
+No google cloud, foram habilitadas e utilizadas as seguintes API's para facilitar integração:
+- Google Drive API;
+- Compute Engine API;
+- Cloud Run API
+
+  Isso tornou possível o deploy do container ser feito através do google sdk shell.
 ```
