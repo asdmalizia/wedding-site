@@ -2,6 +2,7 @@
     "mercadoPagoAccessToken": "APP_USR-XXXXXXXXXXXXXXXX",
     "url_after_payment": "https://www.casamentomaxinefelipe.com.br",
     "googleSheetUrl": "https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXXXXXXX/exec"
+
 }
 
 

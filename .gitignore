@@ -35,8 +35,8 @@ typings/
 .yarn-integrity
 .env
 .sass-cache/
-css/
 *.css.map
-config.json
-credentials.json
 data/
+credentials.json
+config.json
+css/
