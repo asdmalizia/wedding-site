@@ -10,13 +10,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Maxine & Felipe!</title>
+    <title>Rod & Ale</title>
     <meta name="description" content="We would like to invite you to our big day.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
     <meta property="og:title" content="Maxine & Felipe">
     <meta property="og:description" content="We would like to invite you to our big day.">
-    <meta property="og:image" content="https://wedding.ramswaroop.me/img/hero.jpeg">
+    <meta property="og:image" content="img/logo.png">
     <meta property="og:type" content="website">
     <link rel="uch-icon" sizes="180x180" href="favicon-256x256.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -46,7 +46,7 @@
         }
         .rsvp-btn {
             margin-top: 20px;
-            background-color: #377125;
+            /* background-color: #377125; */
             color: white;
             border: none;
             padding: 10px 20px;
@@ -107,7 +107,7 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 <section class="hero">
-    <section class="navigation fixed">
+    <section class="navigation">
         <header>
             <div class="header-content">
                 <div class="logo"><a href="#"><img src="img/logo.png" alt="Logo" style="width:80px; height: auto"></a></div>
@@ -115,17 +115,17 @@
                     <nav>
                         <ul class="primary-nav">
                             <li><a href="#intro">Nossa História</a></li>
+                            <li><a href="#eng-pics">Fotos do Casal</a></li>
                             <li><a href="#events">Eventos</a></li>
-                            <li><a href="#instagram">Instagram</a></li>
-                            <li><a href="#eng-pics">Momentos do Casal</a></li>
-                            <li class="hidden-sm hidden-xs"><a href="#video-bg">Um visão da Cidade</a></li>
+                            <!-- <li><a href="#instagram">Instagram</a></li> -->
+                            <!-- <li class="hidden-sm hidden-xs"><a href="#video-bg">Um visão da Cidade</a></li> -->
+                            <li><a href="#map" class="login">Local</a></li>
                             <li><a href="#gifts">Lista de Presentes</a></li>
-                            <li><a href="#map" class="login">Local</a></li>
                         </ul>
-                        <!-- <ul class="member-actions">
-                            <li><a href="#map" class="login">Local</a></li>
-                            <li><a href="#rsvp" class="btn-white btn-small">Presença</a></li>
-                        </ul> -->
+                        <ul class="member-actions">
+                            <!-- <li><a href="#map" class="login">Local</a></li> -->
+                            <li><a href="#rsvp" class="btn-white btn-small">RSVP</a></li>
+                        </ul>
                     </nav>
                 </div>
                 <div class="navicon">
@@ -138,14 +138,20 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="hero-content text-center">
-                    <h1 style="font-family:'Imperial Script';">Maxine e Felipe</h1>
-                    <!--<img src="img/logo-lg.png">-->
+                    <!-- <h1 style="font-family:'Imperial Script';">Maxine e Felipe</h1> -->
+                    <img src="img/logo-lg.png">
                     <!--<p class="intro">Ram & Antara are getting hitched!</p>-->
                     <!--<a href="#" class="btn btn-fill btn-large btn-margin-right">Scroll Down</a> -->
                 </div>
             </div>
         </div>
        
+        <div class="row">
+            <div class="col-sm-4 hidden-xs"></div>
+            <div class="col-sm-4 hidden-xs text-center"><a href="#rsvp"
+                                                           class="btn btn-accent btn-large rsvp-btn">RSVP</a></div>
+            <div class="col-sm-4 hidden-xs"></div>
+        </div>
     </div>
     <div class="down-arrow floating-arrow"><a href="#invitation"><i class="fa fa-angle-down"></i></a></div>
 </section>
@@ -155,9 +161,9 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h3>Vamos casar!</h3>
-                <p style="color: black;">12 Dezembro 2024</p>
+                <p style="color: black;">09 de Agosto 2025</p>
                 <p style="color: black;">Comemore conosco esse momento!</p>
-                <h5 style="color: black;">COUNTDOWN</h5>
+                <h5 style="color: black;">CONTAGEM REGRESSIVA</h5>
                 <div id="countdown" class="countdown">
                     <div class="countdown-item">
                         <span id="days" class="countdown-value"></span>
@@ -208,7 +214,7 @@
         align-items: center;
         font-family: 'Arial', sans-serif;
         color: #ffffff;
-        background-color: #416821;
+        background-color: #ffd656;
         padding: 20px;
         border-radius: 10px;
         margin-top: 20px;
@@ -232,7 +238,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function updateCountdown() {
-            const weddingDate = new Date('2024-12-12T16:30:00');
+            const weddingDate = new Date('2025-08-09T17:30:00');
             const now = new Date();
             const timeDifference = weddingDate - now;
 
@@ -292,6 +298,24 @@
             <div class="col-sm-4 col-sm-push-2 col-xs-6 hidden-md hidden-lg"><img src="img/IMG_2317.jpg" class="wp8"></div>
             <div class="col-sm-4 col-sm-push-2 col-xs-6 hidden-md hidden-lg"><img src="img/DSD_0214.jpg" class="wp9"></div>
         </div> -->
+    </div>
+</section>
+
+<section id="eng-pics" class="section-padding">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="header">Fotos do Casal</h3>
+            </div>
+        </div>
+        <div class="row" id="imageRow" >
+                <!-- Coloque todas as imagens aqui via JavaScript -->
+        </div>
+    </div>
+    <div class="container">
+        <div class="row hidden-lg hidden-md hidden-xs">
+            <div class="col-xs-12 section-border section-padding"></div>
+        </div>
     </div>
 </section>
 
@@ -364,7 +388,7 @@
 
 </section>
 
-<section id="instagram" class="section-padding">
+<!-- <section id="instagram" class="section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -380,27 +404,9 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
-<section id="eng-pics" class="section-padding">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3 class="header">Momentos do Casal</h3>
-            </div>
-        </div>
-        <div class="row" id="imageRow" >
-                <!-- Coloque todas as imagens aqui via JavaScript -->
-        </div>
-    </div>
-    <div class="container">
-        <div class="row hidden-lg hidden-md hidden-xs">
-            <div class="col-xs-12 section-border section-padding"></div>
-        </div>
-    </div>
-</section>
-
-<section id="video-bg" class="hidden-sm hidden-xs">
+<!-- <section id="video-bg" class="hidden-sm hidden-xs">
     <div id="bgndVideo" class="player"
          data-property="{videoURL:'https://www.youtube.com/watch?v=BKALRn4V_FU',containment:'#video-bg',autoPlay:true, mute:true, showControls:false, startAt:0, stopAt:86, opacity:1}">
     </div>
@@ -408,7 +414,7 @@
         <h5>Curitiba</h5>
         <p>Pelos olhos do casal</p>
     </div>
-</section>
+</section> -->
 
 <section id="map" class="section-padding">
     <div class="text-center">
@@ -427,12 +433,12 @@
                 <div id="map-content" class="pointer-events-auto">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5>Castello Reale</h5>
-                            <p>R. José Strapasson, 888 - Santa Gema, Colombo - PR, 83407-200, Brasil</p>
+                            <h5>Vale do Alto Eventos</h5>
+                            <p>Av. Édison Passos, 4517 - Alto da Boa Vista, Rio de Janeiro - RJ, 20531-077</p>
                         </div>
                         <div class="col-md-6">
                             <h5>Contato para o evento</h5>
-                            <p><i class="fa fa-phone"></i> <a href="tel://+55413656-5299">+55 41 3656-5299</a></p>
+                            <p><i class="fa fa-phone"></i> <a href="tel://+552197411-8388">+55 21 97411-8388</a></p>
                         </div>
                     </div>
                         <div class="col-md-6" style="padding: 5px;">
@@ -446,7 +452,7 @@
 </section>
 
 
-<section class="rsvp text-center" id="rsvp">
+<section class="rsvp text-center section-padding" id="rsvp">
 
     <div id="rsvp-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -468,7 +474,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h3>O quê você está esperando?</h3>
-                <p>Nós adoraríamos que você confirmasse sua presença antes do dia 01 de novembro de 2024</p>
+                <p>Nós adoraríamos que você confirmasse sua presença antes do dia 20 de Julho de 2025</p>
                 <form id="rsvp-form" class="rsvp-form" action="" method="POST">
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
@@ -532,7 +538,7 @@
         </div>
     </div>
 </section>
-<section class="gift-list text-center" id="gifts">
+<section class="gift-list text-center section-padding" id="gifts">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -569,6 +575,7 @@
         const data = {};
         formData.forEach((value, key) => (data[key] = value));
         data.type = 'message';
+        data.date = new Date();
 
         try {
             const response = await fetch('/proxy', {
@@ -655,7 +662,7 @@
         <div class="row">
             <div class="col-sm-12 text-center content">
                 <span class="to-top-wrapper"><a href="#top" class="to-top"><i class="fa fa-angle-up"></i></a></span>
-                <p>Maxine <span class="fa fa-heart pulse2"></span> Felipe</p>
+                <p>Desenvolvido originalmente pela Milena e Kaio e adaptado para os Xuxus <span class="fa fa-heart pulse2"></span></p>
             </div>
         </div>
     </div>
@@ -669,7 +676,7 @@
 <script src="js/vendor/ouical.js"></script>
 <script src="js/scripts.min.js"></script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXX&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfClq5NcKa-AkgdbLPID1SHGs9KePtKgU&callback=initMap"></script>
 <!-- Google Analytics -->
 <script>
     (function (i, s, o, g, r, a, m) {
