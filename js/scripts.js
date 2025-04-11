@@ -84,7 +84,7 @@ $(document).ready(function () {
     });
 
     /***************** Header BG Scroll ******************/
-/*
+
     $(function () {
         $(window).scroll(function () {
             var scroll = $(window).scrollTop();
@@ -234,7 +234,7 @@ $(document).ready(function () {
         },
         data: {
             // Event title
-            title: "Casamento de Maxine e Felipe",
+            title: "Casamento de Rodrigo e Alessandra",
 
             // Event start date
             start: new Date('Dec 12, 2024 16:00'),
@@ -291,7 +291,7 @@ $(document).ready(function () {
 
 // Google map
 function initMap() {
-    var location = {lat: -25.317811384597785, lng: -49.16990619206163};
+    var location = {lat: -22.961214136771893, lng: -43.27271995490009};
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 15,
         center: location,
@@ -305,7 +305,7 @@ function initMap() {
 }
 
 function initBBSRMap() {
-    var la_fiesta = {lat: -25.317811384597785, lng: -49.16990619206163};;
+    var la_fiesta = {lat: -22.961214136771893, lng: -43.27271995490009};;
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 15,
         center: la_fiesta,

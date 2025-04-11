@@ -40,3 +40,6 @@ data/
 credentials.json
 config.json
 css/
+js/scripts.min.js
+
+
