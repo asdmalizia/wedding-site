@@ -115,12 +115,13 @@
                     <nav>
                         <ul class="primary-nav">
                             <li><a href="#intro">Nossa História</a></li>
-                            <li><a href="#eng-pics">Fotos do Casal</a></li>
-                            <li><a href="#events">Eventos</a></li>
+                            <li><a href="#eng-pics">Fotos</a></li>
+                            <li><a href="#events">Evento</a></li>
                             <!-- <li><a href="#instagram">Instagram</a></li> -->
                             <!-- <li class="hidden-sm hidden-xs"><a href="#video-bg">Um visão da Cidade</a></li> -->
                             <li><a href="#map" class="login">Local</a></li>
                             <li><a href="#gifts">Lista de Presentes</a></li>
+                            <li><a href="#leave-message">Recados</a></li>
                         </ul>
                         <ul class="member-actions">
                             <!-- <li><a href="#map" class="login">Local</a></li> -->
@@ -160,7 +161,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h3>Vamos casar!</h3>
+                <h3>Vamos nos casar!</h3>
                 <p style="color: black;">09 de Agosto 2025</p>
                 <p style="color: black;">Comemore conosco esse momento!</p>
                 <h5 style="color: black;">CONTAGEM REGRESSIVA</h5>
@@ -323,7 +324,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="header">Eventos</h3>
+                <h3 class="header">Evento</h3>
             </div>
         </div>
         <div class="row">
@@ -472,10 +473,11 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <h3>O quê você está esperando?</h3>
                 <p>Nós adoraríamos que você confirmasse sua presença antes do dia 20 de Julho de 2025</p>
-                <form id="rsvp-form" class="rsvp-form" action="" method="POST">
+                <form id="rsvp-form" class="rsvp-form" method="POST">
+                    <input type="hidden" name="type" value="rsvp">
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-input-group">
@@ -484,19 +486,20 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-input-group">
-                                <i class="fa fa-user"></i><input type="text" name="name" placeholder="Nome Completo" required>
+                                <i class="fa fa-user"></i><input type="text" name="name" placeholder="Nome completo" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
-                            <div class="form-input-group">
-                                <i class="fa fa-users"></i><input type="number" name="extras" id="extras" placeholder="Convidados extras" min="0" max="4" required>
-                            </div>
+                                <p style="margin:0; padding:0">Você irá ao evento? </br>
+                                    <input type="radio" name="presença" value="Sim" checked> Sim
+                                    <input type="radio" value="Não" name="presença"> Não
+                                </p>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-input-group">
-                                <i class="fa fa-key"></i><input type="number" name="invite_code" id="invite_code" placeholder="Código do convite" required>
+                                <i class="fa fa-users"></i><input type="number" name="extras" id="extras" placeholder="Convidados extras" min="0" max="4" required>
                             </div>
                         </div>
                     </div>
@@ -575,7 +578,6 @@
         const data = {};
         formData.forEach((value, key) => (data[key] = value));
         data.type = 'message';
-        data.date = new Date();
 
         try {
             const response = await fetch('/proxy', {
