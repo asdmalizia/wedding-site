@@ -333,6 +333,7 @@ Hero
   position: fixed;
   // background-color: #ffd656;
   background-color: rgba( 255, 214, 86, 0.9);
+  // background-color: rgba(253,236,144,.9);
   z-index: 999;
   width: 100%;
 }
@@ -349,9 +350,9 @@ header {
     text-transform: uppercase;
     font-size: $nav-font-size;
 
-    &.login {
-      margin-right: 20px;
-    }
+    // &.login {
+    //   margin-right: 20px;
+    // }
   }
   .logo {
     display: inline-block;
@@ -367,7 +368,8 @@ header {
       display: inline;
 
       a {
-        color: $txt-light;
+        // color: $txt-light;
+        color: rgba(108,17,0,255);
         padding-right: 25px;
 
         &:hover {
@@ -384,7 +386,9 @@ header {
       display: inline;
 
       a {
-        color: $txt-light;
+        // color: $txt-light;
+        color: rgb(108,17,0);
+        border-color: rgb(108,17,0);
 
         &:hover {
           color: $accent-color;
@@ -406,7 +410,7 @@ header {
   color: #fff;
   font-size: 30px;
   position: absolute;
-  bottom: 30px;
+  // bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -939,7 +943,7 @@ Google map
 RSVP form
 ========================================================================== */
 .rsvp {
-  padding-bottom: 140px;
+  // padding-bottom: 140px;
   .rsvp-form {
     .rsvp-btn {
       padding: 15px 0;
@@ -972,7 +976,7 @@ RSVP form
         left: 30px;
         transform: translateY(-50%);
       }
-      i.fa-user, i.fa-users, i.fa-envelope, .fa-key {
+      i.fa-user, i.fa-users, i.fa-envelope, .fa-key, .fa-birthday-cake {
         font-size: 14px;
         position: absolute;
         top: 50%;
