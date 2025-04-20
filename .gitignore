@@ -36,10 +36,6 @@ typings/
 .env
 .sass-cache/
 *.css.map
-data/
-credentials.json
-config.json
-css/
 js/scripts.min.js
 
 
