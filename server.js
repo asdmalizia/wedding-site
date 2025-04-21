@@ -139,7 +139,7 @@ function isValidDatabase(filePath) {
 async function uploadDatabase() {
     const fileMetadata = {
         name: 'ecommerce.db',
-        parents: ['xxxxxxxxxxxxxxxxxxxxx'], // substitua pelo ID da pasta no Google Drive
+        parents: ['1ckINIyMwVph6RIkQqmUKTlS8yUmOwwvr'], // substitua pelo ID da pasta no Google Drive
     };
     const media = {
         mimeType: 'application/x-sqlite3',
@@ -148,7 +148,7 @@ async function uploadDatabase() {
 
     // Verificar se o arquivo já existe no Google Drive
     const response = await drive.files.list({
-        q: "name='ecommerce.db' and parents in 'xxxxxxxxxxxxxxxxxxx'",
+        q: "name='ecommerce.db' and parents in '1ckINIyMwVph6RIkQqmUKTlS8yUmOwwvr'",
         fields: 'files(id, name)',
         spaces: 'drive',
     });
@@ -177,7 +177,7 @@ async function downloadDatabase() {
     try {
         // Verificar se o arquivo existe no Google Drive
         const response = await drive.files.list({
-            q: "name='ecommerce.db' and parents in 'xxxxxxxxxxxxxxxxxx'",
+            q: "name='ecommerce.db' and parents in '1ckINIyMwVph6RIkQqmUKTlS8yUmOwwvr'",
             fields: 'files(id, name)',
             spaces: 'drive',
         });
@@ -294,7 +294,7 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
         });
 
         try {
-            await axios.post('https://casamentomaxinefelipe.com.br/proxy', {
+            await axios.post('https://0.0.0.0:8080/proxy', {
                 type: 'compra',
                 email: email,
                 description: description,
