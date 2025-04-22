@@ -164,13 +164,11 @@ $(document).ready(function () {
     /**fotos do casal** */
     // Dados das imagens
         var images = [
-            "pre_wedding1.jpeg", "pre_wedding2.jpeg", "pre_wedding3.jpeg", "pre_wedding4.jpeg","pre_wedding5.jpeg", "pre_wedding7.jpeg", 
-            "fm1.jpeg", "IMG_3483-lg.png", "_RFX2992-lg.png", "_RFX3064-lg.png", "NGP_4119-lg.png", "fm2.jpeg",
-            "fm3.jpeg", "fm4.jpeg", "fm5.jpeg", "fm6.jpeg", "fm7.jpeg", "fm8.jpeg", "fm9.jpeg", "fm10.jpeg",
-            "fm11.jpeg", "fm12.jpeg", "fm13.jpeg", "fm14.jpeg", "fm15.jpeg", "fm16.jpeg", "fm17.jpeg", "fm18.jpeg",
-            "fm19.jpeg", "fm20.jpeg", "fm21.jpeg", "fm22.jpeg", "fm23.jpeg", "fm24.jpeg", "fm25.jpeg", "fm26.jpeg",
-            "fmultima.jpeg"
-        ];
+            "0.jpg", "1.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg", "10.jpg",
+            "11.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg", "16.jpg", "17.jpg", "18.jpg", "19.jpg", "20.jpg",
+            "21.jpg", "22.jpg", "23.jpg", "24.jpg", "25.jpg", "26.jpg", "27.jpg", "28.jpg", "29.jpg", "30.jpg",
+            "31.jpg"]
+           ;
 
         // Seleciona o elemento pai onde as imagens serão adicionadas
         var imageRow = document.getElementById("imageRow");

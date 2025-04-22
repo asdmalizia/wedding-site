@@ -950,6 +950,11 @@ RSVP form
       border-radius: 3px;
       width: 100%;
       font-size: 13px;
+      background-color: rgba(255, 80, 0, .8);
+      border: none;
+    }
+    .rsvp-btn:hover {
+      background-color: rgba(255, 81, 0, 0.542);
     }
     .form-input-group {
       width: 100%;

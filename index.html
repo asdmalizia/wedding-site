@@ -322,7 +322,7 @@
                 <h3 class="header">Fotos dos Xuxus</h3>
             </div>
         </div>
-        <div class="row" id="imageRow" >
+        <div class="row" id="imageRow" style="background-color: rgba(255,129,166,.2);" >
                 <!-- Coloque todas as imagens aqui via JavaScript -->
         </div>
     </div>
@@ -344,14 +344,14 @@
             <div class="col-md-6 col-sm-12 col-xs-12 leftcol">
                 <div class="wp3">
                     <p><strong>12 de Dezembro de 2024</strong></p>
-                    <h5>Cerimônia de Casamento <span class="time">16h30 - 18h</span></h5>
+                    <h5>Cerimônia de Casamento <span class="time">17h30 - 19h</span></h5>
                     <p>Este é o evento principal, quando os noivos trocam votos e selam seu compromisso. A cerimônia será realizada em um ambiente elegante e intimista, envolvendo rituais significativos que unem o casal. Os convidados devem chegar com antecedência para se acomodarem confortavelmente antes do início da cerimônia. É um momento de emoção e celebração, marcando o início de uma nova jornada juntos.</p>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 rightcol">
                 <div class="wp5">
-                    <h5>Jantar/Festa <span class="time">18h - 02h30</span></h5>
-                    <p>O jantar e a festa começarão logo após a cerimônia e se estenderão até ás 02:30. Prepare-se para uma noite de muita dança, música e celebração. A festa contará com uma banda ao vivo, DJ, e uma variedade de entretenimentos para garantir que todos tenham uma experiência inesquecível. Refeições e bebidas serão servidas ao longo da noite, garantindo que a energia dos convidados permaneça alta até o final do evento.</p>
+                    <h5>Jantar/Festa <span class="time">19h - 12h00</span></h5>
+                    <p>O jantar e a festa começarão logo após a cerimônia e se estenderão até meia noite. Prepare-se para uma noite de muita dança, música e celebração. A festa contará com uma banda ao vivo, DJ, e uma variedade de entretenimentos para garantir que todos tenham uma experiência inesquecível. Refeições e bebidas serão servidas ao longo da noite, garantindo que a energia dos convidados permaneça alta até o final do evento.</p>
                 </div>
             </div>
         </div>
@@ -452,10 +452,12 @@
                         </div>
                         <div class="col-md-6">
                             <h5>Contato para o evento</h5>
-                            <p><i class="fa fa-phone"></i> <a href="tel://+552197411-8388">+55 21 97411-8388</a></p>
+                            <p><i class="fa fa-phone"></i> <a href="tel://+552197411-8388">+55 21 97411-8388</a>
+                            </br> O salão oferece estacionamento e vallet gratuitos para os convidados.
+                            </p>
                         </div>
                     </div>
-                        <div class="col-md-6" style="padding: 5px;">
+                        <div style="text-align: center;">
                             <a class="btn btn-accent btn-small" id="btn-show-map"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Ver Mapa</a>
                         </div>
                     </div>
@@ -512,7 +514,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-input-group">
-                                <i class="fa fa-users"></i><input type="number" name="extras" id="extras" placeholder="Convidados extras" min="0" max="4" required>
+                                <i class="fa fa-users"></i><input type="number" name="extras" id="extras" placeholder="Convidados extras" min="0" max="4">
                             </div>
                         </div>
                     </div>
@@ -571,7 +573,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="De: Seu Nome" required>
+                        <input type="text" name="name" class="form-control" placeholder="De: Seu nome" required>
                     </div>
                     <div class="form-group">
                         <textarea name="message" class="form-control" rows="5" placeholder="Sua mensagem" required></textarea>
@@ -638,7 +640,8 @@
     }
 
     #leave-message .btn-fill {
-        background-color: #4CAF50;
+        /* background-color: #ffd656; */
+        background-color: rgba(255, 80, 0, .8);
         color: white;
         padding: 15px 25px;
         border: none;
@@ -649,7 +652,8 @@
     }
 
     #leave-message .btn-fill:hover {
-        background-color: #45a049;
+        /* background-color: #ffd556c0; */
+        background-color: rgba(255, 81, 0, 0.542);
     }
 
     #leave-message .alert {
