@@ -193,6 +193,7 @@ Navigation
   opacity: 0.9;
   -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
+  background-color: #fff;
 }
 .nav-toggle {
   position: absolute;
@@ -214,7 +215,7 @@ Navigation
   -moz-border-radius: 1px;
   -webkit-border-radius: 1px;
   border-radius: 1px;
-  background: #fff;
+  background: #6c1100;
   cursor: pointer
 }
 .nav-toggle span:before {
@@ -402,7 +403,7 @@ header {
   .member-actions {
     position: absolute;
     right: 0;
-    top: 41px;
+    top: 28px;
     transition: all 300ms ease-in-out;
   }
 }
