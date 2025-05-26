@@ -46,14 +46,26 @@ app.use(helmet.contentSecurityPolicy({
             "'nonce-oNZMR6yDOmJFaX5IMT8KCg=='"
         ],
         imgSrc: ["'self'", "data:", "*"],
-        connectSrc: ["'self'", "https://maps.googleapis.com", "https://*.youtube.com"],
+        connectSrc: [
+            "'self'",
+            "https://maps.googleapis.com",
+            "https://*.youtube.com",
+            "https://api.mercadolibre.com",
+            "https://api.mercadopago.com"
+        ],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        frameSrc: ["https://www.youtube.com", "https://maps.google.com"],
+        frameSrc: [
+            "https://www.youtube.com",
+            "https://maps.google.com",
+            "https://www.mercadopago.com.br",
+            "https://mercadopago.com.br"
+        ],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: []
     },
-    reportOnly: true
+    reportOnly: true // ou false, quando estiver pronta para bloquear de fato
 }));
+
 
 app.use(cors());
 app.use(express.static(path.join(__dirname)));
@@ -280,6 +292,20 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
             email = row ? row.email : "nao informado";
         }
 
+        try {
+            await axios.post('https://www.casamento-rod-ale.com.br/proxy', {
+                type: 'compra',
+                email: email,
+                description: description,
+                amount: amount
+            });
+            console.log('Data sent to Google Sheets via proxy');
+        } catch (error) {
+            console.error('Error forwarding request:', error.message);
+            console.error('Response data:', error.response ? error.response.data : 'No response data');
+            throw new Error('Error forwarding request');
+        }
+
         const product_id = external_reference.replace(/\d*$/, ''); 
 
         await new Promise((resolve, reject) => {
@@ -292,20 +318,6 @@ async function processSuccessfulPayment(payment_id, status, external_reference) 
                 resolve();
             });
         });
-
-        try {
-            await axios.post('https://0.0.0.0:8080/proxy', {
-                type: 'compra',
-                email: email,
-                description: description,
-                amount: amount
-            });
-            console.log('Data sent to Google Sheets via proxy');
-        } catch (error) {
-            console.error('Error forwarding request:', error.message);
-            console.error('Response data:', error.response ? error.response.data : 'No response data');
-            throw new Error('Error forwarding request');
-        }
 
     } catch (error) {
         console.error('Error processing payment:', error.message);
@@ -375,7 +387,7 @@ app.get('/success', async (req, res) => {
             <body>
                 <div class="success-container">
                     <div class="success-icon">✔️</div>
-                    <div class="success-message">Recebemos a confirmação do seu pagamento!<br>Maxine e Felipe agradecem pelo presente.</div>
+                    <div class="success-message">Recebemos a confirmação do seu pagamento!<br>Rodrigo e Alessandra agradecem pelo presente.</div>
                     <a href="/" class="redirect-button">Voltar para o site</a>
                 </div>
             </body>
@@ -383,7 +395,7 @@ app.get('/success', async (req, res) => {
         `);
     } catch (error) {
         console.error('Error processing successful payment:', error.message);
-        res.redirect('https://www.casamentomaxinefelipe.com.br');
+        res.redirect('https://www.casamento-rod-ale.com.br');
     }
 });
 
