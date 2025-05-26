@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Maxine & Felipe!</title>
+    <title>Rod & Ale</title>
     <meta name="description" content="We would like to invite you to our big day.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
@@ -219,571 +219,216 @@
     //lista de presentes
 
     const gifts = [
-        // {
-        //     id: 'TesteCompraFritadeiraEletrica',
-        //     name: 'Air Fryer',
-        //     image:'img/presentes/presente1.png',
-        //     price: 1.00
-        // },
-        // {
-        //     id: 'smartphone',
-        //     name:'Smartphone',
-        //     image:'img/presentes/presente2.png',
-        //     price: 1.00
-        // },
-        {
-            id: 'Cafeteira',
-            name: 'Cafeteira Oster',
-            image: 'img/presentes/1-Cafeteira.jpg',
-            price: 399.00
-        },
-        {
-            id: 'SuporteFiltrarCafe',
-            name: 'Suporte para Filtrar Café YuriPress',
-            image: 'img/presentes/2-FiltroCafe.jpg',
-            price: 234.00
-        },
-        {
-            id: 'MoedorCafe',
-            name: 'Moedor de Café Philco',
-            image: 'img/presentes/3-Moedor.jpg',
-            price: 133.00
-        },
-        {
-            id: 'PratoServirTrevo',
-            name: 'Prato de Servir Trevo',
-            image: 'img/presentes/4-PratoTrevo.jpg',
-            price: 179.00
-        },
-        {
-            id: 'KitSushi',
-            name: 'Kit de fazer sushi (16 peças)',
-            image: 'img/presentes/5-KitSushi.jpg',
-            price: 252.00
-        },
-        {
-            id: 'XicaraAlice',
-            name: 'Xícara Alice no País das Maravilhas',
-            image: 'img/presentes/6-XicaraAlice.jpg',
-            price: 150.00
-        },
-        {
-            id: 'ConjuntoSushiCeramica',
-            name: 'Conjunto Cerâmica para Sushi',
-            image: 'img/presentes/7-ConjuntoSushiCeramica.jpg',
-            price: 598.00
-        },
-        {
-            id: 'QueimadorIncenso',
-            name: 'Queimador de Incenso Oriente Médio',
-            image: 'img/presentes/8-Incensario.jpg',
-            price: 153.00
-        },
-        {
-            id: 'IncensarioCascata',
-            name: 'Incensário Cascata',
-            image: 'img/presentes/9-IncensarioCascata.jpg',
-            price: 174.00
-        },
-        {
-            id: 'EscorredorLoucainox',
-            name: 'Escorredor de Louça Inox - Branco',
-            image: 'img/presentes/10-Escorredor.jpg',
-            price: 176.00
-        },
-        {
-            id: 'DuplaEsteiraSofa',
-            name: 'Dupla Esteira De Sofá',
-            image: 'img/presentes/11-EsteiraSofa.jpg',
-            price: 138.00
-        },
-        {
-            id: 'PortaCoposCeramica',
-            name: 'Porta-copos de Cerâmica',
-            image: 'img/presentes/12-PortaCopoCeramica.jpg',
-            price: 139.00
-        },
-        {
-            id: 'KitChurrascoTramontina',
-            name: 'Kit Churrasco Tramontina',
-            image: 'img/presentes/13-KitChurrasco.jpg',
-            price: 192.00
-        },
-        {
-            id: 'KitCarneWoodbull',
-            name: 'Kit Carne Woodbull',
-            image: 'img/presentes/14-KitCarne.jpg',
-            price: 187.00
-        },
-        {
-            id: 'KitChurrascoEspecialWoodbull',
-            name: 'Kit Churrasco Edição Especial WOODBULL',
-            image: 'img/presentes/15-KitWoodbull.jpg',
-            price: 322.00
-        },
-        {
-            id: 'PortaBoloBambu',
-            name: 'Porta-Bolo de Bambu Com Tampa de Acrílico',
-            image: 'img/presentes/16-PortaBolo.jpg',
-            price: 155.00
-        },
-        {
-            id: 'MaquinaGeloPhilco',
-            name: 'Máquina de Gelo Philco',
-            image: 'img/presentes/17-MaquinaGelo.jpg',
-            price: 400.00
-        },
-        {
-            id: 'LavaLoucaum',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 1',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 450.00
-        },
-        {
-            id: 'LavaLoucadois',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 2',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 400.00
-        },
-        {
-            id: 'LavaLoucatres',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 3',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 400.00
-        },
-        {
-            id: 'LavaLoucaquatro',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 4',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 400.00
-        },
-        {
-            id: 'LavaLoucacinco',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 5',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 300.00
-        },
-        {
-            id: 'LavaLoucaseis',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 6',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 250.00
-        },
-        {
-            id: 'LavaLoucasete',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 7',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 500.00
-        },
-        {
-            id: 'LavaLoucaoito',
-            name: 'Máquina de Lavar Louças Brastemp - Cota 8',
-            image: 'img/presentes/18-LavaLouca.jpeg',
-            price: 500.00
-        },
-        {
-            id: 'ConjuntoChaMagnetico',
-            name: 'Conjunto de chá magnético',
-            image: 'img/presentes/19-ConjuntoCha.jpg',
-            price: 319.00
-        },
-        {
-            id: 'BandejaCafeManha',
-            name: 'Bandeja Café Da Manhã',
-            image: 'img/presentes/20-Bandeja.jpg',
-            price: 145.00
-        },
-        {
-            id: 'BandejaEspelhada',
-            name: 'Bandeja Espelhada',
-            image: 'img/presentes/21-BandejaEspelhada.jpg',
-            price: 159.00
-        },
-        {
-            id: 'PratoFrutas',
-            name: 'Prato de frutas',
-            image: 'img/presentes/22-PratoFrutas.jpg',
-            price: 294.00
-        },
-        {
-            id: 'KitCarregadorPS5',
-            name: 'Kit Carregador PS5',
-            image: 'img/presentes/23-KitPS5.jpg',
-            price: 275.00
-        },
-        {
-            id: 'CadeiraEscritorio',
-            name: 'Cadeira de Escritório',
-            image: 'img/presentes/24-CadeiraEscritorio.jpg',
-            price: 368.00
-        },
-        {
-            id: 'SuporteVinhoBike',
-            name: 'Suporte para Vinho - Bike',
-            image: 'img/presentes/25-SuporteVinho.jpg',
-            price: 130.00
-        },
-        {
-            id: 'BolsaPortaVinho',
-            name: 'Bolsa Porta Vinho',
-            image: 'img/presentes/26-BolsaVinho.jpg',
-            price: 140.00
-        },
-        {
-            id: 'KitCoqueteleiraBar',
-            name: 'Kit Coqueteleira Bar',
-            image: 'img/presentes/27-KitCoqueteleira.jpg',
-            price: 158.00
-        },
-        {
-            id: 'CopoWhiskyGlencairn',
-            name: 'Copo de Whisky - Glencairn',
-            image: 'img/presentes/28-CopoWhiskey.jpg',
-            price: 170.00
-        },
-        {
-            id: 'CanecaPooh',
-            name: 'Caneca Cerâmica Winnie the Pooh - Silver Buffalo',
-            image: 'img/presentes/29-CanecaPooh.jpg',
-            price: 170.00
-        },
-        {
-            id: 'XicaraBuleBelaFera',
-            name: 'Xícara e Bule - A Bela e a Fera',
-            image: 'img/presentes/31-BuleBelaFera.jpg',
-            price: 283.00
-        },
-        {
-            id: 'KitCameraInstax',
-            name: 'Kit Câmera Instax Mini',
-            image: 'img/presentes/32-Instax.jpg',
-            price: 550.00
-        },
-        {
-            id: 'MalaRigidaGladiador',
-            name: 'Mala Rígida Gladiador - Rose',
-            image: 'img/presentes/33-Mala.jpg',
-            price: 400.00
-        },
-        {
-            id: 'AdegaClimatizada',
-            name: 'Adega Climatizada',
-            image: 'img/presentes/34-Adega.jpg',
-            price: 745.00
-        },
-        {
-            id: 'LuminariaMesa',
-            name: 'Luminária Mesa',
-            image: 'img/presentes/35-Luminaria.jpg',
-            price: 137.00
-        },
-        {
-            id: 'EspelhoParede',
-            name: 'Espelho de Parede',
-            image: 'img/presentes/36-Espelho.jpg',
-            price: 180.00
-        },
-        {
-            id: 'TorradeiraElectrolux',
-            name: 'Torradeira Electrolux',
-            image: 'img/presentes/38-Torradeira.jpg',
-            price: 162.00
-        },
-        {
-            id: 'ConjuntoPassaporte',
-            name: 'Conjunto Porta Passaporte Sr e Sra',
-            image: 'img/presentes/39-Passaporte.jpg',
-            price: 209.00
-        },
-        {
-            id: 'KitFonduePedra',
-            name: 'Kit Fondue Pedra',
-            image: 'img/presentes/40-KitFondue.jpg',
-            price: 260.00
-        },
-        {
-            id: 'ConjuntoXicarasPorcelana',
-            name: 'Conjunto Xícaras de Porcelana Wolff',
-            image: 'img/presentes/41-XicaraPorcelana.jpg',
-            price: 300.00
-        },
-        {
-            id: 'BoxGinTanqueray',
-            name: 'Box Gin Tanqueray',
-            image: 'img/presentes/42-KitGin.jpg',
-            price: 195.00
-        },
-        {
-            id: 'GarrafaTermicaElectrolux',
-            name: 'Garrafa Térmica Electrolux Sense 1,8L Verde',
-            image: 'img/presentes/43-GarrafaTermica.jpg',
-            price: 270.00
-        },
-        {
-            id: 'AspiradorRoboElectrolux',
-            name: 'Aspirador de pó robô Electrolux',
-            image: 'img/presentes/44-RoboAspirador.jpg',
-            price: 539.00
-        },
-        {
-            id: 'MoedorEletricoSalPimenta',
-            name: 'Conjunto de moedor elétrico de sal e pimenta',
-            image: 'img/presentes/45-MoedoresSalPimenta.jpg',
-            price: 169.00
-        },
-        {
-            id: 'Geladeira',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 1',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 500.00
-        },
-        {
-            id: 'Geladeiradois',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 2',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 500.00
-        },
-        {
-            id: 'Geladeiratres',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 3',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 500.00
-        },
-        {
-            id: 'Geladeiraquatro',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 4',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 450.00
-        },
-        {
-            id: 'Geladeiracinco',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 5',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 450.00
-        },
-        {
-            id: 'Geladeiraseis',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 6',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 400.00
-        },
-        {
-            id: 'Geladeirasete',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 7',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 400.00
-        },
-        {
-            id: 'Geladeiraoito',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 8',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 350.00
-        },
-        {
-            id: 'Geladeiranove',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 9',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 350.00
-        },
-        {
-            id: 'Geladeiradez',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 10',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiraonze',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 11',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiradoze',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 12',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiratreze',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 13',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiracatorze',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 14',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiraquinze',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 15',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiradezesseis',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 16',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 300.00
-        },
-        {
-            id: 'Geladeiradezessete',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 17',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 250.00
-        },
-        {
-            id: 'Geladeiradezoito',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 18',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 250.00
-        },
-        {
-            id: 'Geladeiradezenove',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 19',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 250.00
-        },
-        {
-            id: 'Geladeiravinte',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 20',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 200.00
-        },
-        {
-            id: 'Geladeiravinteum',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 21',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 500.00
-        },
-        {
-            id: 'Geladeiravintedois',
-            name: 'Geladeira Brastemp French Door Frost Free - Cota 22',
-            image: 'img/presentes/46-Geladeira.jpg',
-            price: 500.00
-        },
-        {
-            id: 'LuaDeMelUm',
-            name: 'Lua de Mel - Cota 1',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 600.00
-        },
-        {
-            id: 'LuaDeMelDois',
-            name: 'Lua de Mel - Cota 2',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 550.00
-        },
-        {
-            id: 'LuaDeMelTres',
-            name: 'Lua de Mel - Cota 3',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 550.00
-        },
-        {
-            id: 'LuaDeMelQuatro',
-            name: 'Lua de Mel - Cota 4',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 500.00
-        },
-        {
-            id: 'LuaDeMelCinco',
-            name: 'Lua de Mel - Cota 5',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 500.00
-        },
-        {
-            id: 'LuaDeMelSeis',
-            name: 'Lua de Mel - Cota 6',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 500.00
-        },
-        {
-            id: 'LuaDeMelSete',
-            name: 'Lua de Mel - Cota 7',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 500.00
-        },
-        {
-            id: 'LuaDeMelOito',
-            name: 'Lua de Mel - Cota 8',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 450.00
-        },
-        {
-            id: 'LuaDeMelNove',
-            name: 'Lua de Mel - Cota 9',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 450.00
-        },
-        {
-            id: 'LuaDeMelDez',
-            name: 'Lua de Mel - Cota 10',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 450.00
-        },
-        {
-            id: 'LuaDeMelOnze',
-            name: 'Lua de Mel - Cota 11',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 400.00
-        },
-        {
-            id: 'LuaDeMelDoze',
-            name: 'Lua de Mel - Cota 12',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 400.00
-        },
-        {
-            id: 'LuaDeMelTreze',
-            name: 'Lua de Mel - Cota 13',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 350.00
-        },
-        {
-            id: 'LuaDeMelCatorze',
-            name: 'Lua de Mel - Cota 14',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 350.00
-        },
-        {
-            id: 'LuaDeMelQuinze',
-            name: 'Lua de Mel - Cota 15',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 350.00
-        },
-        {
-            id: 'LuaDeMelDezesseis',
-            name: 'Lua de Mel - Cota 16',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 300.00
-        },
-        {
-            id: 'LuaDeMelDezessete',
-            name: 'Lua de Mel - Cota 17',
-            image: 'img/presentes/47-LuaDeMel.png',
-            price: 300.00
-        },
-        {
-            id: 'MicroondasUm',
-            name: 'Micro-ondas Brastemp 32 Litros - Cota 1',
-            image: 'img/presentes/48-Microondas.png',
-            price: 450.00
-        },
-        {
-            id: 'MicroondasDois',
-            name: 'Micro-ondas Brastemp 32 Litros - Cota 2',
-            image: 'img/presentes/48-Microondas.png',
-            price: 450.00
-        },
-        {
-            id: 'Alexa',
-            name: 'Novo Echo Spot com Alexa',
-            image: 'img/presentes/49-Alexa.png',
-            price: 500.00
-        },
-    ];
+    {
+        id: 'AbridorMassa',
+        name: 'Abridor de Massa',
+        image: 'img/presentes/Abridor de Massa.jpg',
+        price: 149.00
+    },
+    {
+        id: 'AdegaVinhos',
+        name: 'Adega de Vinhos',
+        image: 'img/presentes/Adega.jpg',
+        price: 590.00
+    },
+    {
+        id: 'AirFryer',
+        name: 'AirFryer',
+        image: 'img/presentes/AirFryer.png',
+        price: 399.00
+    },
+    {
+        id: 'ArmaduraColiseu',
+        name: 'Armadura Completa pro Noivo Lutar no Coliseu',
+        image: 'img/presentes/Armadura Completa Para o Noivo Lutar no Coliseu.png',
+        price: 1200.00
+    },
+    {
+        id: 'AulaDanca',
+        name: 'Aula de Dança para os Noivos',
+        image: 'img/presentes/Aula de dança pros noivos.jpg',
+        price: 280.00
+    },
+    {
+        id: 'BoardgameCaixinha',
+        name: 'Caixinha para Compra de Boardgame',
+        image: 'img/presentes/Caixinha para Compra de boardgame.jpeg',
+        price: 70.00
+    },
+    {
+        id: 'SeguroViagem',
+        name: 'Contribuição para Seguro Viagem',
+        image: 'img/presentes/Contribuição pro Seguro Viagem.jpg',
+        price: 100.00
+    },
+    // {
+    //     id: 'CotaCruzeiro',
+    //     name: 'Cota para Viagem de Cruzeiro dos Noivos',
+    //     image: 'img/presentes/Cota para Viagem de Cruzeiro dos Noivos.png',
+    //     price: 350.00
+    // },
+    {
+        id: 'SalaoNoivo',
+        name: 'Spa pro dia do Noivo',
+        image: 'img/presentes/Dia no Salão Pré Casamento pro Noivo.jpeg',
+        price: 180.00
+    },
+    {
+        id: 'SpaNoiva',
+        name: 'Salão pro dia da Noiva',
+        image: 'img/presentes/Dia no Spa pra Noiva.jpg',
+        price: 220.00
+    },
+    {
+        id: 'JantarRoma',
+        name: 'Jantar Especial em Roma',
+        image: 'img/presentes/Jantar Especial em Roma.png',
+        price: 400.00
+    },
+    {
+        id: 'JogoAmericano',
+        name: 'Jogo Americano (4 peças)',
+        image: 'img/presentes/Jogo Americano.jpg',
+        price: 89.00
+    },
+    {
+        id: 'JogoJantarCeramica',
+        name: 'Louça em Cerâmica Artesanal',
+        image: 'img/presentes/jogo-de-jantar-2-pessoas-em-ceramica-artesanal-prato.jpg',
+        price: 260.00
+    },
+    {
+        id: 'KitCozinhaNoivo',
+        name: 'Kit Cozinha para o Noivo',
+        image: 'img/presentes/Kit Cozinha para o Noivo.jpg',
+        price: 190.00
+    },
+    {
+        id: 'FacasGourmet',
+        name: 'Kit de Facas Gourmet – MasterChef Edition',
+        image: 'img/presentes/Kit de Facas Gourmet Para Treinar para o MasterChef.png',
+        price: 230.00
+    },
+    {
+        id: 'LencoUmedecido',
+        name: 'Lenço Umedecido para Não Borrar a Maquiagem',
+        image: 'img/presentes/Lenço Umedecido Para a Familia não Borrar a Maquiagem.png',
+        price: 55.00
+    },
+    {
+        id: 'LingerieNoiva',
+        name: 'Lingerie Sexy para a Noiva',
+        image: 'img/presentes/Lingerie Sexy para a Noiva.png',
+        price: 130.00
+    },
+    {
+        id: 'MaquiagemEspecial',
+        name: 'Maquiagem Especial para o Casamento',
+        image: 'img/presentes/Maquiagem Especial para o Casamento.jpg',
+        price: 300.00
+    },
+    {
+        id: 'MassagemRelaxante',
+        name: 'Massagem Relaxante pra Noiva Não Surtar',
+        image: 'img/presentes/Massagem Relaxante para Noiva não Surtar.png',
+        price: 200.00
+    },
+    {
+        id: 'PanelaPressao',
+        name: 'Panela de Pressão',
+        image: 'img/presentes/Panela de Pressão.jpg',
+        price: 270.00
+    },
+    {
+        id: 'DespedidaNoiva',
+        name: 'Contribuição pra Despedida da Noiva',
+        image: 'img/presentes/Patrocine a despedida da noiva.png',
+        price: 150.00
+    },
+    {
+        id: 'DespedidaNoivo',
+        name: 'Contribuição pra Despedida do Noivo',
+        image: 'img/presentes/Patrocine a despedida do noivo.png',
+        price: 150.00
+    },
+    {
+        id: 'PortaCopos',
+        name: 'Porta-Copos Divertidos (6 peças)',
+        image: 'img/presentes/Porta Copos.jpg',
+        price: 65.00
+    },
+    {
+        id: 'RedeDomingo',
+        name: 'Rede para Descansar no Domingo à Tarde',
+        image: 'img/presentes/Presente - Rede para descansar no Domingo a tarde.jpg',
+        price: 180.00
+    },
+    {
+        id: 'SkinCare',
+        name: 'Skin Care para os Noivos Brilharem',
+        image: 'img/presentes/Skin Care Pros Noivos Ficarem Lindos pro Casamento.jpg',
+        price: 120.00
+    },
+    {
+        id: 'TaxaBolo',
+        name: 'Taxa para Comer o Primeiro Pedaço de Bolo',
+        image: 'img/presentes/Taxa para o Primeiro Pedaço do Bolo no Casamento.jpg',
+        price: 80.00
+    },
+    {
+        id: 'TvUltraHd',
+        name: 'Televisão de Última Geração”',
+        image: 'img/presentes/Televisão de Última Geração.png',
+        price: 2500.00
+    },
+    {
+        id: 'ToalhaMesa',
+        name: 'Toalha de Mesa de Linho',
+        image: 'img/presentes/Toalha de Mesa.jpg',
+        price: 120.00
+    },
+    {
+        id: 'Torradeira',
+        name: 'Torradeira',
+        image: 'img/presentes/Torradeira.jpg',
+        price: 160.00
+    },
+    {
+        id: 'TourVeneza',
+        name: 'Tour Guiado Romântico em Veneza',
+        image: 'img/presentes/Tour Guiado em Veneza.png',
+        price: 420.00
+    },
+    // {
+    //     id: 'TrilhaNoivos',
+    //     name: 'Trilha na Mata (sem Guia) com os Noivos',
+    //     image: 'img/presentes/Trilha na Mata sem Guia com os Noivos.jpg',
+    //     price: 95.00
+    // },
+    {
+        id: 'PanoPrato',
+        name: 'Um Lindo Pano de Prato',
+        image: 'img/presentes/Um lindo Pano de Prato.png',
+        price: 55.00
+    },
+    {
+        id: 'LuaDeMelConvidado',
+        name: 'Vaga pra viajar na Lua de Mel',
+        image: 'img/presentes/Você vem com a gente na Lua de Mel.png',
+        price: 1999.00
+    }
+];
+
+for (let i = 1; i <= 15; i++) {
+    const price = 100 + (i - 1) * 200; // Aumenta de R$100 em R$200 até R$3.000
+    gifts.push({
+        id: `CotaCruzeiro${i}`,
+        name: `Cota ${i} para a Viagem de Cruzeiro dos Noivos`,
+        image: 'img/presentes/Cota para Viagem de Cruzeiro dos Noivos.png',
+        price: price > 3000 ? 3000 : price
+    });
+}
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -893,6 +538,8 @@ document.addEventListener('DOMContentLoaded', function() {
         button.classList.add('btn', 'btn-primary');
         button.id = `button-item-${gift.id}`;
         button.textContent = 'Escolher Item';
+        button.style.backgroundColor = 'rgba(255, 80, 0, 0.8)';
+        button.style.borderColor = '#fff';
         button.addEventListener('click', function() {
             openPaymentModal(gift.price, gift.name, gift.id);
         });
