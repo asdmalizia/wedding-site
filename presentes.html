@@ -150,7 +150,14 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 style="padding-top: 115px;">Lista de Presentes</h3>
-                <p>Escolha um presente da nossa lista e marque sua presença em nossa união!</p>
+                <p>
+                    <!-- Escolha um presente da nossa lista e marque sua presença em nossa união! </br>
+                    Escolha a melhor forma de pagamento (cartão de débito, crédito, boleto ou pix) seguindo a compra pelo site, 
+                    ou transfira diretamente para a nossa conta através pix no QR code abaixo. -->
+                    Ficaremos muito felizes com a sua presença em nosso grande dia! </br>
+                    Você pode escolher um presente da nossa lista e finalizar o pagamento da forma que preferir: cartão (débito ou crédito), boleto ou Pix. </br>
+                    Se quiser, também é possível transferir diretamente para a nossa conta através do Pix no QR code abaixo.
+                </p>
             </div>
         </div>
         <div class="filter-buttons">
@@ -220,6 +227,12 @@
 
     const gifts = [
     {
+        id: 'PIX',
+        name: '1. Escolha o valor que quiser no PIX :)',
+        image: 'img/presentes/1. pix.png',
+        price: 1.00
+    },
+    {
         id: 'AbridorMassa',
         name: 'Abridor de Massa',
         image: 'img/presentes/Abridor de Massa.jpg',
@@ -247,19 +260,19 @@
         id: 'AulaDanca',
         name: 'Aula de Dança para os Noivos',
         image: 'img/presentes/Aula de dança pros noivos.jpg',
-        price: 280.00
+        price: 500.00
     },
     {
         id: 'BoardgameCaixinha',
-        name: 'Caixinha para Compra de Boardgame',
+        name: 'Vaquinha pra Comprar Boardgame',
         image: 'img/presentes/Caixinha para Compra de boardgame.jpeg',
         price: 70.00
     },
     {
         id: 'SeguroViagem',
-        name: 'Contribuição para Seguro Viagem',
+        name: 'Contribuição pro Seguro Viagem',
         image: 'img/presentes/Contribuição pro Seguro Viagem.jpg',
-        price: 100.00
+        price: 150.00
     },
     // {
     //     id: 'CotaCruzeiro',
@@ -269,21 +282,21 @@
     // },
     {
         id: 'SalaoNoivo',
-        name: 'Spa pro dia do Noivo',
+        name: 'Spa pro  Noivo',
         image: 'img/presentes/Dia no Salão Pré Casamento pro Noivo.jpeg',
-        price: 180.00
+        price: 300.00
     },
     {
         id: 'SpaNoiva',
-        name: 'Salão pro dia da Noiva',
+        name: 'Salão pra Noiva',
         image: 'img/presentes/Dia no Spa pra Noiva.jpg',
-        price: 220.00
+        price: 600.00
     },
     {
         id: 'JantarRoma',
         name: 'Jantar Especial em Roma',
         image: 'img/presentes/Jantar Especial em Roma.png',
-        price: 400.00
+        price: 550.00
     },
     {
         id: 'JogoAmericano',
@@ -295,13 +308,13 @@
         id: 'JogoJantarCeramica',
         name: 'Louça em Cerâmica Artesanal',
         image: 'img/presentes/jogo-de-jantar-2-pessoas-em-ceramica-artesanal-prato.jpg',
-        price: 260.00
+        price: 650.00
     },
     {
         id: 'KitCozinhaNoivo',
         name: 'Kit Cozinha para o Noivo',
         image: 'img/presentes/Kit Cozinha para o Noivo.jpg',
-        price: 190.00
+        price: 200.00
     },
     {
         id: 'FacasGourmet',
@@ -313,13 +326,13 @@
         id: 'LencoUmedecido',
         name: 'Lenço Umedecido para Não Borrar a Maquiagem',
         image: 'img/presentes/Lenço Umedecido Para a Familia não Borrar a Maquiagem.png',
-        price: 55.00
+        price: 49.00
     },
     {
         id: 'LingerieNoiva',
         name: 'Lingerie Sexy para a Noiva',
         image: 'img/presentes/Lingerie Sexy para a Noiva.png',
-        price: 130.00
+        price: 199.00
     },
     {
         id: 'MaquiagemEspecial',
@@ -331,31 +344,31 @@
         id: 'MassagemRelaxante',
         name: 'Massagem Relaxante pra Noiva Não Surtar',
         image: 'img/presentes/Massagem Relaxante para Noiva não Surtar.png',
-        price: 200.00
+        price: 380.00
     },
     {
         id: 'PanelaPressao',
         name: 'Panela de Pressão',
         image: 'img/presentes/Panela de Pressão.jpg',
-        price: 270.00
+        price: 250.00
     },
-    {
-        id: 'DespedidaNoiva',
-        name: 'Contribuição pra Despedida da Noiva',
-        image: 'img/presentes/Patrocine a despedida da noiva.png',
-        price: 150.00
-    },
-    {
-        id: 'DespedidaNoivo',
-        name: 'Contribuição pra Despedida do Noivo',
-        image: 'img/presentes/Patrocine a despedida do noivo.png',
-        price: 150.00
-    },
+    // {
+    //     id: 'DespedidaNoiva',
+    //     name: 'Contribuição pra Despedida da Noiva',
+    //     image: 'img/presentes/Patrocine a despedida da noiva.png',
+    //     price: 150.00
+    // },
+    // {
+    //     id: 'DespedidaNoivo',
+    //     name: 'Contribuição pra Despedida do Noivo',
+    //     image: 'img/presentes/Patrocine a despedida do noivo.png',
+    //     price: 150.00
+    // },
     {
         id: 'PortaCopos',
         name: 'Porta-Copos Divertidos (6 peças)',
         image: 'img/presentes/Porta Copos.jpg',
-        price: 65.00
+        price: 39.00
     },
     {
         id: 'RedeDomingo',
@@ -373,7 +386,7 @@
         id: 'TaxaBolo',
         name: 'Taxa para Comer o Primeiro Pedaço de Bolo',
         image: 'img/presentes/Taxa para o Primeiro Pedaço do Bolo no Casamento.jpg',
-        price: 80.00
+        price: 99.00
     },
     {
         id: 'TvUltraHd',
@@ -409,25 +422,31 @@
         id: 'PanoPrato',
         name: 'Um Lindo Pano de Prato',
         image: 'img/presentes/Um lindo Pano de Prato.png',
-        price: 55.00
+        price: 20.00
     },
     {
         id: 'LuaDeMelConvidado',
-        name: 'Vaga pra viajar na Lua de Mel',
+        name: 'Vaga pra viajar na Lua de Mel com a gente',
         image: 'img/presentes/Você vem com a gente na Lua de Mel.png',
-        price: 1999.00
+        price: 50000.00
     }
 ];
 
-for (let i = 1; i <= 15; i++) {
-    const price = 100 + (i - 1) * 200; // Aumenta de R$100 em R$200 até R$3.000
-    gifts.push({
-        id: `CotaCruzeiro${i}`,
-        name: `Cota ${i} para a Viagem de Cruzeiro dos Noivos`,
-        image: 'img/presentes/Cota para Viagem de Cruzeiro dos Noivos.png',
-        price: price > 3000 ? 3000 : price
-    });
-}
+// for (let i = 1; i <= 15; i++) {
+    // const price = 100 + (i - 1) * 200; // Aumenta de R$100 em R$200 até R$3.000
+
+    const prices = [170, 250, 320, 450, 520, 650, 800, 1000, 
+        1200, 1500, 1800, 2000, 2500, 3000, 3500];
+    var i=0;
+    for (let price of prices) {
+        i++;
+        gifts.push({
+            id: `CotaCruzeiro${i}`,
+            name: `Cota ${i} para a Viagem de Cruzeiro dos Noivos`,
+            image: 'img/presentes/Cota para Viagem de Cruzeiro dos Noivos.png',
+            price: price //> 3000 ? 3000 : price
+        });
+    }
 
 
 
@@ -562,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById(`button-item-${itemId}`);
 
     // Verifica se o preço é menor ou igual a 200 antes de fazer a requisição
-    if (gift.price <= 200) {
+    if (gift.price <= 0) {
         availabilityText.innerText = 'Já comprado';
         availabilityText.style.color = 'red';
         button.disabled = true;
